@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ width:100px; height:100px; background:red; position:absolute; left:150px; top:0; opacity:1}
+
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="div2" style="left:0;"></div>
+<div id="div3"  style="left:300px;"></div>
+<div id="div4" style="left:450px;"></div>
+<div id="div5"  style="left:600px;"></div>
+<div id="div6"  style="left:750px;"></div>
+animate(ele,{left:850,top:500},1500,['zfLinear','easeIn'],callback)
+//动画名（运动的元素,{运动的方向:目地的},完成此运动的总时间,[动画类型],回调方法)
+</body>
+</html>
+<script>
+//按时间比例的动画，以数学公式为算法的动画
+
+function getCss(ele,attr){
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele,null)[attr]);
+	}else{
+		return parseFloat(ele.currentStyle[attr]);
+	}
+}
+var ele=document.getElementById("div1");
+//淡入淡出的动画
+function fadeInOut(ele,target,duration,fnCallback){//target是指不透明度的终点值
+	duration = duration||600;
+	var begin=getCss(ele,"opacity");
+	var change=target-begin;
+	var times=0;
+	var interval=15;
+	clearInterval(ele.timer);
+	//开始清除积累的clearInterval(timer);
+	function step(){
+		//clearInterval(ele.timer);//写在这儿，一次也执行不了
+		times+=interval;
+		if(times<duration){
+			ele.style.opacity=times/duration*change+begin;
+		}else{
+			ele.style.opacity=target;//处理过界的问题
+			window.clearInterval(ele.timer);
+			
+			if(typeof fnCallback=="function"){
+				fnCallback.call(ele);
+				//fnCallback();
+				//通过下边的需求，理解回调方法为什么要用call来处理一下
+			}
+			
+		}
+	}
+	ele.timer=window.setInterval(step,interval);
+	
+}
+
+var oDivs=document.getElementsByTagName("div");
+for(var i=0;i<oDivs.length;i++){
+	oDivs.item(i).onclick=function(){
+		fadeInOut(this,0.1,1800,callback);
+		//第一个要求：点击后1800ms透明度变成0.1
+		//第二个要求：当第一个要求完成之后，还要把背景变成黑色	
+	}
+}
+/*function callback(){this.style.backgroundColor="black";}
+div1.onclick=function(){
+	fadeInOut(this,0.1,1800,function(){div1.style.backgroundColor="black"});
+}
+
+div2.onclick=function(){
+	fadeInOut(this,0.1,1800,function(){div2.style.backgroundColor="black"});
+}
+
+div3.onclick=function(){
+	fadeInOut(this,0.1,1800,function(){div3.style.backgroundColor="black"});
+}*/
+</script>

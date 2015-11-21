@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; left:150px; top:0; opacity:0}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+animate(ele,{left:850,top:500},1500,['zfLinear','easeIn'],callback)
+//动画名（运动的元素,{运动的方向:目地的},完成此运动的总时间,[动画类型],回调方法)
+</body>
+</html>
+<script>
+//按时间比例的动画，以数学公式为算法的动画
+
+function getCss(ele,attr){
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele,null)[attr]);
+	}else{
+		return parseFloat(ele.currentStyle[attr]);
+	}
+}
+var ele=document.getElementById("div1");
+//淡入淡出的动画
+function fadeInOut(ele,target,duration,fnCallback){//target是指不透明度的终点值
+	duration = duration||600;
+	var begin=getCss(ele,"opacity");
+	var change=target-begin;
+	var times=0;
+	var interval=15;
+	clearInterval(ele.timer);
+	//开始清除积累的clearInterval(timer);
+	function step(){
+		//clearInterval(ele.timer);//写在这儿，一次也执行不了
+		times+=interval;
+		if(times<duration){
+			ele.style.opacity=times/duration*change+begin;
+		}else{
+			ele.style.opacity=target;//处理过界的问题
+			window.clearInterval(ele.timer);
+			//window.clearInterval(timer);
+			//让动画结束后，再运行，就可以实现回调
+			
+			if(typeof fnCallback=="function"){
+				//fnCallback.call(ele);	//让回调方法里的this指向当前运动的元素
+				fnCallback();
+			}
+			
+		}
+	}
+	ele.timer=window.setInterval(step,interval);
+	//开始的时候，timer是个局部变量：
+	//var timer=window.setInterval(step,interval);
+
+}
+function fadeIn(){
+	fadeInOut(ele,1,2000,fadeOut);//放在回调里执行淡出，和下面直接执行淡出有什么不同呢？
+	fadeInOut(ele,1,2000)
+	fadeInOut(ele,0,2000)//直接放在
+	//fadeOut();
+}
+function fadeOut(){
+	fadeInOut(ele,0,2000,fadeIn)
+}
+document.documentElement.onclick=fadeIn;
+
+//回调方法：
+//当淡入之后，背景变绿
+//fadeInOut--A
+//背景变色---B
+//A--B；//想让A执行完成之后再执行B
+//A();
+//B();//B不会等到A完成之后再去执行
+//F11 逐语句调试
+//F8  逐断点（IE中是F5）
+//F10 逐过程
+</script>

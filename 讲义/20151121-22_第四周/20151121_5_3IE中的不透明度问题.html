@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+div{ width:100px; height:100px; background:red; position:absolute; left:150px; top:0; opacity:0.5; }
+
+</style>
+</head>
+
+<body>
+<div id="div1" style="filter:alpha(opacity=50)"></div>
+<div id="div2" style="left:0;"></div>
+<div id="div3"  style="left:300px;"></div>
+<div id="div4" style="left:450px;"></div>
+<div id="div5"  style="left:600px;"></div>
+<div id="div6"  style="left:750px;"></div>
+
+</body>
+</html>
+<script>
+//按时间比例的动画，以数学公式为算法的动画
+//getCss(div1,"opacity");//
+
+function getCss(ele,attr){
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele,null)[attr]);
+	}else{//只有IE才会执行这里
+		//专门为处理IE的opacity写代码
+		//filter:alpha(opacity=50)
+		if(attr=="opacity"){//说明这是在IE中获得opacity的值，则按以下方式去处理
+			var val=ele.currentStyle.filter;
+			//然后再从val里，把opacity的值分解出来，并且按着标准浏览器的原则返回：opacity是介于0-1之间的数
+			var reg=/alpha\(opacity=(\d+)\)/;
+			if(reg.test(val)){//如果分解出来的滤镜样式满足这个正则的匹配，则把第一个分组的内容解析出来
+				return RegExp.$1/100;//IE的opacity值和标准浏览器差100倍，按标准浏览器的方式返回此值，所以要除以100	
+			}else{
+				//如果没有发现滤镜样式里写opacity的值，则返回默认值
+				return 1;	
+			}
+		}else{
+			return parseFloat(ele.currentStyle[attr]);
+		}
+	}
+}
+function setCss(ele,attr,val){
+	//给css赋值有三种情况
+	//1、带单位的
+	//2、不带单位的
+	//3、存在IE兼容问题的
+	switch(attr){
+		case "height":
+		case "width":
+		case "left":
+		case "top":
+			ele.style[attr]=val+"px";
+			break;
+		case "opacity":
+			ele.style.opacity=val;
+			ele.style.filter="alpha(opacity="+val*100+")";
+			break;
+		default:
+			ele.style[attr]=val;	
+	}
+}
+alert(getCss(div1,"opacity"));
+alert(getCss(div2,"opacity"));
+var ele=document.getElementById("div1");
+//淡入淡出的动画
+function fadeInOut(ele,target,duration,fnCallback){//target是指不透明度的终点值
+	duration = duration||600;
+	var begin=getCss(ele,"opacity");
+	var change=target-begin;
+	var times=0;
+	var interval=15;
+	clearInterval(ele.timer);
+	//开始清除积累的clearInterval(timer);
+	function step(){
+		//clearInterval(ele.timer);//写在这儿，一次也执行不了
+		times+=interval;
+		if(times<duration){
+			var val=times/duration*change+begin;
+			setCss(ele,"opacity",val);
+		}else{
+			setCss(ele,"opacity",target);
+			window.clearInterval(ele.timer);
+			
+			if(typeof fnCallback=="function"){
+				fnCallback.call(ele);
+			}
+			
+		}
+	}
+	ele.timer=window.setInterval(step,interval);
+}
+
+var oDivs=document.getElementsByTagName("div");
+for(var i=0;i<oDivs.length;i++){
+	oDivs.item(i).onclick=function(){
+		fadeInOut(this,0.1,1800);
+	}
+}
+
+</script>

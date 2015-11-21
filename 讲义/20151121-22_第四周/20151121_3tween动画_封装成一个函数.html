@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; left:150px; top:0;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+animate(ele,{left:850,top:500},1500,['zfLinear','easeIn'],callback)
+//动画名（运动的元素,{运动的方向:目地的},完成此运动的总时间,[动画类型],回调方法)
+</body>
+</html>
+<script>
+//按时间比例的动画，以数学公式为算法的动画
+//animate(ele,{left:850},1500,['zfLinear','easeIn'],callback)
+//运动的距离和目地的不是一样
+
+//起点是150
+//终点是850
+//时间1000ms
+// 当前消耗的时间/规定的总时间=当前走过的距离/总距离
+
+//比如时间消耗了500ms,
+//500/1000=当前走过的距离/总距离
+//明确：动画是不断的在计算当前的位置
+//还要明确：当前走过的距离，不一定是当前位置
+//当前的位置=走过的距离+起点，比如说，现在的时间已经消耗了500ms，总距离是850（终点）-150（起点），既然时间消耗了一半，那距离也要运动一半，就是（850-150)/2,而当前到达的位置，还要加上起点：(850-150)/2+150,其实就是350+150
+//当前走过的距离=（当前消耗的时间/规定的总时间）*总距离
+//当前的位置 = 当前走过的距离+起点
+//当前的位置=（当前消耗的时间/规定的总时间）*总距离+起点
+
+//规定每10ms走一步，也就是说用定时器每隔10ms驱动一次这个动画
+function getCss(ele,attr){
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele,null)[attr]);
+	}else{
+		return parseFloat(ele.currentStyle[attr]);
+	}
+}
+var ele=document.getElementById("div1");
+function animate(ele,attr,target,duration){
+	var begin=getCss(ele,attr);//起点就是当前元素的坐标（CSS规定的静态坐标）
+	var change=target-begin;
+	var times=0;
+	var interval=15;
+	
+	function step(){
+		times+=interval;
+		if(times<duration){
+			ele.style[attr]=times/duration*change+begin+"px";	
+		}else{
+			ele.style[attr]=target+"px";
+			window.clearInterval(timer);	
+		}
+	}
+	timer=window.setInterval(step,interval);
+}
+
+ele.onclick=function(){
+	animate(this,"height",850,1000);	
+}
+
+</script>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        #div1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin: 50px auto;
+            cursor: pointer;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    var getCss = function (ele, attr) {
+        return "getComputedStyle" in window ? window.getComputedStyle(ele, null)[attr] : ele.currentStyle[attr];
+    };
+    var fadeInOut = function (ele, target, duration, fnCallback) {
+        var begin = getCss(ele, "opacity");
+        var change = target - begin;
+        duration = duration || 600;
+        var times = 0;
+        var interval = 15;
+        window.clearInterval(oDiv.timer);
+        function step() {
+            times += interval;
+            if (times < duration) {
+                ele.style.opacity = times / duration * change + begin;
+            }
+            else {
+                ele.style.opacity = target;
+                window.clearInterval(oDiv.timer);
+                typeof fnCallback ? fnCallback() : null;
+            }
+        }
+         oDiv.timer = window.setInterval(step, interval);
+    };
+    var fadeIn = function () {
+        fadeInOut(oDiv, 1, 3000, fadeOut);
+    };
+    var fadeOut = function () {
+        fadeInOut(oDiv, 0, 3000, fadeIn);
+    };
+    document.documentElement.onclick =fadeIn;
+</script>
+</body>
+</html>

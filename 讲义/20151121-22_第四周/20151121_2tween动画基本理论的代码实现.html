@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; left:150px; top:0;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+animate(ele,{left:850,top:500},1500,['zfLinear','easeIn'],callback)
+//动画名（运动的元素,{运动的方向:目地的},完成此运动的总时间,[动画类型],回调方法)
+</body>
+</html>
+<script>
+//按时间比例的动画，以数学公式为算法的动画
+//animate(ele,{left:850},1500,['zfLinear','easeIn'],callback)
+//运动的距离和目地的不是一样
+
+//起点是150
+//终点是850
+//时间1000ms
+// 当前消耗的时间/规定的总时间=当前走过的距离/总距离
+
+//比如时间消耗了500ms,
+//500/1000=当前走过的距离/总距离
+//明确：动画是不断的在计算当前的位置
+//还要明确：当前走过的距离，不一定是当前位置
+//当前的位置=走过的距离+起点，比如说，现在的时间已经消耗了500ms，总距离是850（终点）-150（起点），既然时间消耗了一半，那距离也要运动一半，就是（850-150)/2,而当前到达的位置，还要加上起点：(850-150)/2+150,其实就是350+150
+//当前走过的距离=（当前消耗的时间/规定的总时间）*总距离
+//当前的位置 = 当前走过的距离+起点
+//当前的位置=（当前消耗的时间/规定的总时间）*总距离+起点
+
+//规定每10ms走一步，也就是说用定时器每隔10ms驱动一次这个动画
+
+var ele=document.getElementById("div1");
+ele.style.left;//不断的给它赋值，每隔10ms赋值一次
+var times=0;//当前消耗的时间
+var duration=900;//ms，规定完成此动画的总时间
+var target=850;//终点
+var begin=150;//起点
+var change=target-begin;//需要走的距离
+var interval=15;//每走一步的间隔时间
+
+//把计算当前位置的算法，用一个函数来表示出来
+
+//加一个需求：当运动到终点之后，背景变为绿色
+function step(){
+	times+=interval;
+	if(times<duration){
+		ele.style.left=	times/duration*change+begin+"px";
+		//当前位置=消耗的时间/规定的总时间*总的距离+起点
+	}else{
+		ele.style.left=target+"px";//一但到了（或超过了）规定的总时间，则强值让其到达终点
+		clearInterval(timer);
+		ele.style.backgroundColor="green";
+	}
+}
+
+var timer=setInterval(step,interval);
+
+
+
+
+
+
+
+
+
+</script>

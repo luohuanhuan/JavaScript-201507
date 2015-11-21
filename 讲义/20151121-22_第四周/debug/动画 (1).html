@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body,div{
+            margin: 0;
+            padding: 0;
+            position: relative;
+
+        }
+        #div1{
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: black;
+            margin: 20px;
+            opacity:0;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<script type="text/javascript">
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr])
+        }
+        else{
+            ele.currentStyle[attr];
+        }
+    }
+   /* var ele=document.getElementById("div1");
+    function animate(ele,attr,target,duration){
+        var begin=getCss(ele,attr);
+        var change=target-begin;
+        var times=0;
+        var interval=15;
+        function step(){
+            times+=interval;
+            if(times<duration){
+                ele.style[attr]=times/duration*change+begin+"px";
+            }
+            else{
+                ele.style[attr]=target+"px";
+                window.clearInterval(timer);
+            }
+        }
+        var timer=window.setInterval(step,interval)
+
+    }
+    ele.onclick=function(){
+        animate(this,"width",850,1000)
+
+    }*/
+    var ele=document.getElementById("div1");
+    function fadeInOut(ele,attr,target,duration,fn){
+        duration=duration||600;
+        var begin=getCss(ele,attr);
+        var change=target-begin;
+        var times=0;
+        var interval=15;
+        clearInterval(ele.timer);
+        function step(){
+            times+=interval;
+            if(times<duration){
+                ele.style.opacity=times/duration*change+begin;
+            }
+            else{
+                ele.style.opacity=target;
+                window.clearInterval(timer);
+            }
+            if(typeof fn=="function"){
+                fn();
+            }
+        }
+         ele.timer=window.setInterval(step,interval);
+    }
+   /* document.documentElement.onclick=function(){
+        if(ele.style.opacity<0.5){fadeInOut(ele,"opacity",1,10000)}
+        else{fadeInOut(ele,"opacity",0,10000)}
+
+    };*/
+    function fadeIn(){
+        fadeInOut(ele,"opacity",1,10000,fadeOut)
+    }
+    function fadeOut(){
+        fadeInOut(ele,"opacity",0,10000,fadeIn)
+    }
+    document.documentElement.onclick=fadeIn;
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

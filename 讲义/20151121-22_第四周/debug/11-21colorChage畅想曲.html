@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>colorChange畅想曲</title>
+    <style>
+        html,body,div{
+            margin:0;
+            padding:0;
+        }
+        div{
+            width:100px;
+            height:100px;
+            background-color:lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>
+<script>
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr]);
+        }else{
+            return parseFloat(ele.currentStyle[attr]);
+        }
+    }
+    function fadeInOut(ele,target,duration,fnCallback){
+        var begin = getCss(ele,'opacity');
+        var times = 0;
+        var change = target-begin;
+        var interval = 10;
+        clearInterval(box.timer);
+        function run(){
+            times+=interval;
+            if(times<duration){
+                box.style.opacity=times/duration*change+begin;
+            }else{
+                box.style.opacity=target;
+                clearInterval(box.timer);
+                if(typeof fnCallback=='function'){
+                    fnCallback();
+                }
+            }
+        }
+        box.setInterval(run,interval);
+    }
+    function fadeIn(){
+        fadeInOut(box,1,2000,fadeOut);
+    }
+    function fadeOut(){
+        fadeInOut(box,0,2000,fadeIn);
+    }
+    document.documentElement.onclick=fadeOut;
+</script>

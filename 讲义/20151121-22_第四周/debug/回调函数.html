@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #div1{width:100px;height:100px;background:red;position:absolute;left:150px;top:0;
+            opacity:0;}
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+
+<script type="text/javascript">
+
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr]);
+        }else{
+            return parseFloat(ele.currentStyle[attr]);
+        }
+    }
+    var ele=document.getElementById(div1);
+    function fadeInOut(ele,target,duration){
+        duration=duration||600;
+        var times=0;
+        var begin=getCss(ele,"opacity");
+        var change=target-begin;
+        var interval=15;
+        clearInterval(ele.timer);
+        function step(){
+            times+=interval;
+           if(times<duration){
+               ele.style.opacity=times/duration*change+begin;
+           }else{
+               ele.style.opacity=target;
+               window.clearInterval(ele.timer);
+           }
+        }
+        ele.timer=window.setInterval(step,interval);
+    }
+    document.documentElement.onclick=function(){
+        if(getCss(ele,"opacity")<0.5){
+            fadeInOut(ele,1,1000);
+        }else{
+            fadeInOut(ele,0,1000);
+        }
+    }
+
+</script>
+
+
+</body>
+</html>

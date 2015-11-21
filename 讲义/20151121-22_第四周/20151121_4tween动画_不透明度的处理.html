@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; left:150px; top:0; opacity:0}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+animate(ele,{left:850,top:500},1500,['zfLinear','easeIn'],callback)
+//动画名（运动的元素,{运动的方向:目地的},完成此运动的总时间,[动画类型],回调方法)
+</body>
+</html>
+<script>
+//按时间比例的动画，以数学公式为算法的动画
+
+function getCss(ele,attr){
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele,null)[attr]);
+	}else{
+		return parseFloat(ele.currentStyle[attr]);
+	}
+}
+var ele=document.getElementById("div1");
+//淡入淡出的动画
+function fadeInOut(ele,target,duration){//target是指不透明度的终点值
+	duration = duration||600;
+	var begin=getCss(ele,"opacity");
+	var change=target-begin;
+	var times=0;
+	var interval=15;
+	clearInterval(ele.timer);
+	//开始清除积累的clearInterval(timer);
+	function step(){
+		//clearInterval(ele.timer);//写在这儿，一次也执行不了
+		times+=interval;
+		if(times<duration){
+			ele.style.opacity=times/duration*change+begin;
+		}else{
+			ele.style.opacity=target;//处理过界的问题
+			window.clearInterval(ele.timer);
+			//window.clearInterval(timer);
+		}
+	}
+	ele.timer=window.setInterval(step,interval);
+	//开始的时候，timer是个局部变量：
+	//var timer=window.setInterval(step,interval);
+
+}
+fadeInOut();//0---1000，淡入
+fadeInOut();//700 ,第二次触发，淡出
+document.documentElement.onclick=function(){
+	if(getCss(ele,"opacity")<0.5){
+		fadeInOut(ele,1,2800);
+	}else{
+		fadeInOut(ele,0,2800);
+	}
+}
+//写动画的时候要注意一定要考虑的几个问题：
+//1、要有停止的条件
+//2、过界如果判断和处理（超过了边界或离边界还差一点）
+//3、动画积累的问题，一个元素同时被多次执行这个动画
+	//拿这个div的淡入来说(第一次执行fadeInOut)，它从0变化到了0.7，你又点了一下网页，又开始执行淡出了(第二次执行fadeInOut)，这样两个相反的效果作用在同一个元素上，就冲突了。
+	//怎么解决？：在第二个动画执行之前，把原来的动画清除掉
+	//在fadeInOut方法的开始部分加一个clearInterval(timer)能不能解决这个问题呢？
+	//淡入的时间是执行了一次fadeInOut,淡出的时候又执行了一次fadeInOut,这两次执行不是一个作用域，也就是第二次fadeInOut执行的时候，它是访问不到第一次执行的fadeInOut作用域里的timer变量的，所以这个清除动画积累的方式不起作用
+	//要想让清除积累起作用，应该在跨作用域的时候，也可以访问到这个定时器变量，
+//document.body
+
+function fn(){
+	var n=9;
+	n++;
+		
+}
+fn();fn();
+</script>

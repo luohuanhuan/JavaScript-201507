@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; left:150px; top:0;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+function getCss(ele,attr){
+	if(window.getComputedStyle){
+		return parseFloat(getComputedStyle(ele,null)[attr]);
+	}else{//只有IE才会执行这里
+		//专门为处理IE的opacity写代码
+		//filter:alpha(opacity=50)
+		if(attr=="opacity"){//说明这是在IE中获得opacity的值，则按以下方式去处理
+			var val=ele.currentStyle.filter;
+		
+			var reg=/alpha\(opacity=(\d+)\)/;
+			if(reg.test(val)){//如果分解出来的滤镜样式满足这个正则的匹配，则把第一个分组的内容解析出来
+				return RegExp.$1/100;//IE的opacity值和标准浏览器差100倍，按标准浏览器的方式返回此值，所以要除以100	
+			}else{
+				return 1;	
+			}
+		}else{
+			return parseFloat(ele.currentStyle[attr]);
+		}
+	}
+}
+function setCss(ele,attr,val){
+	switch(attr){
+		case "height":
+		case "width":
+		case "left":
+		case "top":
+			ele.style[attr]=val+"px";
+			break;
+		case "opacity":
+			ele.style.opacity=val;
+			ele.style.filter="alpha(opacity="+val*100+")";
+			break;
+		default:
+			ele.style[attr]=val;	
+	}
+}
+
+function animate(ele,oTarget,duration,callback){
+	//oTarget:{width:500,height:400,top:444,left:700,opacity:0.2}
+	
+	var oBegin={};//放一组begin
+	var oChange={};//放一组change
+	for(var attr in oTarget){
+		var begin=getCss(ele,attr);
+		var target=oTarget[attr];
+		var change=target-begin;
+		oBegin[attr]=begin;
+		oChange[attr]=change;
+	}
+	var times=0;
+	var interval=15;
+	window.clearInterval(ele.timer);
+	
+	function step(){
+		times+=interval;
+		if(times<duration){
+			for(var attr in oChange){
+				var begin=oBegin[attr];
+				var change=oChange[attr];
+				var val=times/duration*change+begin;
+				setCss(ele,attr,val);
+			}
+		}else{
+			for(var attr in oTarget){
+				var target=oTarget[attr];
+				setCss(ele,attr,target);
+			}
+			
+			window.clearInterval(ele.timer);
+			if(typeof callback == "function"){
+				callback.call(ele);	
+			}
+		}
+	}
+	ele.timer=window.setInterval(step,interval);
+}
+var obj={width:500,height:400,top:444,left:0,opacity:0.2}
+var obj={left:0}
+div1.onclick=function(){
+	animate(this,obj,1000);	
+}
+</script>

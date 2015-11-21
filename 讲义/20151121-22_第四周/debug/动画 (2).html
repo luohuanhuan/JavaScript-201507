@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #div1{ width:100px; height:100px; background:red; position:absolute; left:150px; top:0; opacity:0}
+    </style>
+</head>
+<body>
+ <div id="div1"></div>
+</body>
+</html>
+<script>
+    //Tween算法
+    //animate(ele,{left:850},1500,['zfLinear'],'easeIn')
+    //动画名(运动的元素， {运动的方向：目的地},完成此运动的总时间，[动画类],回调函数)
+
+    //考试题
+//    var count = 0;
+//    window.setTimeout(function(){
+//        count++;
+//    },0)
+//
+//    console.log(count);
+
+//    var target=500;
+//
+//    var interval=15;   //google浏览器用15比较流畅，IE用13流畅
+//    //如果不写，按浏览器最高性能计算 大约在6-8
+//
+//    window.clearTimeout(timer);
+//    window.clearInterval(timer);  //这里用clearInterval 和 clearTimeout 一样写哪个都行
+//
+//    var timer=window.setInterval(step,interval);
+//
+//    // 这里用body的话，如果body里没写内容，则body高度为0，所以用以下documentElement来更准确
+//    document.documentElement.onclick=function(){
+//
+//    }
+
+//    Closure：闭包
+
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr]);
+        }else{
+            return parseFloat(ele.currentStyle[attr]);
+        }
+    }
+
+    var ele = document.getElementById("div1");
+    function fadeInOut(ele,target,duration,fnCallback){//target是指不透明度的终点值
+        duration = duration||600;
+        var begin=getCss(ele,"opacity");
+        var change=target-begin;
+        var times=0;
+        var interval=15;
+        clearInterval(ele.timer);
+        //开始清除积累的clearInterval(timer);
+        function step(){
+            //clearInterval(ele.timer);//写在这儿，一次也执行不了
+            times+=interval;
+            if(times<duration){
+                ele.style.opacity=times/duration*change+begin;
+            }else{
+                ele.style.opacity=target;//处理过界的问题
+                window.clearInterval(ele.timer);
+                //window.clearInterval(timer);
+                if(typeof fnCallback == "function"){
+                    fnCallback();  //这里怎么传参数
+                }
+            }
+        }
+        ele.timer=window.setInterval(step,interval);
+        //开始的时候，timer是个局部变量：
+        //var timer=window.setInterval(step,interval);
+    }
+
+    function fadeIn(name){
+        console.log('fadeIn=' + name);
+        fadeInOut(ele,0,2000,fadeOut);
+    }
+
+    function fadeOut(name){
+        console.log('fadeOut=' + name);
+        fadeInOut(ele,1,2000,fadeIn(name));
+    }
+    //1.该怎么传参数，要这样就会自动执行，而不是点击后执行
+    //document.documentElement.onclick = fadeIn("zhangsan");
+
+    document.documentElement.onclick = function(){
+        fadeIn("zhangsan");
+    }
+
+
+    //2.如果改成下面匿名方法会出错，fadeIn找不到
+//    document.documentElement.onclick = function fadeIn(){
+//        fadeOut(ele,0,2800,fadeOut);
+//    }
+
+
+//            =function(){
+//        if(getCss(ele,"opacity")<0.5){
+//            fadeInOut(ele,1,2800);
+//        }else{
+//            fadeInOut(ele,0,2800);
+//        }
+//    }
+
+</script>
+
+<!--//动画网址-->
+<!--http://www.zhufengpeixun.cn/tween/-->
