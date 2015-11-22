@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:500px; height:240px; margin:50px auto; position:relative; overflow:hidden; }
+#inner{ width:2500px; height:240px; position:absolute; left:0px; top:0;  }
+#inner div{ float:left; width:500px; height:240px; line-height:240px; font-size:100px; text-align:center; background:red; font-weight:bold;}
+#btn{ position:absolute; right:30px; bottom:0px; list-style:none; padding:0; width:260px; height:50px; }
+#btn li{ width:30px; height:30px; margin:10px; float:left; background:orange; color:white; font-size:16px; font-weight:bold; text-align:center; line-height:30px; border-radius:50%; cursor:pointer; -webkit-user-select:none;}
+#btn li.current{ background:darkBlue; color:red;}
+</style>
+</head>
+
+<body>
+<div id="outer">
+	<div id="inner">
+    	<div>一</div>
+        <div style="background:green;">二</div>
+        <div style="background:blue;">三</div>
+        <div style="background:pink;">四</div>
+        <div style="background:black; color:white;">五</div>
+    </div>
+    <ul id="btn"><li class="current">1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>
+
+</div>
+</body>
+</html>
+<script src="../20151115_第三周周末2/dom140326.js"></script>
+<script src="tween20151122.js"></script>
+<script>
+var oInner=document.getElementById("inner");
+var oLis=document.getElementById("btn").getElementsByTagName("li");
+for(var i=0;i<oLis.length;i++){
+	oLis.item(i).i=i;
+	oLis.item(i).onclick=function(){
+		animate(oInner,{left:-this.i*500},700,3);
+		selectCurrent(this);
+		clearInterval(autoTimer);//点击的时候，把自动执行的清除掉
+		autoTimer=window.setInterval(autoRight,2000);//然后过三秒再自动执行
+		step=this.i;//为了再自动执行的时候，步伐相同（同步）；
+	}
+}
+
+function selectCurrent(ele){
+		DOM.addClass(ele,"current");
+		var siblings=DOM.siblings(ele);
+		for(var i=0;i<siblings.length;i++){
+			DOM.removeClass(siblings[i],"current");
+		}
+}
+
+//用JS动态的创建DOM元素，实现动画之前的初始化
+
+var oFirstDiv=oInner.getElementsByTagName("div").item(0);
+oInner.appendChild(oFirstDiv.cloneNode(true));
+oInner.style.width=oInner.clientWidth+oFirstDiv.clientWidth+"px";
+
+var step=0;
+function autoRight(){
+	step--;
+	if(step<0){
+		oInner.style.left=-2500+"px";
+		step=4;//就是表示：从索引5往索引4上走	
+	}
+	
+	animate(oInner,{left:-step*500},600);
+	
+}
+var autoTimer=window.setInterval(autoRight,2100);
+
+
+
+</script>

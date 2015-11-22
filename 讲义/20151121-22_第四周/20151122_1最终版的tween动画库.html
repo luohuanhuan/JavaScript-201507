@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; left:150px; top:0;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="tween20151122.js"></script>
+<script>
+var obj={left:900}
+div1.onclick=function(){
+	//animate(this,obj,1000,5);	
+	animate(this,obj,1000,function(){
+		this.style.backgroundColor="green";	
+	});
+}
+
+/*animate(ele,{left:600},1500,['zfBounce','easeOut'],callback)
+zhufengEffect['zfBounce']['easeOut'];
+zhufengEffect.zfBounce.easeOut*/
+</script>
+
+
+

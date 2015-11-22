@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+img{ display:block; border:none; margin:0 auto;}
+#content{ width:1000px; height:300px; margin:10px auto; background:#9FC; position:relative;}
+#content div{ background:url(banner1.jpg); position:absolute; }
+</style>
+</head>
+
+<body>
+<img src="banner1.jpg" width="1000" height="300">
+<div id="content">
+</div>
+
+
+</body>
+</html>
+<script>
+var content=document.getElementById("content");
+var rows=3;
+var cols=10;
+var w=content.offsetWidth/cols;//每一个小盒子的宽度
+var h=content.offsetHeight/rows;//每一个小盒子的高度
+for(var i=0;i<rows*cols;i++){
+	var ele=document.createElement("div");
+	with(ele.style){
+			width=w+"px";
+			height=h+"px";
+			var t=Math.floor(i/cols)*h;
+			var l=i%cols*w;
+			top=t+"px";
+			left=l+"px";
+			//求每一个盒子的行号和列号
+			//它们top值是行号*高度
+			//它们的left值是列号*宽度
+			backgroundPosition=-l+"px -"+t+"px";
+	}
+	content.appendChild(ele);
+}
+
+/*
+	求每一个盒子的行号和列号
+		它们top值是行号*高度
+		它们的left值是列号*宽度
+	0 , 1, 2, 3, 4, 5, 6, 7, 8, 9  Math.floor(i/cols);
+	10,11,12,13,14,15,16,17,18,19
+	20,21,22,23,24,25,26,27,28,29
+	取每个盒子的列号算法是：i%cols（当前盒子的索引和总列数取模）
+	求行号的算法是：当前例子的索引除以总列数，然后向下取整
+
+
+*/
+
+
+
+
+</script>
