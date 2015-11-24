@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<div >DIV</div>
+<div >DIV</div>
+<div >DIV</div>
+<div >DIV</div>
+<div >DIV</div>
+</body>
+</html>
+<script>
+//如何自己构造一个类数组（其实也是对象）
+//学习链式写法的实现原理
+//this在类的方法里是指当前实例
+//构造函数的用途
+//复习一下prototype
+//隐式遍历是怎么实现的
+//eq方法和get方法的区别和实现，就是jQuery对象的和JS原生对象的区别
+
+
+function Query(selector){//CSS选择器风格的字符串
+	var regId=/^#([a-z_]\w*)$/i;
+	var regClass=/^\.([a-z]\w*)$/i;
+	var regTagName=/^[a-z]\w*$/i;
+	if(regId.test(selector)){
+		var ele=document.getElementById(RegExp.$1);
+		this[0]=ele;
+		this.length=1;
+	}else if(regClass.test(selector)){
+		var eles=document.getElementsByClassName(RegExp.$1);
+		for(var i=0;i<eles.length;i++){
+			this[i]=eles[i];	
+		}
+		this.length=eles.length;
+	}else if(regTagName.test(selector)){
+		var eles=document.getElementsByTagName(selector);
+		for(var i=0;i<eles.length;i++){
+			this[i]=eles[i];	
+		}
+		this.length=eles.length;
+	}
+	//new Query;
+	
+}
+
+Query.prototype.width=function(val){//设置当前实例中保存的元素的宽度的
+	for(var i=0;i<this.length;i++){
+		this[i].style.width=val+"px";	
+	}
+	return this;//这是链式写法的关键
+}
+Query.prototype.height=function(val){
+	for(var i=0;i<this.length;i++){
+		this[i].style.height=val+"px";	
+	}
+	return this;//这是链式写法的关键
+}
+Query.prototype.bgColor=function(val){
+	for(var i=0;i<this.length;i++){
+		this[i].style.backgroundColor=val;	
+	}
+	return this;//这是链式写法的关键
+}
+Query.prototype.eq=function(n){//返回一个新的Query对象，它包含原来的对象中指定的第n个元素
+	var obj=new Query;//其实是为保证再返回的对象还是Query类对象。如果不是Query类的对象那这个链就断了
+	obj[0]=this[n];
+	obj.length=1;
+	return obj;
+
+	
+}
+Query.prototype.get=function(n){//返回的是JS原生对象（DOM对象）
+	//return this[n];
+	var obj=this[n];//10
+
+	if(typeof obj == "undefined"){
+		//这样做是只为人品问题，明确null和undefined的区别。直接用78行这样的方式也没有问题。
+		return null;	
+	}else{
+		return obj;
+	}
+	
+}
+var obj=new Query("div");
+obj.bgColor("red").height(100).width(100).eq(2).bgColor("yellow")
+function $(selector){
+	return new Query(selector);	
+}
+$("div").width(130).height(120).bgColor("green").eq(4).width(300).bgColor("blue");
+
+(3).plus(5).reduce(2);//如何实现plus和reduce方法，使其最终输出的结果是6
+
+//string上的方法，为什么只能返回一个新的字符串，而不能修改原来的字符
+//值类型的存值特点和包装类
+//既然“万物皆对象”，那为什么还有值类型？值类型和对象类型在内存管理上有什么 区别呢？
+</script>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰轮播图</title>
+    <style type="text/css">
+        html, body, div, ul, li, img, a {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+            font-family: "微软雅黑";
+            -webkit-user-select: none;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        img {
+            border: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <!--banner.css仅包含了轮播图区域的样式-->
+    <link type="text/css" rel="stylesheet" href="css/banner.css"/>
+</head>
+<body>
+<div class="banner" id="banner">
+    <div class="bannerImg"></div>
+    <div class="bannerTipBg"></div>
+    <ul class="bannerTip"></ul>
+    <!--javascript:;阻止a标签的默认行为-->
+    <a href="javascript:;" class="bannerLeft" id="bannerLeft"></a>
+    <a href="javascript:;" class="bannerRight" id="bannerRight"></a>
+</div>
+<script type="text/javascript" src="js/banner.js"></script>
+</body>
+</html>
