@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>事件委托</title>
+</head>
+<body>
+<script type="text/javascript">
+    //事件委托：利用了事件冒泡传播的机制,我们给大容器绑定事件,那么容器中的所有元素一但触发了对应的行为,我们绑定的方法都会执行,然后我们根据事件源来进行不一样的处理
+    //例如：#box 有三个按钮(#btn1,#btn2,#btn3),都需要点击操作,我们用事件委托如何的处理?
+    //    #box.onclick=function(e){
+    //        e=e||window.event;
+    //        var tar= e.target|| e.srcElement;
+    //        if(tar.id==="btn1"){
+    //
+    //        }else if(tar.id==="btn2"){
+    //
+    //        }
+    //    };
+</script>
+</body>
+</html>

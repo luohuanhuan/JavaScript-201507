@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1">有本事点我啊~~</div>
+
+<script type="text/javascript">
+    //EventTarget:这个类中定义了我们DOM2级事件使用的方法
+    //addEventListener:绑定一个事件
+    //removeEventListener:移除一个事件
+    //DOM0定义在元素的私有的属性上,DOM2定义在所属类EventTarget上
+
+    //DOM2的优势:
+    //1)对于事件的传播机制(捕获+冒泡),DOM2既可以控制捕获阶段也可以控制冒泡阶段,而DOM0只能操作冒泡阶段
+    //2)DOM2可以给一个元素的同一个事件类型绑定多个不同的方法,这些方法都可以起到自己对应的作用;DOM0只能绑定一个方法,绑定的后面的方法会把前面的覆盖掉;
+    //3)DOM0里面的事件行为DOM2都可以用,但是DOM2中新增加了一些新的行为:DOMContentLoaded(当页面中的HTML结构加载完成) ->window.onload当页面中的HTML结构、文字、图片等所有资源都加载完成
+
+    //思考题：window.onload 和 $(document).ready()的区别是什么?
+    //两个都可以在HTML加载完成后在执行对应的JS,window.onload是等到页面中的结构、文字、图片等资源都加载完成才会执行,而且一个页面只能使用一次;而$(document).ready()只要结构加载完成就会执行,并且一个页面可以使用多次
+    //为什么会这样?
+    //主要取决于我们的DOM0和DOM2级事件的区别了
+    //window.onload=function(){} 采用的是DOM0绑定,所以只能绑定一次,后面绑定的会把前面的覆盖掉;而且window.onload本身就是等所有资源都加载完成才执行;
+    //$(document).ready()是jQuery封装的方法,此方法在实现的时候采用的是DOM2事件绑定;所以可以绑定使用多次;而且绑定的是DOMContentLoaded这个事件,所以只要结构加载完成就会执行JS->
+    //document.addEventListener("DOMContentLoaded",function(){},false);
+    //document.addEventListener("DOMContentLoaded",function(){},false);
+
+    var oDiv = document.getElementById("div1");
+
+    //DOM2在移除的时候需要和绑定时候的三个参数保持一致,尤其是函数对应的堆内存的地址也要一致才可以,所以我们绑定的时候,一般都绑定的是实名函数
+    function fn1(e) {
+        console.log(this);
+    }
+    function fn2() {
+        console.log(2);
+    }
+    function fn3() {
+        console.log(3);
+    }
+    function fn4() {
+        console.log(4);
+    }
+    function fn5() {
+        console.log(5);
+    }
+    function fn6() {
+        console.log(6);
+    }
+    function fn7() {
+        console.log(7);
+    }
+    function fn8() {
+        console.log(8);
+    }
+    function fn9() {
+        console.log(9);
+    }
+    function fn10() {
+        console.log(10);
+    }
+    function fn11() {
+        console.log(11);
+    }
+    function fn12() {
+        console.log(12);
+    }
+
+    //[标准浏览器下]
+
+    //1、事件池和执行的顺序
+    //给一个元素绑定的所有的方法都在"事件池"/"事件队列"中呢,而且按照先后绑定的顺序进行排列
+    //当我们触发这个行为的时候,回到事件池中把所有和这个行为有关的时间按照排列的顺序依次的执行
+
+    //2、this
+    //和DOM0一样,给我们元素的某个行为绑定方法,当行为触发的时候首先会执行对应的方法,并且会给方法传递一个事件对象,并且方法中的this是当前的元素
+
+    //3、关于重复的问题
+    // 我们可以给一个元素(oDiv)的同一个事件行为(click)绑定多个不同的方法(fn1~fn12)
+    // 但是不能给同一个行为多次绑定同一个方法,比如 oDiv的click绑定了两次fn12,也只能执行一次
+
+    //[IE6~8下不兼容addEventListener,需要使用attachEvent]
+    //1)但是不支持第三个控制传播阶段的参数,默认只能控制冒泡阶段(和DOM0一样)
+    //2)事件行为需要向DOM0一样加on
+    //而且还存在相当大的兼容问题
+    //1)执行的时候,顺序是混乱的,和绑定时候的顺序半毛钱关系都没有 ->"顺序问题"
+    //2)绑定方法中的this是window而不是当前的元素 ->"this问题"
+    //3)并且可以给一个元素的同一个行为多次绑定同一个方法 ->"重复问题"
+
+    oDiv.attachEvent("onclick", fn10);
+    oDiv.attachEvent("onclick", fn11);
+    oDiv.attachEvent("onclick", fn12);
+    oDiv.attachEvent("onclick", fn10);
+    oDiv.attachEvent("onclick", fn11);
+    oDiv.attachEvent("onclick", fn12);
+    oDiv.attachEvent("onclick", fn1);
+    oDiv.attachEvent("onclick", fn2);
+    oDiv.attachEvent("onclick", fn3);
+    oDiv.attachEvent("onclick", fn4);
+    oDiv.attachEvent("onclick", fn5);
+    oDiv.attachEvent("onclick", fn6);
+    oDiv.attachEvent("onclick", fn7);
+    oDiv.attachEvent("onclick", fn8);
+    oDiv.attachEvent("onclick", fn9);
+
+
+    //    oDiv.attachEvent("onclick", fn9);//->绑定
+    //    oDiv.detachEvent("onclick", fn9);//->移除
+
+    //    oDiv.addEventListener("click",fn9,false);//->绑定
+    //    oDiv.removeEventListener("click",fn9,false);//->移除
+</script>
+</body>
+</html>

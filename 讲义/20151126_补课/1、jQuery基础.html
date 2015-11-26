@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #div1 {
+            width: 300px;
+            height: 300px;
+            background: #008000;
+        }
+    </style>
+</head>
+<body>
+<input type="button" value="操作"/>
+
+<div id="div1"></div>
+
+
+<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //1、jQuery的版本
+    //jQuery-1.xxx 基本上做PC专用的 兼容个所有的浏览器 推荐大家使用的版本号:1.9、1.8、1.11
+    //jQuery-2.xxx 不兼容了IE6~8,但是文件还是挺大的,移动端现在也基本不用它->Zepto.js在移动端替换jQuery
+    //jQuery-min jQuery常用方法的精简版
+
+    //2、jQuery API 手册
+    //讲义中“jQueryAPI-1.4.1.chm”回去后可以参考一下
+    //在线的手册(1.11.3) http://jquery.cuishifeng.cn/
+
+    //3、买书
+    //"锋利的jQuery第二版"
+
+    //4、fork ->jQuery GitHub的托管源码
+    // https://github.com/jquery/jquery.git
+    // 自己没事的时候就看两行
+
+
+    //关于jQuery的核心
+    //1、jQuery采用的是构造函数模式封装的框架,jQuery是一个类
+    //    var jQuery = function (selector, context) {
+    //        return new jQuery.fn.init(selector, context);
+    //    };
+
+    //    window.jQuery = window.$ = jQuery; ->$相当于jQuery的一个别名
+    //    $("#div1") jQuery("#div1")
+
+    //2、$() ->jQuery的选择器 ->其实就是创建jQuery这个类的一个实例 ->通过选择器获取的就是jQuery的一个实例->"jQuery对象"
+
+    //"作为一个类",它的实例具有私有/公有的属性和方法
+    //[私有的属性]
+    //length:通过选择器获取元素的个数 ->公有的方法size()和这个的意思一样
+    //$("div").length
+    //$("div").size()
+    //selector:我们选择器中第一个传递进去的参数值->jQuery的选择器类型/内容
+    //context:上下文,限定获取的范围->我们选择器第二个传递进来的参数,不传默认是document
+
+    //[公有的方法]
+    //属性:
+    //attr([name],[value]) attr([name]) ->通过setAttribute来实现的
+    //prop 也是设置/获取属性,一般它是用来操作内置的属性的(尤其是操作表单元素),attr一般是用来操作自定义属性的
+
+    //CSS:
+    //offset获取的是元素距离body的偏移->{top:xxx,left:xxx}
+    //position获取的是距离父亲元素(parentNode)的偏移
+
+    //文档处理
+
+    //筛选(在选择器获取的所有的元素集合中使用特殊的方法来筛选我们需要的具体的元素,例如:$("div").hasClass("move") 在所有div中把具有move这个样式的获取到)
+    //children 子代筛选 $("#box").children("div") 获取#box下儿子辈分的div
+    //find 后代筛选 $("#box").find("div") 获取#box下子子孙孙辈分的div
+    //filter 同级筛选 $("p").filter(".selected") 在获取的一堆集合中把具有.selected这个样式的筛选出来
+
+    //效果(动画)
+    //    $("input:button:first").click(function () {
+    //        //$("#div1").slideToggle(1000);
+    //        $("#div1").animate({height: 0, opacity: 0}, 1000);
+    //    });
+
+    //    $("input:button:first").click(function () {
+    //        $("#div1").stop().slideToggle(1000);
+    //        //.stop结束前面所有正在运行的动画
+    //    });
+
+    //事件 click、mouseover... / on("click",[function]) / bind("click",[function]) / live("click",[function]) ...
+
+
+    //"作为一个普通的对象"
+    //Ajax
+    //$.ajax() -> jQuery.ajax()
+
+    //常用的工具
+    //each
+    //1)定义在类的原型上的公有的方法,遍历jQuery对象集合的 -> $("div").each(function(index,item){});
+    //2)另外一个是循环数组的 $.each(ary,function(index,item){console.log(item)})
+
+    //核心
+    //把它当做对象扩展了一个aa的方法 -> 完善类库
+    //    $.extend({
+    //        aa: function () {
+    //
+    //        }
+    //    });
+    //    $.aa();
+
+    //在jQuery原型上扩展的公有的方法 ->编写jQuery插件
+    //    $.fn.extend({
+    //        bb: function () {
+    //
+    //        }
+    //    });
+    //    $().bb();
+
+    //类库共存,除了jQuery以外我们还引入了一个使用$的类库
+    //把$这个名字的使用权转让给别人,我以后不用了,j是我们给它起的新的名字,以后使用的话都统一用j
+    //    var j = jQuery.noConflict();
+    //    console.log(j());
+</script>
+</body>
+</html>

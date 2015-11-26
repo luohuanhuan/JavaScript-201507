@@ -236,7 +236,7 @@ var zhufengEffect = {
 };
 
 var animate = function (curEle, oTarget, duration, effect, callBack) {
-    
+
     //初始化传递进来的参数值,主要处理的是动画的方式
     var fnEffect = zhufengEffect.Expo.easeOut;
     if (typeof effect === "number") {
@@ -382,12 +382,9 @@ var animate = function (curEle, oTarget, duration, effect, callBack) {
     for (var i = 0; i < bannerTipList.length; i++) {
         bannerTipList[i].index = i;
         bannerTipList[i].onclick = function () {
-            window.clearInterval(bannerImg.autoTimer);
             setTip(this.index);
             step = this.index + 1;
-            animate(bannerImg, {left: -step * bannerW}, 500, 1, function () {
-                bannerImg.autoTimer = window.setInterval(autoMove, 3000);
-            });
+            animate(bannerImg, {left: -step * bannerW}, 500, 1);
         };
     }
 
@@ -403,7 +400,7 @@ var animate = function (curEle, oTarget, duration, effect, callBack) {
     };
 
     bannerRight.onclick = autoMove;
-    bannerLeft.onclick = function () {
+    bannerLeft.onclick = function(){
         step--;
         if (step < 0) {
             setCss(bannerImg, "left", -(count - 2) * bannerW);
