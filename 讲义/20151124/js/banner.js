@@ -309,7 +309,7 @@ var animate = function (curEle, oTarget, duration, effect, callBack) {
     var bannerRight = document.getElementById("bannerRight");
 
     //计算当前bannerImg的宽度和位置
-    var bannerW = banner.clientWidth, totalW = (dataAry.length + 2) * bannerW, count = dataAry.length + 2;
+       var bannerW = banner.clientWidth, totalW = (dataAry.length + 2) * bannerW, count = dataAry.length + 2;
     setGroupCss(bannerImg, {
         width: totalW,
         left: -bannerW
