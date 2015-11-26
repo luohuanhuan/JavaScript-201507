@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>京东放大镜</title>
+    <style type="text/css">
+        body, div, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+        }
+
+        .box, .boxDec {
+            float: left;
+            margin: 20px;
+            width: 350px;
+            height: 350px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+
+        .box img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .boxDec {
+            display: none;
+            position: relative;
+        }
+
+        .boxDec img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+        }
+
+        .box {
+            position: relative;
+        }
+
+        #mark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 175px;
+            height: 175px;
+            background: #000;
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box">
+    <img src="img/iphone.jpg"/>
+</div>
+<div class="boxDec" id="boxDec"><img src="img/iphone_big.jpg"/></div>
+
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    var boxDec = document.getElementById("boxDec");
+    var boxDecImg = boxDec.getElementsByTagName("img")[0];
+
+    //1、鼠标进入#box创建mark,鼠标在mark层的中间,然后跟着鼠标移动,并且不能超出#box的区域,鼠标离开#mark消失
+    var boxL = box.offsetLeft + box.clientLeft;
+    var boxT = box.offsetTop + box.clientTop;
+    var setPosition = function (e, curEle) {
+        e = e || window.event;
+
+        //1)计算我们鼠标在中心位置时候的top/left
+        var top = e.clientY - boxT - (curEle.offsetHeight / 2), left = e.clientX - boxL - (curEle.offsetWidth / 2);
+
+        //2)边界判断:左边界(left=0) 上边界(top=0) 右边界(left=box.clientWidth-curEle.clientWidth) 下边界(top=box.clientHeight-curEle.clientHeight)
+        var rightMax = box.clientWidth - curEle.clientWidth, bottomMax = box.clientHeight - curEle.clientHeight;
+        if (left <= 0) {
+            curEle.style.left = 0;
+            boxDecImg.style.left = 0;
+        } else if (left >= rightMax) {
+            curEle.style.left = rightMax + "px";
+            boxDecImg.style.left = -(rightMax * 2) + "px";
+        } else {
+            curEle.style.left = left + "px";
+            boxDecImg.style.left = -(left * 2) + "px";
+        }
+
+        if (top <= 0) {
+            curEle.style.top = 0;
+            boxDecImg.style.top = 0;
+        } else if (top >= bottomMax) {
+            curEle.style.top = bottomMax + "px";
+            boxDecImg.style.top = -(bottomMax * 2) + "px";
+        } else {
+            curEle.style.top = top + "px";
+            boxDecImg.style.top = -(top * 2) + "px";
+        }
+    };
+
+    box.onmouseenter = function (e) {
+        var mark = document.getElementById("mark");
+        if (!mark) {
+            mark = document.createElement("div");
+            mark.id = "mark";
+            this.appendChild(mark);
+        }
+        setPosition(e, mark);
+        boxDec.style.display = "block";
+    };
+
+    box.onmousemove = function (e) {
+        var mark = document.getElementById("mark");
+        if (mark) {
+            setPosition(e, mark);
+        }
+    };
+
+    box.onmouseleave = function (e) {
+        var mark = document.getElementById("mark");
+        if (mark) {
+            this.removeChild(mark);
+        }
+        boxDec.style.display = "none";
+    };
+</script>
+</body>
+</html>

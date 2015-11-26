@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            margin: 100px auto;
+            width: 200px;
+            height: 200px;
+            background: #ffeedd;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="div1">有本事点我啊~~</div>
+
+<script type="text/javascript">
+    //事件：
+    //1)事件本身->元素的某一个行为(onclick、onmouseover(onmouseenter)、onmouseout(onmouseleave)、onmousedown、onmouseup、onmousemove、onmousewheel、表单：onblur、onfocus、onkeydown、onkeyup...)
+    //2)事件绑定->给元素的某一个行为绑定一个方法,只有当我们触发这个行为(这个行为发生的时候)我们的方法才会执行
+    //重要记住的：元素的行为是天生自带的,我们在操作的时候,元素的行为都会被触发,不管你是否给行为绑定了方法,行为都会被触发,例如：我们没有给body的任何行为绑定方法,但是当我们鼠标进入页面的时候也出发了body的onmouseover事件,只不过什么事情都不干而已
+
+    var oDiv = document.getElementById("div1");
+
+    //当我们触发onclick这个行为的时候,会执行后面的这个匿名函数 -> 不仅仅是执行,而且浏览器默认的还给这个方法传递了一个参数值
+    //1)MouseEvent的鼠标事件类的一个实例->事件对象
+    //2)事件对象(e)中包含了很多的属性,这些属性就是用来描述当前鼠标的相关信息的
+    // type : 当前的时间类型,例如:"click"
+    // target : 当前的事件源(当前操作的元素)  srcElement : 事件源
+    // clientX/clientY : 鼠标位置距离当前可视窗口的x/y轴的坐标值
+    // pageX/pageY : 鼠标位置距离body的x/y轴的坐标值
+    // e.stopPropagation() : 阻止事件的冒泡传播  e.cancelBubble=true
+    // e.preventDefault() : 阻止事件的默认行为  e.returnValue=false
+
+
+    //我们定义的形参变量 e 就是用来接收浏览器默认传递的那个值的
+    //    oDiv.onclick = function (e) {
+    //        //e.type ->事件类型
+    //        //e.clientX/e.clientY
+    //
+    //        //e.target ->事件源  在IE不兼容 e.srcElement
+    //        //e.pageX/e.pageY ->在IE不兼容
+    //        //e.stopPropagation() ->在IE不兼容 e.cancelBubble=true
+    //        //e.preventDefault() ->在IE不兼容 e.returnValue=false
+    //
+    //    };
+
+    function buildMouseEvent(e) {
+        if (!e) {
+            e = window.event;
+            e.target = e.srcElement;
+            e.pageX = e.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft);
+            e.pageY = e.clientY + (document.documentElement.scrollTop || document.body.scrollTop);
+            e.preventDefault = function () {
+                e.returnValue = false;
+            };
+            e.stopPropagation = function () {
+                e.cancelBubble = true;
+            };
+        }
+    }
+
+    oDiv.onclick = function (e) {
+        //e事件对象本身也存在兼容的问题:在标准浏览器下,是执行方法的时候,浏览器默认给方法传递的一个参数的值;但是在IE6~8下是全局window对象下的event属性存储的;
+        //e = e || window.event;
+        buildMouseEvent(e);
+
+        e.preventDefault();
+    };
+
+
+</script>
+</body>
+</html>

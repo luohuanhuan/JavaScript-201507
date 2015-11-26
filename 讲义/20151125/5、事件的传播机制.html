@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #outer {
+            margin: 10px auto;
+            width: 300px;
+            height: 300px;
+            background: #008000;
+        }
+
+        #inner {
+            margin: 10px auto;
+            width: 200px;
+            height: 200px;
+            background: #FF3300;
+        }
+
+        #center {
+            margin: 10px auto;
+            width: 100px;
+            height: 100px;
+            background: #ffe470;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div id="center"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var outer = document.getElementById("outer");
+    var inner = document.getElementById("inner");
+    var center = document.getElementById("center");
+
+    //    document.body.onclick = function () {
+    //        console.log("document.body");
+    //    };
+    //
+    //    outer.onclick = function (e) {
+    //        console.log("outer");
+    //    };
+    //
+    //    inner.onclick = function () {
+    //        console.log("inner");
+    //    };
+    //
+    //    center.onclick = function (e) {
+    //        console.log("center");
+    ////        e = e || window.event;
+    ////        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+    //    };
+
+    //DOM2
+    //最后一个参数是false->在冒泡阶段执行 true->在捕获阶段执行
+    document.body.addEventListener("click", function (e) {
+        console.log("body-冒泡");
+    }, false);
+
+    outer.addEventListener("click", function (e) {
+        console.log("outer-冒泡");
+    }, false);
+
+    outer.addEventListener("click", function (e) {
+        console.log("outer-捕获");
+    }, true);
+
+    inner.addEventListener("click", function (e) {
+        console.log("inner-捕获");
+    }, true);
+
+    center.addEventListener("click", function (e) {
+        console.log("center-冒泡");
+    }, false);
+
+
+    /*规律总结*/
+    //当我们触发center的onclick行为的时候,不仅它后面的方法执行输出了"center",而且center的所有上级元素的onclick行为都触发了
+
+    //JS天生的传播机制:->"冒泡传播机制"
+    //当前元素的某一个行为触发,它上级所有元素的相关行为都会被触发,如果绑定了对应的事件方法,那么对应的方法都会被执行
+
+    //元素.onxxx=function(){} ->属于DOM零级事件绑定
+    //center.onclick = function () {};
+    //center.onclick = function () {}; ->DOM零级事件绑定第二次绑定的方法会把第一次绑定的方法给覆盖,只有最后一次绑定的方法才有效->"只能给一个元素的同一个事件行为绑定一个方法"
+    //DOM零级事件绑定我们能够控制的只有冒泡传播的阶段
+</script>
+</body>
+</html>

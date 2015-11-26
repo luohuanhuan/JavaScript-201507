@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #ccc;
+            overflow: hidden;
+        }
+
+        #box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -150px 0 0 -200px;
+            width: 400px;
+            height: 300px;
+            background: #fff;
+        }
+
+        #boxTop {
+            padding-left: 15px;
+            height: 35px;
+            line-height: 35px;
+            background: #FFCF78;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="boxTop">欢迎来到珠峰培训拖拽课堂~~</div>
+</div>
+
+<script type="text/javascript" src="js/utils-1.0.min.js"></script>
+<script type="text/javascript">
+    //拖拽的原理：onmousedown、onmousemove、onmouseup
+    //onmousedown:记录当前盒子的起始位置(top(startT)、left(startL)、鼠标clientX(startX)、鼠标的clientY(startY))，在给当前元素绑定onmousemove和onmouseup事件
+    //onmousemove:随时记录最新的鼠标位置(endX、endY)，并计算最新的top和left的值 left=startL+(endX-startX)
+    //onmouseup:移除onmousemove和onmouseup事件
+
+    //拖拽过快的时候我们的鼠标焦点丢失了：盒子计算在移动端，赶不上鼠标移动的速度，盒子找不到鼠标了--->setCapture:相当于一根绳子，把我们的盒子和鼠标绑到一起，但是在谷歌下兼容--->鼠标在快也离不开我们的文档，那么我们把事件绑定给document
+
+    var box = document.getElementById("box");
+    var boxTop = document.getElementById("boxTop");
+
+    boxTop.onmousedown = down;
+    function down(e) {
+        //为了防止我们原有设置的margin值对我们的移动产生影响，我们把margin去掉
+        utils.setGroupCss(box, {
+            margin: 0,
+            left: box.offsetLeft,
+            top: box.offsetTop
+        });
+
+        e = e || window.event;
+        this.startT = utils.css(box, "top");
+        this.startL = utils.css(box, "left");
+        this.startX = e.clientX;
+        this.startY = e.clientY;
+
+        if (this.setCapture) {
+            this.setCapture();
+            this.onmousemove = move;
+            this.onmouseup = up;
+        } else {
+            var _this = this;
+            //document.onmousemove=move -->move方法中的this由之前的boxTop-->document
+            document.onmousemove = function () {
+                move.call(_this);
+            };
+            document.onmouseup = function () {
+                up.call(_this);
+            };
+        }
+    }
+
+    function move(e) {
+        e = e || window.event;
+        var l = this.startL + (e.clientX - this.startX);
+        var t = this.startT + (e.clientY - this.startY);
+        var minL = 0, minT = 0, maxL = (document.documentElement.clientWidth || document.body.clientWidth) - box.offsetWidth, maxT = (document.documentElement.clientHeight || document.body.clientHeight) - box.offsetHeight;
+
+        if (l <= minL) {
+            utils.css(box, "left", minL);
+        } else if (l >= maxL) {
+            utils.css(box, "left", maxL);
+        } else {
+            utils.css(box, "left", l);
+        }
+
+        if (t <= minT) {
+            utils.css(box, "top", minT);
+        } else if (t >= maxT) {
+            utils.css(box, "top", maxT);
+        } else {
+            utils.css(box, "top", t);
+        }
+    }
+
+    function up(e) {
+        if (this.releaseCapture) {
+            this.releaseCapture();
+            this.onmousemove = null;
+            this.onmouseup = null;
+        } else {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<a href="https://www.baidu.com/" id="link">百度</a>
+
+<script type="text/javascript">
+    var link = document.getElementById("link");
+    link.onclick = function (e) {
+//        e = e || window.event;
+//        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+        return false;//阻止了默认行为
+    };
+</script>
+</body>
+</html>

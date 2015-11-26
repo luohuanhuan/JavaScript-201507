@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1">有本事点我啊~~</div>
+
+<script type="text/javascript" src="event.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById("div1");
+    function fn1(e) {
+        console.log(this);
+    }
+    function fn2() {
+        console.log(2);
+    }
+    function fn3() {
+        console.log(3);
+    }
+    function fn4() {
+        console.log(4);
+    }
+    function fn5() {
+        console.log(5);
+    }
+    function fn6() {
+        console.log(6);
+    }
+    function fn7() {
+        console.log(7);
+    }
+    function fn8() {
+        console.log(8);
+    }
+    function fn9() {
+        console.log(9);
+    }
+    function fn10() {
+        console.log(10);
+    }
+    function fn11() {
+        console.log(11);
+    }
+
+    function fn12() {
+        console.log(12);
+        unbind(oDiv, "click", fn12);
+    }
+
+    bind(oDiv, "click", fn12);
+    bind(oDiv, "click", fn11);
+    bind(oDiv, "click", fn12);
+    bind(oDiv, "click", fn11);
+</script>
+</body>
+</html>
