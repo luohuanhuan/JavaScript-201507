@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:400px; height:400px; }
+#outer *{ display:block; width:70%; height:70%; margin-left:20px; overflow:hidden;}
+</style>
+</head>
+
+<body>
+
+<div id="outer" style=" background:green;">
+	outer
+	<div id="middle"  style=" background:red;">
+    	middle
+    	<div id="inner"  style=" background:pink;">
+        inner
+        	<p  style=" background:yellow;">
+            段落
+            	<span  style=" background:blue;">span</span>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+//要求实现：点击任意一个元素的时候，弹出这个元素的id名或标签名
+//不能有连锁反应
+	function fn(e){ alert(this.id||this.tagName);
+		e.stopPropagation();
+	}
+	var eles=document.getElementsByTagName("*");
+	for(var i=0;i<eles.length;i++){
+		//eles.item(i).addEventListener("click",fn,false);
+		//eles.item(i).onclick=fn;
+		//以上的方式可以解决，但性能较差
+	}
+	
+	//只要理解事件是传播的就可以了，具体在那个阶段传播不重要
+	
+	document.documentElement.onclick=function(e){
+		e=e||window.event;
+		var target=e.target||e.srcElement;//事件源
+		alert(target.id||target.tagName);
+	}
+	document.documentElement.onclick=function(){
+		if(e.target.className=="tab"){
+			//选项卡
+		}else if(e.target.className=="animate"){
+			//动画	
+		}
+	}
+	
+</script>
