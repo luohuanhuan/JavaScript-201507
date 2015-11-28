@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		html,body,div,span,a,ul,li,p,h1,h2{margin: 0;padding: 0}
+		html,body{
+			width: 100%;
+			height: 100%;
+			background: #ccc;
+			overflow: hidden;
+		}
+		#bg{
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			position: absolute;
+			background: #000;
+			opacity: 0.1;
+			filter: alpha(opacity=10);
+		}
+		#box{
+			width: 300px;
+			height: 420px;
+			background: #fff;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -210px 0 0 -150px;
+			border-radius: 5px;
+			box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.5);
+		}
+		#box #box-top{
+			padding: 0 10px;
+			background: #fe3;
+			height: 40px;
+			line-height: 40px;
+			font-size: 15px;
+			border-radius: 5px 5px 0 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="bg"></div>
+	<div id="box">
+		<div id="box-top">黄英登陆珠峰</div>
+	</div>
+	<script>
+		//制定具体时间实现多方向同时运动，最终运动到自己的目标值（width/height/opacity/margin）
+	</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		html,body,div,span,a,ul,li,p,h1,h2{margin: 0;padding: 0}
+		html,body{
+			width: 100%;
+			height: 100%;
+			background: #ccc;
+			overflow: hidden;
+		}
+		#bg{
+			display: none;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			position: absolute;
+			background: #000;
+			opacity: 0.1;
+			filter: alpha(opacity=10);
+		}
+		#box{
+			display: none;
+			width: 300px;
+			height: 420px;
+			background: #fff;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -210px 0 0 -150px;
+			border-radius: 5px;
+			opacity: 0;
+			filter: alpha(opacity=0);
+			box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.5);
+		}
+		#box #box-top{
+			display: none;
+			padding: 0 10px;
+			background: #fe3;
+			height: 40px;
+			line-height: 40px;
+			font-size: 15px;
+			border-radius: 5px 5px 0 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="bg"></div>
+	<div id="box">
+		<div id="box-top">黄英登陆珠峰</div>
+	</div>
+	<script src="js/utils-1.0.min.js"></script>
+	<script>
+		//制定具体时间实现多方向同时运动，最终运动到自己的目标值（width/height/opacity/margin）
+		var bg 		= document.getElementById('bg'),
+			box 	= document.getElementById('box'),
+			boxTop  = document.getElementById('box-top');
+			// body 	= document.body;
+
+		var move = function(){
+			bg.style.display = 'block';
+			box.style.display = 'block';
+
+			var _this = box,
+				duration = 1000,
+				interval = 10,
+				wid 	= utils.css(box,"width"),
+				hei 	= utils.css(box,'height'),
+				opa 	= utils.css(box,'opacity');
+
+			var stepW = (wid/duration)*interval;
+			~function _move(){
+				window.clearTimeout(_this.timer);
+				var wid = utils.css(_this,"height ")
+				utils.setGroupCss()
+
+
+
+				_this.timer = window.setTimeout(_move,interval);
+			}();
+		}
+		document.body.onclick = move;
+	</script>
+</body>
+</html>

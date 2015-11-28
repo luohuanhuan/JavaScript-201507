@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>匀速反弹运动优化2</title>
+	<style>
+		html,body{
+			margin: 0;
+			padding: 0;
+		}
+		#box{
+			position: absolute;
+			top: 100px;
+			left: 0;
+			height: 50px;
+			width: 50px;
+			border-radius:50%;
+			background: #f60;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	<script src="js/utils-1.0.min.js"></script>
+	<script>
+		var oDiv = document.getElementById('box');
+		var tar = utils.win("clientWidth") - oDiv.offsetWidth;
+
+		var move = function(target){
+			var _this = this;
+			window.clearTimeout(_this.timer);
+			~function _move(){
+				window.clearTimeout(_this.timer);
+				var curL = utils.css(oDiv,"left");
+				if(curL < target){
+					if(curL + 8 >= target){
+						utils.css(_this,"left",target);
+						move.call(_this,0);
+						return;
+					}
+					utils.css(_this,"left",curL + 8)
+				}else if(curL > target){
+					if(curL - 8 <= target){
+						utils.css(_this,"left",target);
+						move.call(_this,tar);
+						return;
+					}
+					utils.css(_this,"left",curL - 8)
+
+				}else{
+					return;
+				}
+				_this.timer = window.setTimeout(_move,13);
+			}();
+		}
+		move.call(oDiv,tar);
+	</script>
+</body>
+</html>

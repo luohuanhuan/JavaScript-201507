@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动画示例</title>
+	<style>
+		*{margin: 0;padding: 0}
+		body{
+			background: #333;
+		}
+		.box{
+			margin: 50px 0 0 20px;
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			border: 1px solid yellow;
+			border-radius: 50%;
+		}
+		input{
+			width: 100px;
+			height: 30px;
+			position: absolute;
+			top: 200px;
+			cursor: pointer;
+			border: none;
+			outline: none;
+		}
+		#btnLeft{
+			left: 35%;
+		}
+		#btnRight{
+			left: 60%;
+		}
+	</style>
+</head>
+<body>
+
+	从左向右运动，
+	<div class="box" id="box">
+	</div>
+	<input type="button" value="向左" id="btnLeft">
+	<input type="button" value="向右" id="btnRight">
+		
+
+	<script charset="utf-8" src="js/utils-1.0.min.js"></script>
+	<!-- <script charset="utf-8" src="js/utils.js"></script> -->
+
+	<script>
+		var oDiv = document.querySelector('.box');
+		var target = utils.win("clientWidth") - oDiv.offsetWidth;
+		
+		function move(target){
+			clearTimeout(oDiv.timer);
+			// var curL = utils.offset(oDiv).left;
+			var curL = utils.css(oDiv,'left');
+			if(curL > target){
+				if(curL >= target){
+					return;
+				}
+				utils.css(oDiv,"left",curL+10);
+			}else if(curL < target){
+				if(cur <= target){
+					return;
+				}
+				utils.css(oDiv,'left',curL-10);
+			}else{
+				return;
+			}
+
+			// utils.css(oDiv,'left',curL+10);
+			oDiv.timer = setTimeout(move,13);这样第二次执行的时候就没有参数了
+			oDiv.timer = setTimeout(move(target),13);这样就是一个返回值在做参数，不行
+			oDiv.timer = setTimeout(function(){move(target);},13);这样可以实现，但由于作用域不销毁，性能消耗严重
+
+
+		}
+		// window.setTimeout(move,13);
+
+		解决方案：-只有move 这个第一次执行时候形成的私有作用域不销毁
+			如果 move 需要传递参数，那么我们就在 move 中定义一个小的函数 _move ,每一次都把动画执行的代码放在 _move 中
+		function move(target){
+			window.clearTimeout(oDiv.timer);
+
+			var _move = function(){
+				<js code>
+				oDiv.timer = window.setTimeout(_move,13);
+			};
+			_move();
+		}
+
+
+
+		function move(target){
+			window.clearTimeout(oDiv.timer);
+
+			~function _move(){
+				window.clearTimeout(oDiv.timer);
+				var curL = utils.css(oDiv,"left");
+				if(curL < target){
+					if(curL >= target){return;}
+					utils.css(oDiv,"left");
+				}else if(){ 
+
+				}else{
+
+				}
+				oDiv.timer = setTimeout(_move,13);
+			}();
+		}
+
+	</script>
+</body>
+</html>

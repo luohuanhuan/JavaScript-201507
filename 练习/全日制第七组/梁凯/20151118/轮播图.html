@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图</title>
+	<style>
+		html,body,div{
+			margin: 0;
+			height: 0;
+		}
+		.banner{
+			width: 1000px;
+			height: 300px;
+			overflow: hidden;
+			margin: 10px auto;
+			position: relative;
+		}
+		#bannerImg{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 4000px;
+			height: 300px;
+		}
+		#bannerImg img{
+			float: left;
+			width: 1000px;
+			height: 300px;
+		}
+	</style>
+</head>
+<body>
+	<div class="banner">
+		<div id="bannerImg">
+			<img src="img/banner1.jpg" alt="">
+			<img src="img/banner2.jpg" alt="">
+			<img src="img/banner3.jpg" alt="">
+			<img src="img/banner4.jpg" alt="">
+		</div>
+	</div>
+	<script src="js/utils-1.0.min.js"></script>
+	<script>
+		var bannerImg = document.getElementById('bannerImg');
+
+		//实现每一次切换的时候，完成一秒钟从当前的left值切换到下一张的left的值
+
+		function move(duration,interval){
+			// var step = (1000/duration)*interval;
+			// var count = 0;
+			// ~function _move(){
+			// 	window.clearTimeout(_this.timer);
+			// 	if(count + step <= -1000){
+			// 		return;
+			// 	}
+			// 	var curL = utils.css(bannerImg, "left");
+
+			// 	utils.css(bannerImg,"left",curL + step);
+			// 	_this.timer = window.setTiemout(_move,interval);
+			// }();
+
+			var _this =this;
+			var curL = utils.css(_this,"left"); //运动的起始位置
+			var tarL = curL - 1000;//运动的结束位置
+
+			var step = (-1000 / duration) * interval;
+			~function _move(){
+				window.clearTimeout(_this.timer);
+				var curL= utils.css(_this,"left");
+				if(curL + step <= tarL){
+					utils.css(_this,"left",tarL);
+					_this.autoTimer = window.setInterval(autoMove,3000);
+					return;
+				}
+				utils.css(_this,"left",curL+step);
+				_this.timer = window.setTimeout(_move,interval);
+
+			}();
+		}
+
+		function autoMove(){
+			move.call(bannerImg,1000,10);
+		}
+		// window.setInterval(function(){
+		// 	move.call(bannerImg,1000,10);
+		// },3000);
+		bannerImg.autoTimer = window.setInterval(autoMove,3000);
+	</script>
+</body>
+</html>

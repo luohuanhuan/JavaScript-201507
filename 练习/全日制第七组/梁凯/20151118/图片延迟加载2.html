@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width;initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<title>图片延迟加载2</title>
+	<style>
+		
+	</style>
+</head>
+<body>
+	<ul id="newsList">
+		<div class="logo">
+			<img src="img/default.jpg" trueImg="xxxxxxxxx"alt="">
+		</div>
+		<div class="title">
+			<h2></h2>
+			<p></p>
+		</div>
+	</ul>
+	<script src="js/utils-1.0.min.js"></script>
+	<script>
+		var newsList = document.getElementById("newsList");
+
+		var initData = function(){
+			if(!dataAry){return;}
+
+			var frag = document.createDocumentFragment();
+			for(var i=0; i<dataAry.length; i++){
+				var curItem = dataAry[i];
+				curItem.logo = curItem.logo || "img/default.jpg";
+				curItem.title = curItem.title || '--';
+				curItem.desc = curItem.desc || '--';
+
+				var oLi = document.createElement("li");
+				var str = "<div class='logo'><img src='img/defalut.jpg' trueImg='" + curItem.logo + "''/></div>";
+				str += "<div class='title'>";
+				str += "<h2>" + curItem.title + "</h2>";
+				str += "<p>" + curItem.desc + "</p>";
+				str += "</div>";
+				oLi.innerHTMl = str;
+				frag.appendChild(oLi);
+			}
+			newsList.appendChild(frag);
+		}
+		initData();
+
+		var winH = document.documentElement.clientHeight || document.body.clientHeight;
+		var loadImg = function(){
+			var winT = document.documentElement.scrollTop || document.body.scrollTop;
+			var imgList = newsList.getElementsByTagName("img");
+			for(var i=0; i<imgList.length; i++){
+				~function(i){
+					var curImg = imgList[i];
+					if(!curImg.isLoad){
+						var offT = utils.offset(curImg).top;
+						var curH = curImg.offsetHeight;
+						if(offT + curH <= winT + winH){
+							var oImg = new Image;
+							oImg.src = curImg.getAttribute('trueImg');
+							oImg.onload = function(){
+								curImg.src = this.src;
+								curImg.isLoad = true;
+							}
+						}
+					}
+				}(i);
+			}
+		};
+		window.setTimeout(loadImg,1000);
+		window.onscroll = loadImg;
+	</script>
+</body>
+</html>

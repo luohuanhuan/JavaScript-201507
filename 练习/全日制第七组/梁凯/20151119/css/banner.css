@@ -1,0 +1,30 @@
+
+@charset "uft-8"
+*{margin: 0;padding: 0}
+
+body{
+	background: #ddd;
+}
+img{
+	border: none;
+}
+.banner{
+	position: relative;
+	margin: 50px auto;
+	width: 1000px;
+	height: 300px;
+	border: 2px solid yellow;
+	overflow: hidden;
+}
+.banner .bannerImg{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 5000px;
+	height: 300px;
+}
+.banner .bannerImg img{
+	float: left;
+	width: 1000px;
+	height: 300px;
+}

@@ -1,0 +1,34 @@
+分析选项卡不行的问题，从作用域以及异步加载来分析，以及实现方式
+
+
+选项卡（3 个li 标签）若这样写：
+	for(var i=0; i<oLis.length; i++){
+		oLis[i].onclick = function(){
+			alert(i);
+		}
+	}
+会发现，每次点击 li 标签都输出 3，即循环结束 i 的最终值。
+而我们期待的是 0 - 1 - 2 的输出。
+
+解释：
+	1-作用域观点：在for 循环执行的时候，在olis[i] 的 onclick 属性上存的是函数字符串，
+	当触发onclick 事件时，执行函数，函数中的变量 i 不在本作用域，去上级作用域即全局作用域
+	找，会找到 i ，值是循环结束时的 3 .
+	2-异步加载观点：onclick 是异步加载，非阻塞式。for 循坏会先结束。
+
+解决方案：
+	1-闭包：
+	for(var i=0; i<oLis.length; i++){
+		~function(){
+			oLis[i].onclick = function(){
+				alert(i);
+			}
+		}(i);
+	}
+	2- 自定义属性：
+	for(var i=0; i<oLis.length; i++){
+		oLis[i].index = i;
+		oLis[i].onclick = function(){
+			alert(this.index);
+		}
+	}

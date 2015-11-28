@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>匀速反弹动画</title>
+	<style>
+		html,body{
+			margin: 0;
+			padding: 0;
+		}
+		#box{
+			position: absolute;
+			top: 20px;
+			left: 0;
+			width: 50px;
+			height: 50px;
+			border-radius: 30%;
+			background: #f30;
+		}
+		input{
+			position: absolute;
+			bottom: 20px;
+			width: 80px;
+			height: 30px;
+			/*background: #313;*/
+			border: 2px solid yellow;
+			border-style: none;
+			outline: none;
+		}
+		#btnLeft{
+			left: 40%;
+		}
+		#btnRight{
+			left: 50%;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	<input type="button" value="向左走" id="btnLeft">
+	<input type="button" value="向右走" id="btnRight">
+	<script src="js/utils-1.0.min.js"></script>
+	<script>
+		var oDiv = document.getElementById('box');
+		var btnLeft = document.getElementsByTagName('input')[0];
+		var btnRight = document.getElementsByTagName('input')[1];
+
+		var move = function(target){
+			window.clearTimeout(oDiv.timer);
+			~function _move(){
+				window.clearTimeout(oDiv.timer);
+				var curL = utils.css(oDiv,"left");
+				if(curL < target){
+					// if(curL >= target)
+					if(curL >= target){
+						return;
+					}
+					utils.css(oDiv,"left",curL+5);
+				}else if(curL > target){
+					if(curL <= target){
+						return;
+					}
+					utils.css(oDiv,"left",curL-5);
+				}else{
+					return;
+				}
+				oDiv.timer = window.setTimeout(_move,13);
+			}();
+			// setTimeout(move,13);
+		}
+		btnRight.onclick = function(){
+			var tar = utils.win("clientWidth") - oDiv.offsetWidth;
+			move(tar);
+		};
+		btnLeft.onclick = function(){
+			move(0);
+		};
+	</script>
+</body>
+</html>

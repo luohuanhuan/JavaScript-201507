@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多方向运动</title>
+	<style>
+		html,body,div{
+			margin: 0;
+			padding: 0;
+		}
+		html,body,#bg{
+			width: 100%;
+			height: 100%;
+		}
+		body{
+			font-size: 16px;
+			font-weight: 300;
+			font-family: Arial,sans-serif;
+			-webkit-user-select: none;
+		}
+		#bg{
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: none;
+			background: #000;
+			opacity: 0.3;
+			filter: alpha(opacity=30);
+		}
+		#box{
+			display: none;
+			width: 300px;
+			height: 420px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -210px 0 0 -150px;
+			background: #fff;
+			border-radius: 5px;
+			box-shadow: 3px 3px 5px #ddd;
+		}
+		#box #box-top{
+			display: none;
+			width: 300px;
+			height: 30px;
+			line-height: 30px;
+			border-radius: 5px 5px 0 0;
+			background: #f60;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="bg"></div>
+	<div id="box">
+		<div id="box-top">黄英登陆</div>
+	</div>
+	<script src="js/utils-1.0.min.js"></script>
+	<script>
+		function $(ele){
+			return ele ? document.querySelector(ele):document;
+		}
+
+		var move = function(duration,interval,callBack){
+			var _this = this;
+			var stepW = (300 / duration) * interval,
+				stepH = (420 / duration) * interval,
+				stepO =  (1  / duration) * interval;
+			~function _move(){
+				window.clearTimeout(_this.timer);
+				var curW = utils.css(_this,"width"),
+					curH = utils.css(_this,"height"),
+					curO = parseFloat(utils.css(_this,"opacity"));
+
+				if(curW + stepW >= 420){
+					utils.setGroupCss(_this,{
+						width: 	300,
+						height: 420,
+						opacity:1,
+						marginLeft: -150,
+						marginTop:  -210
+					});
+					typeof callBack === 'function' ? callBack.call(_this) : null;
+					return;
+				}
+				utils.setGroupCss(_this,{
+					width: 	curW + stepW,
+					height: curH + stepH,
+					opacity:curO + stepO,
+					marginLeft: -(curW + stepW) / 2,
+					marginTop:  -(curH + stepH) / 2
+				});
+				_this.timer = window.setTimeout(_move,interval);
+			}();
+		};
+
+		document.body.onclick = function(){
+			$('#bg').style.display = 'block';
+			$('#box').style.display = 'block';
+
+			move.call(box,2000,10,function(){
+				$("#box-top").style.display = "block";
+				var count = 0;
+				$("#box-top").timer = window.setInterval(function(){
+					if(count + 0.01 >= 1){
+						utils.css($("box-top"),"opacity",1);
+						window.clearInterval($("box-top").timer);
+					}
+					count += 0.01;
+					utils.css($('#box-top'),"opacity",1);
+					// window.clearInterval()
+				},10);
+			});
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试</title>
+</head>
+<body>
+	<script>
+
+	//测试用function套用会不会产生异步，结果是不会。
+	//***************************************************************//
+		function A(){
+			for(var i=0; i<1000000; i++){}
+			console.log('1');
+		}
+		function B(callBack){
+			console.log('2');
+			callBack();
+		}
+		B(A);
+		console.log('3');
+	//***************************************************************//
+
+
+	</script>
+</body>
+</html>

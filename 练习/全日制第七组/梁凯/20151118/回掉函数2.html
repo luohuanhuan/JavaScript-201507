@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>回掉函数</title>
+</head>
+<body>
+	<script>
+		Array.prototype.myForEach = function(callBack,context){
+			context = context || window;
+			if(typeof callBack !== 'function'){return;}
+			if("forEach" in Array.prototype){
+				this.forEach(callBack,context);
+				return;
+			}
+			for(var i=0; i<this.length; i++){
+				callBack.call(context,this[i],i,this);
+			}
+		}
+		// Array.prototype.myMap = function()
+		// Array.prototype.myMap = function(callBack,context){
+		// 	context = context || window;
+		// 	if(typeof callBack !== 'function'){return;}
+		// 	if("map" in Array.prototype){
+		// 		this.map(callBack,context);
+		// 		return;
+		// 	}
+		// 	for(var i=0; i<this.length; i++){
+		// 		callBack.call(context,this[i],i,this);
+		// 	}
+		// }
+
+	</script>
+</body>
+</html>

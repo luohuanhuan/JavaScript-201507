@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>一些动画</title>
+	<style>
+		body{
+			background: #333;
+		}
+		#box{
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			left: 0;
+			top: 0;
+			background: #f60;
+			border-left: 20px;
+			border-radius: 50%;
+			margin: 50px 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="box"></div>
+	<script>
+		// animate(ele,{left:850},1200,['zfLinear'],callBack);
+		function getCss(ele){
+			if(window.getComputedStyle){
+
+			}else{
+
+			}
+		}
+
+		function fadeInOut(ele,target,duration){
+			duration = duration || 500;
+			var begin = getCss(ele,"opacity");
+			var chage = target - begin;
+			var times = 0;
+			var interval = 13;
+
+			function step(){
+				times += interval;
+				if(times < duration){
+
+				}else{
+
+				}
+			}
+			var timer = window.setInterval(step,interval);
+		}
+	</script>
+</body>
+</html>

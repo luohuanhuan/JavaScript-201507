@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动画示例</title>
+	<style>
+		*{margin: 0;padding: 0}
+		body{
+			background: #333;
+		}
+		.box{
+			position: absolute;
+			margin: 50px 0 0 20px;
+			width: 50px;
+			height: 50px;
+			border: 1px solid yellow;
+		}
+	</style>
+</head>
+<body>
+	<div class="box" id="box">
+		
+	</div>
+	<script charset="utf-8" src="js/utils-1.0.min.js"></script>
+	<!-- <script charset="utf-8" src="js/utils.js"></script> -->
+
+	<script>
+		var oDiv = document.querySelector('.box');
+		var target = utils.win("clientWidth") - oDiv.offsetWidth;
+			// var curL = utils.offset(oDiv).left;
+			// utils.css(oDiv,"left",curL+10);
+
+		// var timer = window.setInterval(function(){
+		// 	var curL = utils.offset(oDiv).left;
+		// 	if(curL >= target){
+		// 		clearInterval(timer);
+		// 		return;
+		// 	}
+		// 	utils.css(oDiv,"left",curL+10);
+						
+		// },13);
+
+		function move(){
+			clearTimeout(oDiv.timer);
+			var curL = utils.offset(oDiv).left;
+			// var curL = utils.css(oDiv,'left');
+			if(curL >= target){
+				clearTimeout(timer);
+				return;
+			}
+			utils.css(oDiv,'left',curL+5);
+			oDiv.timer = setTimeout(move,13);
+		}
+		window.setTimeout(move,13);
+	</script>
+</body>
+</html>

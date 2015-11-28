@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>回掉函数</title>
+</head>
+<body>
+	forEach -->数组中用来遍历每一项的一个方法，在IE6~8中不兼容；
+				第一个参数是函数，三个参数：item,idnex,input
+				第二个参数可以改变第一个参数中的this对象。
+	map 	--> 和forEach一样，循环遍历数组中的每一项，只不过map是支持返回值的
+
+	不管是map 还是forEach，对原有数组都不改变:
+	1-forEach 只是遍历数组中的每一项，但不支持返回值，不能通过return 方式修改原来的每一项
+	2-map中的return 是啥，相当于把当前数组中的这一项修改为renturn 的内容
+
+
+	在不考虑IE兼容性的情况下（移动端开发），我们经常使用forEach/map
+	var oLis = document.querySelectorAll('li');
+	[].forEach.call(oLis,function(item,index,input){....<js code>...});
+
+
+	var ary = [];
+	ayr.sort(function(){})
+	ary.forEach(function(){})
+	ary = '';
+	ary.replace(/^.$/,function(){})
+	window.setTimeout(function(){},t)
+	<script>
+		var ary = [12,33,44,11];
+		ary.forEach(function(item,index,input){
+			console.log(item,index,input,this);
+			// console.log(index);
+		},ary);
+
+		ary.map(function(item,index,input){
+			return item + 10;
+		});
+
+
+		//重写forEach
+		Array.prototype.myForEach = function myForEach(callBack,context){
+			if (typeof callBack !== 'function'){return;}
+			context = context || window;
+			//判断是否兼容forEach方法
+			if("forEach" in Array.prototype){
+				this.forEach(callBack,context);
+				return;
+			}
+			console.log('9');
+			//不兼容的话自己实现
+			for(var i=0; i<this.length; i++){
+				//每一次循环都执行callBack函数并且改变this关键字为context，而且要传递三个参数值
+				callBack.call(context,this[i],i,this);
+			}
+		};
+
+		ary.myForEach(function(item,index,input){console.log(item,index,input,this);},ary);
+	</script>
+</body>
+</html>

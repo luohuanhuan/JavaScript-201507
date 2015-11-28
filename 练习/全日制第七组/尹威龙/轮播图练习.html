@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, img {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: none;
+        }
+
+        .banner {
+            position: relative;
+            margin: 10px auto;
+            width: 1000px;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        #bannerImg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5000px;
+            height: 300px;
+        }
+
+        #bannerImg img {
+            float: left;
+            width: 1000px;
+            height: 300px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="banner">
+    <div id="bannerImg">
+        <img src="img/banner1.jpg" alt=""/>
+        <img src="img/banner2.jpg" alt=""/>
+        <img src="img/banner3.jpg" alt=""/>
+        <img src="img/banner4.jpg" alt=""/>
+        <img src="img/banner1.jpg" alt=""/>
+    </div>
+</div>
+<script type="text/javascript" src="js/utils-1.0.min.js"></script>
+<script type="text/javascript">
+    var bannerImg = document.getElementById("bannerImg");
+    /* function move(duration,interval){
+     var _this=this;
+     window.clearInterval(_this.autoTimer);
+     var tarL=utils.css(_this,"left")-1000;
+     var step=(-1000/duration)*interval;
+     ~function _move(){
+     window.clearTimeout(_this.timer);
+     var curL=utils.css(_this,"left");
+     if(curL+step<=tarL){
+     utils.css(_this,"left",tarL);
+     if(index>=4){
+     index=0;
+     _this.style.left=0+"px";
+     }
+     _this.autoTimer=window.setInterval(autoMove,3000);
+     return;
+     }
+     utils.css(_this,"left",curL+step);
+     _this.timer=window.setTimeout(_move,interval);
+     }();
+     }
+     var index=0;
+     function autoMove(){
+     index++;
+     move.call(bannerImg,1000,10);
+     }
+     bannerImg.autoTimer=window.setInterval(autoMove,3000);*/
+    function move(duration,interval){
+        var _this=this;
+        window.clearInterval(_this.autoTimer);
+        var tarL=utils.css(_this,"left")-1000;
+        var step=(-1000/duration)*interval;
+        ~function _move(){
+            window.clearTimeout(_this.timer);
+            var curL=utils.css(_this,"left");
+            if(curL+step<=tarL){
+                utils.css(_this,"left",tarL);
+                if(index>=4){
+                    index=0;
+                    _this.style.left=0+"px";
+                }
+                _this.autoTimer=window.setInterval(autoMove,3000);
+             return;
+            }
+            utils.css(_this,"left",curL+step);
+            _this.timer=window.setTimeout(_move,interval);
+        }();
+    }
+    var index=0;
+    function autoMove(){
+        index++;
+        move.call(bannerImg,1000,10);
+    }
+    bannerImg.autoTimer=window.setInterval(autoMove,3000);
+
+
+
+</script>
+</body>
+</html>

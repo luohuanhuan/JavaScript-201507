@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多方向运动</title>
+	<style>
+		html,body,div{
+			margin: 0;
+			padding: 0;
+		}
+		html,body,.bg{
+			height: 100%;
+			width: 100%;
+		}
+		.bg{
+			background: #333;
+		}
+		.box{
+			width: 300px;
+			height: 500px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -250px;
+			margin-left: -150px;
+			background: #ddd;
+			border-radius: 5px;
+		}
+		.box .tit{
+			height: 40px;
+			line-height: 40px;
+			background: pink;
+			border-radius: 5px 5px 0 0;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="bg" id="bg"></div>
+	<div class="box">
+		<div class="tit">我是标题</div>
+	</div>
+	<script src="js/utils-1.0.min.js"></script>
+	<script>
+		var oBox = document.querySelector(".box");
+
+		function move(curEle){
+			var _this = curEle;
+			var tarW = utils.css(_this,'width'),
+			var tarH = 
+		}
+	</script>
+</body>
+</html>

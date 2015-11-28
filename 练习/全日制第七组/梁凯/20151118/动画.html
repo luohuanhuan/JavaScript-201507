@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动画</title>
+</head>
+<body>
+	<script>
+		动画：在一段时间内，从当前位置运动到目标位置
+		一些概念
+		总距离：起始位置-结束位置         一般命名--起始位置target； 起始位置：current
+		总时间：多长时间完成我们的动画				duration
+		步长： 每一步走多远							step
+		速度： 多长时间走一步						interval
+
+													匀速 linear /减速 ease /加速 ease-in/ 减速 ease-out/ 先加速后减速 ease-in-out
+		
+
+		分类
+		1-起始位置定了，步长也确定了，总时间不定
+		2-起始和结束位置定了，定了总时间，也知道了速度->步长不定（需要求出步长）
+
+		
+		动画优化技巧
+		1-我们使用的是setTimeout 实现基本的运动动画（我们一般都是使用setTiemout,因为这个控制起来更加灵活一些），基于基于递归思想，每一次执行完成都重新设置一个新的定时器来完成下一次的操作，这样的话我们就会重复累加下去影响页面性能；		解决方案：首先清除定时器
+		var timer = null;
+		function move(){
+			window.clearTimeout(timer);
+			<js code>
+			timer = window.setTimeout(move,13);
+		}
+		2-我们每一次都把定时器存储到全局变量timer 中，但过多的使用全局变量会造成相互冲突和污染
+			解决方案：把 timer 设置为当前操作元素的自定义属性的方式;还有一个好处就是当前元素的属性是唯一的，可以实现快速清除timer 使得运动效果快速切换。
+			var timer = null;
+			function move(){
+				window.clearTimeout(oDiv.timer);
+				<js code>
+				oDiv.timer = window.setTimeout(move,13);
+			}
+		3-move 传递了参数，这个第一次执行时候形成的私有作用域不销毁，造成性能消耗
+			解决方案：如果 move 需要传递参数，那么我们就在 move 中定义一个小的函数 _move ,每一次都把动画执行的代码放在 _move 中
+		function move(target){
+			window.clearTimeout(oDiv.timer);
+
+			var _move = function(){
+				<js code>
+				oDiv.timer = window.setTimeout(_move,13);
+			};
+			_move();
+		}
+		4-this 关键字优化，使用var _this = this; 
+		5-在自动来回滚动运动中，边界判断问题--有可能会遇到加步长超了，减步长又不到，在边界来回抖动
+			解决方案：加步长临界判断，到达边界后直接让位置定位到边界。
+
+
+
+
+	</script>
+</body>
+</html>
