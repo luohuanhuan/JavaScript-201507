@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+ <style type="text/css">
+ #div1{ width:300px; height:300px; margin:100px auto; background:red; position:relative;}
+ #mask{ width:80px; height:80px; background:#888; position:absolute;}
+ </style>
+ 
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+ele.onmouseenter=function(e){
+	var oMask=document.createElement("div");
+	this.appendChild(oMask);	
+	oMask.id="mask";
+	oMask.style.left=e.pageX-this.offsetLeft-oMask.offsetWidth/2+"px";
+	oMask.style.top=e.pageY-this.offsetTop-oMask.offsetHeight/2+"px";
+
+	//e.stopPrapagation();//不是让红色的div停止事件传播
+	//oMask.onmouseover=function(e){
+		//e.stopPropagation();
+	//}
+}
+ele.onmousemove=function(e){
+	var mask=document.getElementById("mask");
+	if(mask){
+		var l=e.pageX-this.offsetLeft-mask.offsetWidth/2;
+		var t=e.pageY-this.offsetTop-mask.offsetHeight/2;
+		if(l<=0){
+			mask.style.left=0;
+		}else if(l>=this.offsetWidth-mask.offsetWidth){
+			mask.style.left=this.offsetWidth-mask.offsetWidth+"px";
+		}else{
+			mask.style.left=l+"px";
+		}
+		if(t<=0){
+			mask.style.top=0;	
+		}else if(t>=this.offsetHeight-mask.offsetHeight){
+			mask.style.top=this.offsetHeight-mask.offsetHeight+"px";
+		}else{
+			mask.style.top=t+"px";
+		}
+	}		
+}
+ele.onmouseleave=function(){
+		var mask=document.getElementById("mask");
+		if(mask){
+			this.removeChild(mask);
+		}
+}
+
+//mouseenter和mouseover事件很相似，mouseenter事件和over事件的区别：
+//如果事件是在自己的子元素发生的，则无效
+//如果这个事件发生的时候，是从子元素离开的，则此次事件也无效
+//如果是从子元素上触发的些事件，但是离开的时候，是从自己这儿离开的，也无效
+</script>

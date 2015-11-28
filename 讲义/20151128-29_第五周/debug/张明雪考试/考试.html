@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{
+            height: 100px;
+            width: 100px;
+            position: relative;
+            left: 0;
+            top: 0;
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+    <script>
+        var oDiv = document.getElementById("div1");
+        oDiv.onclick = function(){
+            animate(this,{width:200, height:200,left:300,top:400,opacity:0.3},600,15,function(){
+                this.style.backgroundColor = "green";
+            });
+        }
+
+//        document.onclick = function(e){
+////            var leftTarget = event.clientX || e.clientX;
+//            var leftTarget = e.clientX || e.clientX;
+//            animate(oDiv,{left:leftTarget},600,15);
+//        }
+
+        function animate(ele,oTarget,duration,interval,callback){
+            oBegin = {};
+            oChange = {};
+            var times = 0;
+            for(var attr in oTarget){
+                console.log(css(ele,attr));
+                oBegin[attr] = css(ele,attr);
+                oChange[attr] = oTarget[attr] - oBegin[attr];
+            }
+            clearInterval(ele.timer);
+            function step(){
+                 times +=  interval;
+                 if(times < duration){
+                     for(var attr in oChange){
+                         css(ele,attr,times/duration*oChange[attr] + oBegin[attr]);
+                     }
+                 }else{
+                     for(var attr in oChange){
+                         css(ele,attr,oTarget[attr]);
+                     }
+                     clearInterval(ele.timer);
+                     if(typeof callback == "function"){
+                         callback.call(ele);
+                     }
+                 }
+            }
+             ele.timer = setInterval(step,interval);
+        }
+
+        function css(ele,attr,value){
+            if(value === undefined){
+                if(window.getComputedStyle){
+                    return parseFloat(getComputedStyle(ele,null)[attr]);
+                }else{
+                    if(attr == "opacity"){
+                        var str = ele.currentStyle["filter"];
+                        var reg = /alpha\(opacity = (\d+)\)/;
+                        if(reg.test(str)){
+                            return RegExp.$1/100;
+                        }else{
+                            return 1;
+                        }
+                    }else{
+                        return parseFloat(ele.currentStyle[attr]);
+                    }
+                }
+            }else{
+                var reg = /heigth|width|top|left|right|bottom/;
+                if(reg.test(attr)){
+                    ele.style[attr] = value + "px";
+                }else if(attr =="opacity"){
+                    ele.style.opacity = value;
+                    ele.style.filter = "alpha(opacity="+(value*100)+")";
+                }else{
+                    ele.style[attr] = value;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

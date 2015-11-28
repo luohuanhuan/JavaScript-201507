@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #outer{ width:500px; height:240px; margin:50px auto; position:relative; overflow:hidden; }
+        #inner{ width:2500px; height:240px; position:absolute; left:0; top:0;  }
+        #inner div{ float:left; width:500px; height:240px; line-height:240px; font-size:100px; text-align:center; background:red; font-weight:bold;}
+        #outer span{
+            width: 50px;
+            height:30px;
+            display: block;
+            line-height: 30px;
+            text-align: center;
+            background: black;
+            opacity: 0.3;
+            position: absolute;
+            top: 50%;
+            margin-top: -15px;
+            z-index: 2;
+            color: white;
+            cursor: pointer;
+        }
+        .toLeft{
+            left: 0;
+        }
+        .toRight{
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div>一</div>
+        <div style="background:green;">二</div>
+        <div style="background:blue;">三</div>
+        <div style="background:pink;">四</div>
+        <div style="background:black; color:white;">五</div>
+    </div>
+    <span class="toLeft">向左</span>
+    <span class="toRight">向右</span>
+
+</div>
+</body>
+</html>
+<script>
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr]);
+        }else{
+            if(attr=="opacity"){
+                var val=ele.currentStyle.filter;
+                var reg=/alpha\(opacity=(\d+)\)/;
+                if(reg.test(val)){
+                    return RegExp.$1/100;
+                }else{
+                    return 1;
+                }
+            }else{
+                return parseFloat(ele.currentStyle[attr]);
+            }
+        }
+    }
+
+
+    function animate(ele,oTarget,duration){
+        var oBegin={};
+        var oChange={};
+        for(var attr in oTarget){
+            var begin=getCss(ele,attr)
+             var target=oTarget[attr];
+            var change=target-begin;
+            oBegin[attr]=begin;
+            oChange[attr]=change;
+        }
+        var times=0;
+        var interval=15;
+        function step(){
+            times+=interval;
+            if(times<duration){
+                ele.style[attr]=times/duration*change+begin+"px";
+            }else{
+                ele.style[attr]=target+"px";
+                window.clearInterval(timer);
+            }
+        }
+        timer=window.setInterval(step,interval);
+    }
+
+    var inner=document.getElementById("inner");
+    var first=inner.getElementsByTagName("div").item(0);
+    inner.appendChild(first.cloneNode(true))
+    inner.style.width=inner.clientWidth+first.clientWidth+"px";
+    var step=0;
+    function toLeft(){
+        step++;
+        if(step>=6){
+            inner.style.left=0;
+            step=1;
+        }
+        animate(inner,{left:-step*500},1000);
+
+    }
+    function toRight(){
+        step--;
+        if(step<0){
+            inner.style.left=-2500+"px";
+            step=4;
+        }
+        animate(inner,{left:-step*500},1000);
+    }
+    var oSpans=document.getElementsByTagName("span");
+    oSpans[0].onclick=toLeft;
+    oSpans[1].onclick=toRight;
+</script>
