@@ -95,12 +95,15 @@ li{
 <script>
 $("a.tooltip").mouseover(function(e){
 	var src=this.href;
-	$("<div id='tooltip'><img src='"+src+"'></div>").appendTo(document.body).css({left:e.pageX,top:e.pageY}).show(600);
+	this.tempTitle=this.title;
+	this.title="";
+	$("<div id='tooltip'><img src='"+src+"'><br>"+this.tempTitle+"</div>").appendTo(document.body).css({left:e.pageX+10,top:e.pageY+20}).show(600);
 	
 }).mousemove(function(e) {
-    $("#tooltip").css({left:e.pageX,top:e.pageY});
+    $("#tooltip").css({left:e.pageX+10,top:e.pageY+20});
 }).mouseout(function(e) {
     $("#tooltip").remove();
+	this.title=this.tempTitle;
 });
 
 </script>
