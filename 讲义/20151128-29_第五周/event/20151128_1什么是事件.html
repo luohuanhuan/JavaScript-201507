@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body style="height:3000px;">
+</body>
+</html>
+<script>
+	//在浏览器中，用绑定在事件的上处理方法中的参数得到
+	//这个参数我们只能定义形参，却没有机会人为的给它传递实参
+	
+	
+	document.onkeydown=function(e){//这个e就是在这里定义的形参
+		//这个匿名方法，当keydown事件发生的时候，自动执行
+		//当这个方法自动执行的时候，浏览器给它一个参数，无法人为干预
+		//这个e就传递了事件对象
+		
+		//以上的事件对象的写法，不适用于IE6/7/8
+		document.body.innerHTML=e.keyCode;//这是键盘上每个键的值对应的ASCII编码
+		
+	}
+	document.onmousemove=function(e){
+		e=e||window.event;//在IE中，事件对象一个全局对象event
+		document.body.innerHTML="left:"+e.pageX+",top:"+e.pageY;
+		console.log("left:"+e.pageX+",top:"+e.pageY);//IE不支持
+		console.log("clientX:"+e.clientX+",client:"+e.clientY);
+		e.type;
+		
+	}
+	//为什么称e为事件对象：是因为它里面肯定不是仅包含一个值，而是保存了很多的属性或方法
+	//常见的事件对象的属性有：
+	//e.type,e.pageX,e.pageY,e.clientX,e.clientY,e.target,
+	//e.stopPropagation,e.preventDefault,
+	
+	
+	
+	
+	
+	
+	
+	
+
+</script>

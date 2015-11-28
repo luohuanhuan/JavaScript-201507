@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <style type="text/css">
+        #outer{ width:500px; height:240px; margin:50px auto; position:relative; overflow:hidden; }
+        #inner{ width:3000px; height:240px; position:absolute; top:0;left:0;}
+        #inner div{ float:left; width:500px; height:240px; line-height:240px; font-size:100px; text-align:center; background:red; font-weight:bold;}
+        #left{ cursor:pointer;position: absolute; left: 0; top: 100px; height: 100px; width: 50px; background-color: orangered; z-index: 100; }
+        #right{cursor: pointer; position: absolute; right: 0; top: 100px; height: 100px; width: 50px; background-color: orangered;z-index: 100;}
+    </style>
+</head>
+
+<body>
+<div id="outer">
+    <div id="left">左</div>
+    <div id="right">右</div>
+    <div id="inner">
+        <div style="background-color: #00007F">一</div>
+        <div style="background:green;">二</div>
+        <div style="background:blue;">三</div>
+        <div style="background:pink;">四</div>
+        <div style="background:black; color:white;">五</div>
+        <div style="background-color: #00007F">一</div>
+    </div>
+    <script>
+        var left = document.getElementById("left");
+        var right = document.getElementById("right");
+        var oInner = document.getElementById("inner");
+        var index = 0;
+        var w = css(oInner.getElementsByTagName("div")[0],"width");
+        left.onclick = leftAuto;
+        right.onclick = RightAuto;
+
+        var step=0;
+        function leftAuto(){
+            step++;
+            if(step>5){
+                oInner.style.left=0+"px";
+                step=1;
+            }
+            animate(oInner,{left:-step*500},600,15);
+        }
+        function RightAuto(){
+            step--;
+            if(step<0){
+                oInner.style.left=-2500+"px";
+                step=4;
+            }
+            animate(oInner,{left:-step*500},600,15);
+        }
+
+        function animate(ele,oTarget,duration,interval,callback){
+            oBegin = {};
+            oChange = {};
+            var times = 0;
+            for(var attr in oTarget){
+                oBegin[attr] = css(ele,attr);
+                oChange[attr] = oTarget[attr] - oBegin[attr];
+            }
+            clearInterval(ele.timer);
+            function step(){
+                times +=  interval;
+                if(times < duration){
+                    for(var attr in oChange){
+                        css(ele,attr,times/duration*oChange[attr] + oBegin[attr]);
+                    }
+                }else{
+                    for(var attr in oChange){
+                        css(ele,attr,oTarget[attr]);
+                    }
+                    clearInterval(ele.timer);
+                    if(typeof callback == "function"){
+                        callback.call(ele);
+                    }
+                }
+            }
+            ele.timer = setInterval(step,interval);
+        }
+
+        function css(ele,attr,value){
+            if(value === undefined){
+                if(window.getComputedStyle){
+                    return parseFloat(getComputedStyle(ele,null)[attr]);
+                }else{
+                    if(attr == "opacity"){
+                        var str = ele.currentStyle["filter"];
+                        var reg = /alpha\(opacity = (\d+)\)/;
+                        if(reg.test(str)){
+                            return RegExp.$1/100;
+                        }else{
+                            return 1;
+                        }
+                    }else{
+                        return parseFloat(ele.currentStyle[attr]);
+                    }
+                }
+            }else{
+                var reg = /heigth|width|top|left|right|bottom/;
+                if(reg.test(attr)){
+                    ele.style[attr] = value + "px";
+                }else if(attr =="opacity"){
+                    ele.style.opacity = value;
+                    ele.style.filter = "alpha(opacity="+(value*100)+")";
+                }else{
+                    ele.style[attr] = value;
+                }
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

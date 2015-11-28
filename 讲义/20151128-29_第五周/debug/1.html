@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        li{
+            list-style: none;
+        }
+        #outer{
+            position: relative;
+            left: 30px;
+            top: 0;
+            width: 500px;
+            height: 240px;
+            border: 1px solid orangered;
+            overflow: hidden;
+        }
+        #inner{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2530px;
+            height: 240px;
+            font-size: 35px;
+            font-weight: bold;
+            line-height: 240px;
+        }
+        #inner div{
+            float: left;
+            width: 500px;
+            height: 240px;
+            border: 1px solid olivedrab;
+            text-align: center;
+        }
+        #btn li{
+            float: left;
+            border: 1px solid cornflowerblue;
+            width: 100px;
+            height: 100px;
+            padding: 10px;
+            font-size: 30px;
+            font-weight: bold;
+            margin-right: 60px;
+            text-align: center;
+            line-height: 100px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div>一</div>
+        <div>二</div>
+        <div>三</div>
+        <div>四</div>
+        <div>五</div>
+    </div>
+</div>
+<ul id="btn">
+    <li onclick="left();">向左</li>
+    <li onclick="right();">向右</li>
+</ul>
+
+</body>
+</html>
+<script type="text/javascript">
+    function getCSS(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(getComputedStyle(ele,null)[attr]);
+        }else{
+            if(attr=="opacity"){
+                var val=ele.currentStyle[filter];
+                var reg=/alpha\(opacity=(\d+)\)/;
+                if(reg.test(val)){
+                    return RegExp.$1/100;
+                }else{
+                    return 1;
+                }
+            }else{
+                return parseFloat(ele.currentStyle[attr]);
+            }
+        }
+    }
+
+    function setCSS(ele,attr,val){
+        switch (attr){
+            case "height":
+            case "width":
+            case "top":
+            case "left":
+                ele.style[attr]=val+"px";
+                break;
+            case "opacity":
+                ele.style[attr]=val;
+                ele.style[filter]="alpha(opacity="+val*100+")";
+                break;
+            default :
+                ele.style[attr]=val;
+        }
+    }
+    function fnEffent(t,b,c,d){
+        return t/d*c+b;
+    }
+
+    function animate(ele,otargin,duration,callback){
+        var obegin={};
+        var ochange={};
+        for(var attr in otargin){
+            var begin=getCSS(ele,attr);
+            var targin=otargin[attr];
+            var change=targin-begin;
+            obegin[attr]=begin;
+            ochange[attr]=change;
+        }
+        var times=0;
+        var interval=15;
+        window.clearInterval(ele.timer);
+        function step(){
+            times+=interval;
+            if(times<duration){
+                for(var attr in ochange){
+                    var begin=obegin[attr];
+                    var change=ochange[attr];
+                    var val=fnEffent(times,begin,change,duration);
+                    setCSS(ele,attr,val);
+                }
+            }else{
+                for(var attr in otargin){
+                    var targin=otargin[attr];
+                    setCSS(ele,attr,targin);
+                }
+				window.clearInterval(ele.timer);
+            }
+            
+        }
+        if(typeof callback=="function"){
+            return callback.call(ele);
+        }
+        ele.timer=window.setInterval(step,interval);
+    }
+
+    var oinner=document.getElementById("inner");
+    var ofirstdiv=oinner.getElementsByTagName("div").item(0);
+
+    oinner.style.width=oinner.clientWidth+ofirstdiv.clientWidth+"px";
+    oinner.appendChild(ofirstdiv.cloneNode(true));
+    var olis=document.getElementById("btn").getElementsByTagName("li");
+
+    var tep=0;
+    function left(){
+        tep++;
+        if(tep>=6){
+            oinner.style.left=0+"px";
+            tep=1;
+        }
+        animate(oinner,{left:tep*-500},2000);
+    }
+    function right(){
+        tep--;
+        if(tep==-1){
+            oinner.style.left=-2500+"px";
+            tep=4;
+        }
+        animate(oinner,{left:tep*-500},2000);
+    }
+</script>

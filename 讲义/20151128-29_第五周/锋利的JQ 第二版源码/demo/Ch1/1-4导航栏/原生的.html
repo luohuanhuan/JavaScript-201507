@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>导航栏</title>
+<link rel="stylesheet" href="css/default.css" type="text/css" />
+
+<!-- 引入 jQuery -->
+<script src="dom140326.js"></script>
+<script type="text/javascript">
+
+</script>
+
+</head>
+<body style="height:3000px;">
+<p>第三步：优化后：</p>
+
+<div class="box">
+	<ul class="menu">
+		<li class="level1">
+			<a href="#none">衬衫</a>
+			<ul class="level2">
+				<li><a href="#none">短袖衬衫</a></li>
+				<li><a href="#none">长袖衬衫</a></li>
+				<li><a href="#none">短袖T恤</a></li>
+				<li><a href="#none">长袖T恤</a></li>
+			</ul>
+		</li>
+		<li class="level1">
+			<a href="#none">卫衣</a>
+			<ul class="level2">
+				<li><a href="#none">开襟卫衣</a></li>
+				<li><a href="#none">套头卫衣</a></li>
+				<li><a href="#none">运动卫衣</a></li>
+				<li><a href="#none">童装卫衣</a></li>
+			</ul>
+		</li>
+		<li class="level1">
+			<a href="#none">裤子</a>
+			<ul class="level2">
+				<li><a href="#none">短裤</a></li>
+				<li><a href="#none">休闲裤</a></li>
+				<li><a href="#none">牛仔裤</a></li>
+				<li><a href="#none">免烫卡其裤</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+</body>
+</html>
+<script >
+var level1s=DOM.getElesByClass("level1");
+//var a=[];
+for(var i=0;i<level1s.length;i++){
+	var oA=DOM.getChildren(level1s[i],"a")[0]//这样得到的是每一个level1下面的子元素a
+	//$(".level1>a");	
+	oA.onclick=function(){
+		DOM.nextEle(this).style.display="block";
+		//下一步是：让当前元素(this)的父节点的兄弟节点的ul子元素隐藏
+		var siblings=DOM.siblings(this.parentNode);
+		
+		//var aUl=[];//把找到的ul子元素放到这个里面
+		for(var i=0;i<siblings.length;i++){
+			var oUl=DOM.getChildren(siblings[i],"ul")[0];
+			oUl.style.display="none";
+		}
+		return false;
+	}
+}
+/*$(".level1>a").click(function(){
+	$(this).next().show();
+	$(this).parent().siblings().children("ul").hide();
+	return false;	
+})*/
+//常见的事件默认行：右键上下文菜单，滚轮事件
+document.oncontextmenu=function(e){
+	var ele=document.createElement("div");
+	document.body.appendChild(ele);
+	ele.style.width=80+"px";
+	ele.style.height=150+"px";
+	ele.style.position="absolute";
+	ele.style.top=e.pageY+"px";
+	ele.style.left=e.pageX+"px";
+	ele.style.backgroundColor="red";
+	return false;
+	}
+window.onscroll=function(){
+	return false;	
+}
+document.onmousewheel=function(){//取消鼠标滚轮的行为
+	
+	return false	
+}
+/*if(container.addEventListener)container.addEventListener("DOMMouseScroll",fn,false);
+*/
+</script>

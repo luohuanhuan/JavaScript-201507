@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	<style type="text/css">
+	  body,ul,li{margin: 0;padding: 0;list-style: none;}
+	    .tab{position:relative;width: 500px;height: auto;overflow: hidden;margin: 0 auto;height: 300px;}
+		.tab_bx{position:absolute;width: 2500px;height: auto;overflow: hidden;margin: 0 auto;height: 300px;}	
+		.select{font-size: 100px;line-height: 300px;color: #fff;text-align:center;left: 0;top: 0;width: 500px;height: 300px;}	
+		.select1{background: red;}
+		.select2{background: #333;}
+		.select3{background: #000;}
+		.select4{background: #08c;}
+		.select5{background: #555;}
+		.tab_bx li{float: left;}
+		#tab{position: absolute;}
+		
+		.right{ position:absolute;content: "";width: 0;height: 0;border: 20px solid transparent;border-left-color: #fff; top: 125px;right: 20px;z-index: 10;overflow: hidden;cursor: pointer;}
+	    .left{ position:absolute;content: "";width: 0;height: 0;border: 20px solid transparent;border-right-color: #fff; top: 125px;left: 20px;z-index: 10;overflow: hidden;cursor: pointer;}
+	</style>
+	</head>
+	<body>
+	<div class="tab">
+		<div class="tab_bx">
+			<ul id="tab">
+				<li class="select select1">1</li>
+				<li class="select select2">2</li>
+				<li class="select select3">3</li>
+				<li class="select select4">4</li>
+				<li class="sselect elect5">5</li>
+			</ul>
+		</div>
+		<div class="right" id="right"></div>
+		<div class="left" id="left"></div>
+	</div>
+	</body>
+</html>
+<script src="js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/tween.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	 var right=document.getElementById("right");
+	 var left=document.getElementById("left");
+	 var oTab=document.getElementById("tab");
+	 var oLis=document.getElementById("tab").getElementsByTagName("li");
+	 
+	 for(var i=0;i<oLis.length;i++){
+	 	  oLis[i]=i;
+	    	 right.onclick=function(){
+	 		return animate(oTab,{right:-i*500},600)
+	 }
+	    }
+	 
+	  for(var i=0;i<oLis.length;i++){
+	 	  oLis[i]=i;
+	    	 left.onclick=function(){
+	 		 return animate(oTab,{left:-i*500},600)
+	 }
+	    }
+	 
+
+	 
+</script>

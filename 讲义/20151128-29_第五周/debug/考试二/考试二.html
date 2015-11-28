@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{padding: 0; margin: 0}
+        li{list-style: none}
+        #outer{position: relative; height: 200px; margin: 10px auto; width: 500px; overflow: hidden}
+        #inner{width: 2500px; height: 200px; position: absolute; left: 0; top:0;}
+        #inner div{width: 500px; height: 200px; background: red; float: left; font-size: 50px; font-family: "微软雅黑"; text-align: center; line-height: 200px; color: #fff}
+        #pre{width: 40px; height: 40px; background: goldenrod; position: absolute; left: 10px; top:70px; font-size: 0; cursor: pointer}
+        #next{width: 40px; height: 40px; background: goldenrod; position: absolute; right: 10px; top:70px; font-size: 0; cursor: pointer}
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div>一</div>
+        <div style="background: greenyellow">二</div>
+        <div style="background: goldenrod">三</div>
+        <div style="background: rosybrown">四</div>
+        <div style="background: royalblue">五</div>
+    </div>
+    <div id="pre">pre</div>
+    <div id="next">next</div>
+</div>
+<script type="text/javascript">
+    function getCss(ele,attr){
+        if(window.getComputedStyle){
+            return parseFloat(window.getComputedStyle(ele,null)[attr])
+        }else{
+            if(attr=="opacity"){
+                var val=ele.currentStyle.filter;
+                var reg=/alpha\(opacity\=(\d+)\)/;
+                if(reg.test(val)){
+                    return RegExp.$1/100;
+                }else{
+                    return 1
+                }
+            }
+            return parseFloat(ele.currentStyle[attr]);
+        }
+    }
+
+    function setCss(ele,attr,val){
+        switch (attr){
+            case "height":
+            case "width":
+            case "left":
+            case "top":
+                ele.style[attr]=val+"px";
+                break;
+            case "opacity":
+                ele.style.opacity=val;
+                ele.style.filter="alpha(opacity="+val*100+")";
+                break;
+            default :
+                ele.style[attr]=val;
+        }
+    }
+    function animate(ele, oTarget, duration, fnCallBack){
+        var times=0;
+        var interval=15;
+        duration=duration||600;
+        var oBegin={};
+        var oChange={};
+        for(var attr in oTarget){
+            var begin=getCss(ele,attr);
+            var target=oTarget[attr];
+            var change=target-begin;
+            oBegin[attr]=begin;
+            oChange[attr]=change;
+        }
+        window.clearInterval(ele.timer)
+        function step(){
+            times+=interval;
+            if(times<duration){
+                for(var attr in oChange){
+                    var begin=oBegin[attr];
+                    var change=oChange[attr];
+                    var val=times/duration*change+begin;
+                    setCss(ele,attr,val)
+                }
+            }
+            else{
+                for(var attr in oTarget){
+                    setCss(ele,attr,oTarget[attr])
+                    window.clearInterval(ele.timer);
+					ele.timer=null;
+                    if(typeof fnCallBack=="function"){
+                        fnCallBack.call(ele)
+                    }
+                }
+            }
+        }
+        ele.timer=window.setInterval(step,interval);
+    }
+
+    var oInner=document.getElementById("inner");
+    var pre=document.getElementById("pre");
+    var next=document.getElementById("next");
+
+    pre.onclick=function(){
+        leftAuto();
+    };
+    next.onclick=function(){
+        RightAuto();
+    };
+
+    var step=0;
+    function leftAuto(){
+        step++;
+        if(step>5){
+            oInner.style.left=0+"px";
+            step=1;
+        }
+		
+		if(!oInner.timer)//如果动画在执行中，则不再执行下一个动画
+        	animate(oInner,{left:-step*500},600);
+    }
+    function RightAuto(){
+        step--;
+        if(step<0){
+            oInner.style.left=-2500+"px";
+            step=4;
+        }animate(oInner,{left:-step*500},600,1);
+    }
+</script>
+</body>
+</html>

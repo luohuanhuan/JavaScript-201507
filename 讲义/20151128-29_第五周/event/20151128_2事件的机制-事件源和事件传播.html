@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:400px; height:400px; }
+#outer *{ display:block; width:70%; height:70%; margin-left:20px; overflow:hidden;}
+</style>
+</head>
+
+<body style="height:3000px;">
+
+<div id="outer" style=" background:green;">
+	outer
+	<div id="middle"  style=" background:red;">
+    	middle
+    	<div id="inner"  style=" background:pink;">
+        inner
+        	<p  style=" background:yellow;">
+            段落
+            	<span  style=" background:blue;">span</span>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+	document.documentElement.onclick=function(e){
+		//alert(e.target.innerHTML);
+		//处理这个事件，和这个事件在那个元素上触发的，不是一回事	
+		//事件和处理事件的方法是两码事
+		//事件触发了，但未必会有相应的处理方法
+	}
+	//e.target是事件源
+	//事件会传播
+	//事件的传播是在：事件源和根元素之间的传播，
+	//事件传传播是双方向的（不必过度理解）
+	function fn(e){ alert(this.id||this.tagName);
+		e.stopPropagation();
+	}
+	var eles=document.getElementsByTagName("*");
+	for(var i=0;i<eles.length;i++){
+		eles.item(i).addEventListener("click",fn,false);
+		//eles.item(i).addEventListener("click",fn,true);	
+				
+	}
+	
+	//只要理解事件是传播的就可以了，具体在那个阶段传播不重要
+	
+	
+	
+	
+</script>
