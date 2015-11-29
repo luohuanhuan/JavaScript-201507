@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+function fn1(){alert(1)};
+function fn2(){alert(2);}
+var n=0;
+function fn3(){
+	alert(3);
+	n++;
+	if(n==2){
+		unbind(ele,"click",fn3);
+	}
+
+}
+function fn4(){alert(4);}
+function bind(ele,type,fn){
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);
+	}else {
+		ele.attachEvent("on"+type,fn);
+	}
+}
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);	
+	}else{
+		ele.detachEvent("on"+type,fn);
+	}
+	
+}
+bind(ele,"click",fn1);
+bind(ele,"click",fn2);
+bind(ele,"click",fn3);
+bind(ele,"click",fn4);
+</script>
