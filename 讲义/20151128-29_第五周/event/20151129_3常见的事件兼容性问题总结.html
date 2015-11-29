@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+DOM二级事件的绑定方法不一样
+	标准浏览器用addEventListener和removeEventListener
+    IE用attachEvent和detachEvent
+    	并且IE中的二级事件触发的时候，执行顺序有问题
+        this不会指向当前绑定的元素
+事件对象本身不一样
+	标准浏览器，当事件触发的时候，会自动的给绑定的方法传一个事件对象
+    IE浏览器是全局的window.event做为事件对象
+阻止事件传播的方式不一样
+	标准浏览器是用e.stopPropagation();
+    IE是用e.cancelBubblue=true
+取消事件的默认行为
+	标准浏览器是e.preventDefault();(如果用是DOM2级事件的方法处理的事件，是不能return false;)
+    IE浏览器用e.returnValue=false或return false;
+    
+事件源属性不一样：
+	标准浏览器是e.target
+    IE浏览器是e.srcElement
+e.pageX,e.pageY IE浏览器不支持
+
+分三步解决事件的兼容性问题
+	1、自动选择用addEventListener还是用attachEvent
+    	就是先解决二级绑定的问题
+    2、this都要指向当前的元素
+    3、顺序问题
+    在解决顺序问题的同时，会顺便把以上列举的这些兼容性问题都 解决了
+    <a id="a1" href="http://www.zhufengpeixun.cn">珠峰培训</a>
+</body>
+</html>
+<script>
+function fn(e){
+	//return false;
+	//在chrome中，用两种方式来获得事件对象，就是window.event同样可用
+	e.preventDefault();//如果是用addEventListener来绑定的fn方法，如果想阻止事件的默认行为，一定要用这个方法
+}
+document.getElementById("a1").onclick=fn;
+//document.getElementById("a1").addEventListener("click",fn,false);
+</script>

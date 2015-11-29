@@ -97,7 +97,8 @@ $("a.tooltip").mouseover(function(e){
 	var src=this.href;
 	this.tempTitle=this.title;
 	this.title="";
-	$("<div id='tooltip'><img src='"+src+"'><br>"+this.tempTitle+"</div>").appendTo(document.body).css({left:e.pageX+10,top:e.pageY+20}).show(600);
+	$("<div id='tooltip'><img src='"+src+"'><br>"+this.tempTitle+"</div>").appendTo(document.body).css({left:e.pageX+10,top:e.pageY+20}).show(
+	);
 	
 }).mousemove(function(e) {
     $("#tooltip").css({left:e.pageX+10,top:e.pageY+20});
