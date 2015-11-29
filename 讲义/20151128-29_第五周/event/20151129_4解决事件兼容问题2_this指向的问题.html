@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>无标题文档</title>
 <style type="text/css">
-#div1{ width:100px; height:100px; background:red;}
+#div1{ width:300px; height:100px; background:red;}
 </style>
 </head>
 
@@ -14,7 +14,11 @@
 </html>
 <script>
 var ele=document.getElementById("div1");
-function fn1(){alert(1)};
+function fn1(){
+	alert(1);
+	this.innerHTML="只要是文字出现在DIV里，this问题就解决了";
+	
+};
 function fn2(){alert(2);}
 var n=0;
 function fn3(){
@@ -30,7 +34,14 @@ function bind(ele,type,fn){
 	if(ele.addEventListener){
 		ele.addEventListener(type,fn,false);
 	}else {
-		ele.attachEvent("on"+type,fn);
+		ele.tempFn=function (){fn.call(ele);}
+		//为什么把这个经过“化装”的方法赋值给这个唯一的属性不行呢？当bind执行四次，这个ele.tempFn会是谁呢？
+		
+		//用call来调用执行的方法，功能和原来一样，功能不变，只是this的指向被强制改变了
+		
+		ele.attachEvent("on"+type,ele.tempFn);
+		// ele.attachEvent("on"+type,function(){fn.call(ele);});
+		//ele.attachEvent("on"+type,fn.call(ele));//这样不可以，因类fn就立马执行了
 	}
 }
 
