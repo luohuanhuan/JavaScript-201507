@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+基础，DOM，动画（不是重点，只练大家的逻辑），事件基础，事件核心（难度），AJAX（理解曲线陡峭，入门，操作起来简单，讲的比较深），移动端（四个实战），HTML5
+
+promise/A 
+</body>
+</html>
+<script>
+function fn1(){alert(1)};
+function fn2(){alert(2);}
+var n=0;
+function fn3(){
+	alert(3);
+	n++;
+	if(n==2){
+		this.removeEventListener("click",fn3,false);	
+	}
+
+}
+function fn4(){alert(4);}
+	var ele=document.getElementById("div1");
+	//DOM0,DHTML,DOM core,
+	//EventTarget--
+	ele.addEventListener
+	ele.removeEventListener;
+	//ele.onclick=fn1;
+	//ele.onclick=fn2;
+	//多绑定，动态绑定或移除
+	ele.addEventListener("click",fn1,false);
+	ele.addEventListener("click",fn2,false);
+	ele.addEventListener("click",fn3,false);
+	ele.addEventListener("click",fn4,false);
+</script>
