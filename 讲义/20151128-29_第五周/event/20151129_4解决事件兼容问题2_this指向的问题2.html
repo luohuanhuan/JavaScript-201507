@@ -37,22 +37,24 @@ function bind(ele,type,fn){
 		if(!ele.tempFn){
 			ele.tempFn=[];
 		}
-		function tempFn(){fn.call(ele);}
-		tempFn.photo=fn;
-		ele.tempFn.push(tempFn);
-		/*ele.tempFn=function(){fn1.call(ele);}
-		ele.tempFn=function(){fn2.call(ele);}*/
-		
-		//为什么把这个经过“化装”的方法赋值给这个唯一的属性不行呢？当bind执行四次，这个ele.tempFn会是谁呢？
-		
-		//用call来调用执行的方法，功能和原来一样，功能不变，只是this的指向被强制改变了
 		var a=ele.tempFn;
-		//这个数组ele.tempFn里确实保存着被绑定的方法呢，但是我怎么确定第二个方法是我要移动的那个fn3呢？
-		//如果让真正的fn3和数组里的经过改造之后的fn3关联上（就是识别出来），在fn3和上一个方法里的tempFn之间缺少一个识别的关联符号
+	/*	bind(ele,"click",fn3);
+		bind(ele,"click",fn2);
+		bind(ele,"click",fn3);
+		bind(ele,"click",fn4)*/
+		
+		//防止重复绑定的一个判断
+		for(var i=0;i<a.length;i++){
+				if(a[i].photo==fn)return;
+		}
+		function tempFn(){fn.call(ele);}//经过改造之后的方法
+		tempFn.photo=fn;//给每一个经过改造之后的方法都加识别属性
+		a.push(tempFn);
+		
+		
 		ele.attachEvent("on"+type,tempFn);
 		
-		// ele.attachEvent("on"+type,function(){fn.call(ele);});
-		//ele.attachEvent("on"+type,fn.call(ele));//这样不可以，因类fn就立马执行了
+		
 	}
 }
 
@@ -64,9 +66,11 @@ function unbind(ele,type,fn){
 		if(a){
 			for(var i=0;i<a.length;i++){
 				if(a[i].photo==fn){
-					a[i];
-					ele.detachEvent("on"+type,a[i]);
-						
+					
+					ele.detachEvent("on"+type,a[i]);//这只是在事件中把这个方法移除了，但数组里还存在这个方法呢。
+					//如果数组中还存在这个方法，那以后就没办法再绑定这个方法了
+					//a.splice(i,1);//不但在事件中将其移除，还要在数组里将其移除
+					//break;//因为同一个方法只能被绑定一次，则：移除了这次绑定，则应该不再循环了
 				}
 			
 			}	
@@ -76,7 +80,7 @@ function unbind(ele,type,fn){
 	}
 	
 }
-bind(ele,"mouseover",fn3);
+//bind(ele,"mouseover",fn3);
 bind(ele,"click",fn1);
 bind(ele,"click",fn2);
 bind(ele,"click",fn3);
