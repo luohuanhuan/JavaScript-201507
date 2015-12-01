@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<a href="#div1" style="display: block; margin-bottom: 3000px;">珠峰培训</a>
+
+<div id="div1" style="width: 100px;height: 100px; background: red">哈哈哈哈</div>
+
+<script type="text/javascript">
+    //1、什么是事件?
+    //1)事件行为本身->浏览器本身就拥有这些行为,不管有没有绑定方法,元素的这个行为都有,当我们操作的时候同样会触发相关的行为
+    //2)事件绑定->给某一个行为绑定一个或者多个方法,当行为触发的时候执行对应绑定的方法
+
+    //2、执行对应的方法
+    //不管是DOM0还是DOM2绑定的方法,当行为触发执行这个方法的时候,浏览器都会给方法传递一个参数值(IE6~8下保存在了window.event上了)-->"事件对象"
+    //e=e||window.event;
+    //e.type ->事件类型
+    //e.target=e.target||e.srcElement ->事件源(当前行为发生在哪个元素上,那个元素就是事件源)
+    //e.clientX/e.clientY -> 鼠标触发点距离当前可视窗口左上角的x/y坐标
+    //e.pageX=e.pageX||(e.clientX+(document.documentElement.scrollLeft||document.body.scrollLeft))
+    //e.pageY=e.pageY||(e.clientY+(document.documentElement.scrollTop||document.body.scrollTop)) ->鼠标触发点距离body左上角的x/y坐标
+
+    //阻止默认行为,例如阻止<a>标签的默认跳转的行为
+    //<a href="javascript:;" id="link">
+    //link.onclick=function(){return false;}
+    //e.preventDefault ? e.preventDefault() : e.returnValue = false;
+
+    //阻止事件的冒泡传播
+    //e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+
+    //3、事件的传播机制
+    //DOM0只能控制的是冒泡阶段,而DOM2捕获+冒泡阶段都可以控制(最后一个参数是false->在冒泡阶段执行 true->在捕获阶段执行)
+    //但是不管哪种绑定,当行为触发的时候都会先捕获然后在冒泡
+
+    //4、应用事件的传播机制来实现事件委托
+
+    //5、DOM0和DOM2的区别
+    //DOM0的性能会比DOM2稍微好一些
+    //DOM2中有很多的优势:
+    //1)DOM0只能给元素的某一个行为绑定一个方法,绑定第二个方法会把第一个覆盖掉；DOM2可以给元素的某一个行为绑定多个不同的方法;
+    //2)DOM2中新增加了一些DOM0没有的行为,例如:"DOMContentLoaded" ->只要HTML结构加载完成就会执行对应的方法  window.onload->只有HTML结构、图片、文字等所有资源都加载完成才会执行对应的方法(一个页面只能使用一次)
+    //思考题：获取从jQuery实现的原理分析 $(document).ready和window.onload的区别?
+    //onreadystatechange
+
+    //6、DOM2兼容
+    //IE6~8 attachEvent
+    //1)this问题 -> 绑定的方法执行时候,里面的this是window而不是当前的元素
+    //2)重复问题 -> 一个元素的某一个行为可以绑定多个重复的方法
+    //3)顺序问题 -> 先后绑定多个方法,当触发行为的时候,方法执行的顺序并不是按照绑定的顺序执行的
+    //bind unbind on off run
+    //事件池 -> 给元素绑定的所有的方法其实都在一个内置的池子中
+
+    //7、拖拽
+    //鼠标焦点丢失问题
+    //oDiv.setCapture() -> IE/FirFox兼容
+    //把move、up事件绑定给document -> 谷歌
+
+
+    oDiv.onclick = function (e) {
+
+    };
+    oDiv.onmouseover = function (e) {
+
+    };
+
+    //
+    //    oDiv.addEventListener("click", function (e) {
+    //    }, false);
+    //    oDiv.attachEvent("onclick", function (e) {
+    //    });
+
+
+</script>
+</body>
+</html>
