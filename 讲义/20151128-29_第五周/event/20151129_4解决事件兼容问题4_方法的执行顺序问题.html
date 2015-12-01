@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:300px; height:100px; background:red;}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var ele=document.getElementById("div1");
+function fn1(){
+	alert(1);
+	this.innerHTML="只要是文字出现在DIV里，this问题就解决了";
+	
+};
+function fn2(){alert(2);}
+var n=0;
+function fn3(){
+	alert(3);
+	n++;
+	if(n==2){
+		unbind(ele,"click",fn3);
+	}
+
+}
+function fn4(){alert(4);}
+function bind(ele,type,fn){
+	if(ele.addEventListener){
+		ele.addEventListener(type,fn,false);
+	}else {
+		//要根据事件类型来定义不同的自定义属性（数组）
+		if(!ele["tempFn"+type]){
+			ele["tempFn"+type]=[];
+			
+			
+			
+		}
+		var a=ele["tempFn"+type];
+	/*	bind(ele,"click",fn3);
+		bind(ele,"click",fn2);
+		bind(ele,"click",fn3);
+		bind(ele,"click",fn4)*/
+		
+		//防止重复绑定的一个判断
+		for(var i=0;i<a.length;i++){
+				if(a[i].photo==fn)return;
+		}
+		function tempFn(){fn.call(ele);}//经过改造之后的方法
+		tempFn.photo=fn;//给每一个经过改造之后的方法都加识别属性
+		//tempFn["photo"+type]=fn;
+		a.push(tempFn);
+		
+		
+		ele.attachEvent("on"+type,tempFn);
+		//四个经过化装后的run方法被绑定
+		
+		
+	}
+}
+
+function unbind(ele,type,fn){
+	if(ele.removeEventListener){
+		ele.removeEventListener(type,fn,false);	
+	}else{
+		var a=ele["tempFn"+type];
+		if(a){
+			for(var i=0;i<a.length;i++){
+				if(a[i].photo==fn){
+					
+					ele.detachEvent("on"+type,a[i]);//这只是在事件中把这个方法移除了，但数组里还存在这个方法呢。
+					//如果数组中还存在这个方法，那以后就没办法再绑定这个方法了
+					a.splice(i,1);//不但在事件中将其移除，还要在数组里将其移除
+					break;//因为同一个方法只能被绑定一次，则：移除了这次绑定，则应该不再循环了
+				}
+			
+			}	
+		}
+		//ele.detachEvent("on"+type,ele.tempFn);
+		
+	}
+	
+}
+/*//以下代码是解决顺序问题的模型（模式）
+var aEvent=[];
+aEvent.push(fn1);
+aEvent.push(fn2);
+aEvent.push(fn3);
+aEvent.push(fn4);
+//保存在数组目的是要一个正常的顺序
+//先不把以上方法直接绑定到事件上，而是先保存在一个数组里
+//当事件触发的时候，去运行一个“中介”方法。也就是说：在这个模型里，直接和事件联系的run这个方法（直接把run绑定给事件）
+
+function run(){
+	for(var i=0;i<aEvent.length;i++){
+		aEvent[i].call(this);//当run运行的时候，fn1....fnn就可以按顺序执行了。因为数组是有序的	
+		//aEvent[i]();
+	}
+}
+
+bind(ele,"click",run);
+
+*/
+
+function on(ele,type,fn){//伪事件绑定：把要绑定的方法放在一个数组里
+	if(!ele["aEvent"+type]){//如果没有这个数组，则创建一个数组，这样保证这个数组只创建一次
+		ele["aEvent"+type]=[];	//把这个属性定义成数组
+		//ele.aEventclick=[];
+	}
+	var a=ele["aEvent"+type];
+	for(var i=0;i<a.length;i++){//避免重复绑定的判断
+		if(a[i]==fn)return;
+	}
+	
+	a.push(fn);
+	/*on(ele,"click",fn1);
+	on(ele,"click",fn1)
+	on(ele,"click",fn2);
+	on(ele,"click",fn3);
+	on(ele,"click",fn4);
+	*/
+	
+	bind(ele,type,run);//这才是真绑定呢
+	//run被bind重复的绑定了四次
+	 
+}
+
+function run(){//中介：事件其实是绑定的这个方法，当事件触发的时候运行这个方法。这个方法再去已经约定好的那个数组里遍历执行方法
+	var type=window.event.type;//事件类型
+	var a=this["aEvent"+type];
+	for(var i=0;i<a.length;i++){
+		a[i].call(this);	
+	}
+	
+}
+
+
+function off(ele,type,fn){//解除绑定，就是在数组里把保存的方法删除
+	var a=ele["aEvent"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a.splice(i,1);
+				break;	
+			}
+		}
+	}
+}
+
+on(ele,"click",fn1);
+on(ele,"click",fn1)
+on(ele,"click",fn1);
+on(ele,"click",fn2);
+on(ele,"click",fn3);
+on(ele,"click",fn4);
+
+
+
+
+
+
+
+</script>

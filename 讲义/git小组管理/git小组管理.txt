@@ -1,4 +1,4 @@
-组长：
+﻿组长：
 1、fork老师的仓库地址:https://github.com/zhufengpeixun/JavaScript-201507
 2、设置自己的组员：settings -> collaborators -> [Search by username, full name or email address] 根据组员的账号一个个的添加
 

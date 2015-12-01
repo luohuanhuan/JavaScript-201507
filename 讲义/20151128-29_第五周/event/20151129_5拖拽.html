@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1,#div2,#div3{ width:100px; height:100px; background:red; position:absolute; top:0; left:200px; cursor:move;}
+
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="div2" style="left:200px; top:200px; background:black;"></div>
+<div id="div3" style="left:400px; top:300px; background:green;"></div>
+</body>
+</html>
+<script src="event.js"></script>
+<script>
+var ele=document.getElementById("div1");
+on(ele,"mousedown",down);
+on(div2,"mousedown",down);
+on(div3,"mousedown",down);
+//以下方法里，this默认的原则是指向被拖拽的元素
+function down(e){//做准备拖拽
+	this.x=this.offsetLeft//盒子的老位置
+	this.y=this.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;//鼠标按下去的时候的位置
+	if(this.setCapture){
+		this.setCapture();
+		on(this,"mousemove",move);
+		on(this,"mouseup",up);
+	}else{
+		//on(document,"mousemove",move);//move则指向了document
+		//on(document,"mouseup",up);
+		//无论move和up绑定给谁，它的this都要强制指向div1
+		//this//这个this和35行的this不一样
+		//on(document,"mousemove",function(){move.call(this)});
+		
+		var that=this;
+		this.MOVE=function(e){move.call(that,e)};
+		this.UP=function(e){up.call(that,e)}
+		on(document,"mousemove",this.MOVE);
+		on(document,"mouseup",this.UP);
+		
+	}
+}
+
+/*document.onclick=fn;
+document.onclick=function(e){
+	fn(e);
+	}*/
+
+function move(e){//进行拖拽
+	//计算盒子的新位置
+	this.style.left=this.x+(e.pageX-this.mx)+"px";
+	this.style.top=this.y+(e.pageY-this.my)+"px";
+	//盒子的新位置=盒子原来的位置+鼠标移动的距离
+}
+
+function up(){//结束拖拽
+	if(this.releaseCapture){
+		this.releaseCapture();
+		off(this,"mousemove",move);
+		off(this,"mouseup",up);
+	}else{
+		off(document,"mousemove",this.MOVE);
+		off(document,"mouseup",this.UP);
+		
+	}
+}
+
+//事件性能:大约5-8ms查看一次事件是否发生了
+
+//如果鼠标从开始的位置，到离开这个小div，没有到5ms的时间，丢掉了鼠标
+
+</script>
