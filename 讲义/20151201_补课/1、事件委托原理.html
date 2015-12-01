@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .box {
+            position: relative;
+            top: 20px;
+            left: 50%;
+            margin-left: -150px;
+            width: 300px;
+        }
+
+        #menu {
+            width: 100px;
+            height: 50px;
+            background: #08BECE;
+        }
+
+        #list {
+            display: none;
+            width: 300px;
+            height: 150px;
+            background: #ffe470;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div id="menu"></div>
+    <div id="list"></div>
+</div>
+<!--
+ 事件委托其实就是利用了事件的传播机制,当触发某一个元素的行为的时候它的所有父级元素的相关行为都会被触发
+ 如果我们要给这个区域中很多的元素都绑定方法,我只需要给大盒子绑定方法,这样不管里面的哪一个子元素触发的时候，大盒子的方法也会被触发,我们通过判断事件源来实现不同的业务逻辑
+-->
+<script type="text/javascript">
+    var menu = document.getElementById("menu"), list = document.getElementById("list");
+
+    document.body.onmouseover = function (e) {
+        e = e || window.event;
+        var tar = e.target || e.srcElement;
+        if (tar.id === "menu" || tar.id === "list") {
+            list.style.display = "block";
+        } else {
+            list.style.display = "none";
+        }
+    };
+</script>
+
+
+</body>
+</html>
