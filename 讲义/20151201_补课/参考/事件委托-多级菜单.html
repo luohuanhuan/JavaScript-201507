@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body, div, span, ul, li, em, h2 {
+            margin: 0;
+            padding: 0;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+            font-size: 14px;
+            -webkit-user-select: none;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        h2{
+            margin: 5px auto;
+            width: 30%;
+            font-size: 16px;
+        }
+
+        #box {
+            margin: 1% auto;
+            padding: 2%;
+            width: 25%;
+            height: 80%;
+            border: 1px dashed #11c900;
+            overflow: auto;
+        }
+
+        #box li {
+            line-height: 35px;
+        }
+
+        #box .two, #box .three, #box .four {
+            display: none;
+        }
+
+        #box .two {
+            margin-left: 20px;
+        }
+
+        #box .three {
+            margin-left: 40px;
+        }
+
+        #box .four {
+            margin-left: 60px;
+        }
+
+        #box span {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        #box span em {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 16px;
+            height: 16px;
+            background: url("img/icon.png") no-repeat -59px -28px;
+            cursor: pointer;
+        }
+
+        #box span em.open {
+            background-position: -42px -28px;
+        }
+
+
+    </style>
+</head>
+<body>
+<h2>珠峰培训级联菜单(事件委托优化版)</h2>
+
+<div id="box">
+    <ul>
+        <li>
+            <span><em></em>第一级第一个</span>
+            <ul class="two">
+                <li><span>第二级第一个</span></li>
+                <li>
+                    <span><em></em>第二级第二个</span>
+                    <ul class="three">
+                        <li><span>第三级第一个</span></li>
+                        <li><span>第三级第二个</span></li>
+                        <li>
+                            <span><em></em>第三级第三个</span>
+                            <ul class="four">
+                                <li><span>第四级第一个</span></li>
+                                <li><span>第四级第二个</span></li>
+                                <li><span>第四级第三个</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span><em></em>第二级第三个</span>
+                    <ul class="three">
+                        <li><span>第三级第一个</span></li>
+                        <li><span>第三级第二个</span></li>
+                        <li><span>第三级第三个</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span><em></em>第一级第二个</span>
+            <ul class="two">
+                <li><span>第二级第一个</span></li>
+                <li>
+                    <span><em></em>第二级第二个</span>
+                    <ul class="three">
+                        <li><span>第三级第一个</span></li>
+                        <li><span>第三级第二个</span></li>
+                        <li>
+                            <span><em></em>第三级第三个</span>
+                            <ul class="four">
+                                <li><span>第四级第一个</span></li>
+                                <li><span>第四级第二个</span></li>
+                                <li><span>第四级第三个</span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span><em></em>第二级第三个</span>
+                    <ul class="three">
+                        <li><span>第三级第一个</span></li>
+                        <li><span>第三级第二个</span></li>
+                        <li><span>第三级第三个</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript" src="js/utils-1.0.min.js"></script>
+<script type="text/javascript">
+    var box = document.getElementById("box");
+    var spans = box.getElementsByTagName("span");
+
+    //1、让有弟弟并且是ul的span具有cursor: pointer;的样式
+    for (var i = 0; i < spans.length; i++) {
+        var nex = utils.next(spans[i]);
+        if (nex && /^ul$/i.test(nex.nodeName)) {
+            spans[i].style.cursor = "pointer";
+        }
+    }
+
+    //2、实现点击的时候展开:利用事件委托的原理，给我们的box绑定单击事件，这样里面任何元素触发点击行为的时候，都会让我们的box的事件绑定的方法执行，我们只需要判断事件源是谁，做不同的事情即可
+    box.onclick = function (e) {
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+        if (/^span$/i.test(target.nodeName)) {
+            showHide(target);
+        } else if (/^em$/i.test(target.nodeName)) {
+            showHide(target.parentNode);
+        }
+    };
+
+    function showHide(curSpan) {
+        var nex = utils.next(curSpan);
+        if (nex && nex.nodeName.toLowerCase() === "ul") {
+            var isBlock = utils.css(nex, "display");
+            var oEm = curSpan.getElementsByTagName("em")[0];
+            if (isBlock === "block") {//当前是展开的，我们隐藏
+                nex.style.display = "none";
+                utils.removeClass(oEm, "open");
+
+                //我们让当前级收起的时候，让它下面的所有的子级也自动跟着收起
+                var childUl = nex.getElementsByTagName("ul");
+                for (var i = 0; i < childUl.length; i++) {
+                    childUl[i].style.display = "none";
+                    //让其哥哥元素节点中的em移除open的样式
+                    var pre = utils.prev(childUl[i]);
+                    var preEm = pre.getElementsByTagName("em")[0];
+                    utils.removeClass(preEm, "open");
+                }
+
+            } else {//当前是隐藏的，我们展开
+                nex.style.display = "block";
+                utils.addClass(oEm, "open");
+            }
+        }
+    }
+</script>
+</body>
+</html>
