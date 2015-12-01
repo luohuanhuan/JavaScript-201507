@@ -42,9 +42,6 @@
 4)每次修改都需要 add commit push
 
 
-https://github.com/zhufengpeixun/201507.git
-
-
 
 
 

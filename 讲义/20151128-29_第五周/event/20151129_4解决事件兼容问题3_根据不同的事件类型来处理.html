@@ -34,10 +34,18 @@ function bind(ele,type,fn){
 	if(ele.addEventListener){
 		ele.addEventListener(type,fn,false);
 	}else {
-		if(!ele.tempFn){
-			ele.tempFn=[];//
+		//要根据事件类型来定义不同的自定义属性（数组）
+		if(!ele["tempFn"+type]){
+			//ele.tempFn=[];//
+			//ele.tempFnclick
+			//ele.tempFnmouseover//不同的事件上都会对应不同的数组
+			//一定要理解为什么要以tempFn为前缀，以事件类型后区分符来定义一个属性名：为了把绑定在不同的事件类型上的方法，保存在不同的数组里
+			ele["tempFn"+type]=[];
+			
+			
+			
 		}
-		var a=ele.tempFn;
+		var a=ele["tempFn"+type];
 	/*	bind(ele,"click",fn3);
 		bind(ele,"click",fn2);
 		bind(ele,"click",fn3);
@@ -49,6 +57,7 @@ function bind(ele,type,fn){
 		}
 		function tempFn(){fn.call(ele);}//经过改造之后的方法
 		tempFn.photo=fn;//给每一个经过改造之后的方法都加识别属性
+		//tempFn["photo"+type]=fn;
 		a.push(tempFn);
 		
 		
@@ -62,7 +71,7 @@ function unbind(ele,type,fn){
 	if(ele.removeEventListener){
 		ele.removeEventListener(type,fn,false);	
 	}else{
-		var a=ele.tempFn;
+		var a=ele["tempFn"+type];
 		if(a){
 			for(var i=0;i<a.length;i++){
 				if(a[i].photo==fn){
@@ -80,7 +89,7 @@ function unbind(ele,type,fn){
 	}
 	
 }
-//bind(ele,"mouseover",fn3);
+bind(ele,"mouseover",fn3);
 bind(ele,"click",fn1);
 bind(ele,"click",fn2);
 bind(ele,"click",fn3);
