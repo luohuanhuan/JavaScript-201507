@@ -60,3 +60,7 @@ function on(ele,type,fn){
 			}
 		}
 	}
+	
+function processThis(obj,fn){
+	return function(e){fn.call(obj,e)}
+}

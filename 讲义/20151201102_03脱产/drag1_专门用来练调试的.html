@@ -36,12 +36,13 @@ function down(e){
 		on(document,"mousemove",_move);
 		on(document,"mouseup",_up);	
 	}
+}
 	//根据浏览器不同，用不同的方式来绑定move方法
 	
 	function move(e){
 		this.style.left=this.x+(e.pageX-this.mx)+"px";
 		this.style.top=this.y+(e.pageY-this.my)+"px";
-		}
+	}
 	function up(){
 		if(this.releaseCapture){
 		this.releaseCapture();
@@ -57,14 +58,6 @@ function down(e){
 }
 
 
-function move(e){
-	
-	
-}
-
-function up(e){
-	
-}
 
 
 
