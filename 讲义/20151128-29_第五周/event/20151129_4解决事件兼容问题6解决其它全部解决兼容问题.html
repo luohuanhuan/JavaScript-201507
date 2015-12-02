@@ -37,12 +37,10 @@ function fn5(){alert(5);}
 function fn6(){alert(6);};
 function fn7(){alert(7);}
 function fn8(e){
-	//e=e||window.event;
-	//e.target
+
 	this.innerHTML="X:"+e.pageX+",Y:"+e.pageY;
 	this.innerHTML+=e.target;
-	
-	}
+}
 function bind(ele,type,fn){
 	if(ele.addEventListener){
 		ele.addEventListener(type,fn,false);
@@ -143,6 +141,8 @@ function off(ele,type,fn){//解除绑定，就是在数组里把保存的方法�
 }
 
 on(ele,"click",fn8);
+on(ele,"click",fn1);
+on(ele,"click",fn2);
 
 
 
