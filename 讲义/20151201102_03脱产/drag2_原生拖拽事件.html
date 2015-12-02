@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:0; left:0; }
+</style>
+</head>
+
+<body>
+<div id="div1" draggable="true"></div>
+</body>
+</html>
+
+<script>
+var ele=document.getElementById("div1");
+ele.ondragstart=function(e){//拖拽开始的时候的事件
+	this.x=this.offsetLeft;
+	this.y=this.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+}
+
+ele.ondrag=function(e){//拖拽进行的时候的事件
+	this.style.left=this.x+e.pageX-this.mx+"px";
+	this.style.top=this.y+e.pageY-this.my+"px";
+	
+}
+
+ele.ondragend=function(e){//拖拽结束的时候的事件
+	this.style.left=this.x+e.pageX-this.mx+"px";
+	this.style.top=this.y+e.pageY-this.my+"px";
+}
+
+ele.ondrop
+
+</script>
+
+
+
+
+

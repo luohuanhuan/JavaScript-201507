@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#div1{ width:100px; height:100px; background:red; position:absolute; top:0; left:0; }
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script>
+var oDiv=document.getElementById("div1");
+on(oDiv,"mousedown",down);
+function down(e){
+	//保存盒子和鼠标和原始值
+	this.x=this.offsetLeft;
+	this.y=this.offsetTop;
+	this.mx=this.pageX;
+	this.my=this.pageY;
+	if(this.setCapture){
+		this.setCapture();
+		on(this,"mousemove",move);
+		on(this,"mouseup",up);
+	}else{
+		var that=this;
+		var _move=function(){
+			move.call(that);	
+		}
+		var _up=function(){
+			up.call(that);		
+		};
+		on(document,"mousemove",_move);
+		on(document,"mouseup",_up);	
+	}
+}
+	//根据浏览器不同，用不同的方式来绑定move方法
+	
+	function move(e){
+		this.style.left=this.x+(e.pageX-this.mx)+"px";
+		this.style.top=this.y+(e.pageY-this.my)+"px";
+	}
+	function up(){
+		if(this.releaseCapture){
+		this.releaseCapture();
+		off(this,"mousemove",move);
+		off(this,"mouseup",up);
+		}else{
+			off(document,"mousemove",this._move);
+			off(dsocument,"mouseup",this._up);
+			}
+		
+	
+	
+}
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
