@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+/*
+烧水---报警器--->通知
+	泡方便
+	喝
+	洗脚
+	泡澡
+	扫地
+	洗衣服
+	充电*/
+	
+//有一个模块：专门用来管理“通知”，管理不同模块之间的协调
+function EventEmitter(){//事件发射器
+	
+}
+EventEmitter.prototype.on=function(type,fn){
+	if(!this["aEvent"+type]){
+		this["aEvent"+type]=[]	
+	}
+	var a=this["aEvent"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;
+	}
+	a.push(fn);
+}
+
+EventEmitter.prototype.run=function(type){//通知
+	var a=this["aEvent"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(typeof a[i]=="function")
+				a[i].call(this);	
+		}
+	}
+	
+}
+
+EventEmitter.prototype.off=function(type,fn){
+	var a=this["aEvent"+type];
+	if(a){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a[i]=null;
+				return;	
+			}
+			
+		}
+	}
+}
+
+function Kettle(){};//kottle
+//Kettle.prototype=new EventEmitter;
+Kettle.prototype.boiling=function(){
+	console.log("开始烧水");
+	
+	var that=this;
+	window.setTimeout(function(){
+		console.log("水已烧开");
+		//run方法是负责通知的，去已经保存好的数组里，遍历执行那些方法
+		that.run("boiling");//这叫是所谓的“通知”	
+	},3000);
+	
+}
+//Kettle.prototype=new EventEmitter;//它“天生”的原型被覆盖
+Kettle.prototype.__proto__=EventEmitter.prototype;//这是更安全的原型继承方式
+function noodle(){
+	console.log("开始泡面");	
+}
+function washface(){
+	console.log("温水洗脸");	
+}
+
+var kettle1=new Kettle;
+//kettle1.addEventListener("boiling",noodle);
+//kettle1.addEventListener("boiling",washface);
+kettle1.on("boiling",noodle);
+kettle1.on("boiling",washface);
+kettle1.boiling();//"click","boiling",mouseover,mousedown，叫事件标识符
+
+
+//约定：事件
+//click-addEventListener---on-动画
+
+</script>
