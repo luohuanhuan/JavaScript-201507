@@ -1,4 +1,17 @@
 function on(ele,type,fn){
+	//加一段代码，专门处理自定义事件
+	//自定义事件都是以self开头的
+	if(/^self/.test(type)){
+		if(!ele[type]){
+			ele[type]=[];
+		}
+		var a=ele[type];
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn)return;			
+		}
+		a.push(fn);
+		
+	}
 		if(ele.addEventListener){
 			ele.addEventListener(type,fn,false);
 			return;	
@@ -44,8 +57,34 @@ function on(ele,type,fn){
 		}
 	
 	}
-	
+	function selfRun(selfType,e){//专门用来“通知”约定在自定义事件上的那些方法的。selfType参数是自定义的事件类型，e是系统事件对象
+		var a=this[selfType];
+		if(a){
+			for(var i=0;i<a.length;i++){
+				if(typeof a[i] == "function"){
+					a[i].call(this,e);	
+				}
+				
+			}
+			
+		}
+		
+		
+		
+	}
 	function off(ele,type,fn){
+		if(/^self/.test(type)){
+			var a=ele[type];
+			if(a){
+				for(var i=0;i<a.length;i++){
+					if(a[i]==fn){
+						a[i]=null;
+						break;
+					}	
+				}
+				
+			}
+		}
 		if(ele.removeEventListener){
 			ele.removeEventListener(type,fn,false);
 			return;
