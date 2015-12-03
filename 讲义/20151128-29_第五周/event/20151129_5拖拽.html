@@ -23,7 +23,7 @@ on(div2,"mousedown",down);
 on(div3,"mousedown",down);
 //以下方法里，this默认的原则是指向被拖拽的元素
 function down(e){//做准备拖拽
-	this.x=this.offsetLeft//盒子的老位置
+	this.x=this.offsetLeft;//盒子的老位置
 	this.y=this.offsetTop;
 	this.mx=e.pageX;
 	this.my=e.pageY;//鼠标按下去的时候的位置
@@ -40,7 +40,7 @@ function down(e){//做准备拖拽
 		
 		var that=this;
 		this.MOVE=function(e){move.call(that,e)};
-		this.UP=function(e){up.call(that,e)}
+		this.UP=function(e){up.call(that,e)};
 		on(document,"mousemove",this.MOVE);
 		on(document,"mouseup",this.UP);
 		

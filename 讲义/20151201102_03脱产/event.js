@@ -13,11 +13,11 @@ function on(ele,type,fn){
 
 		for(var i=0;i<a.length;i++){
 			if(a[i]==fn)return;	//如果这个方法在数组已经存在了，则退出
-			ele.attachEvent("on"+type,function(e){run.call(ele,e)});
+			//ele.attachEvent("on"+type,function(e){run.call(ele,e)});
 		}
 		
 		a.push(fn);
-		ele.attachEvent("on"+type,function(e){run.call(ele,e)});
+		//ele.attachEvent("on"+type,function(e){run.call(ele,e)});
 		
 	}
 

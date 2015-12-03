@@ -25,7 +25,7 @@
 
     //阻止默认行为,例如阻止<a>标签的默认跳转的行为
     //<a href="javascript:;" id="link">
-    //link.onclick=function(){return false;}
+    //link.onclick=function(){return false;}  只有DOM0可以用
     //e.preventDefault ? e.preventDefault() : e.returnValue = false;
 
     //阻止事件的冒泡传播
@@ -38,7 +38,7 @@
     //4、应用事件的传播机制来实现事件委托
 
     //5、DOM0和DOM2的区别
-    //DOM0的性能会比DOM2稍微好一些
+    //DOM0的性能会比DOM2稍微好一些：DOM0级事件在元素的私有属性上，DOM2级定义在所属类EventTarget上；
     //DOM2中有很多的优势:
     //1)DOM0只能给元素的某一个行为绑定一个方法,绑定第二个方法会把第一个覆盖掉；DOM2可以给元素的某一个行为绑定多个不同的方法;
     //2)DOM2中新增加了一些DOM0没有的行为,例如:"DOMContentLoaded" ->只要HTML结构加载完成就会执行对应的方法  window.onload->只有HTML结构、图片、文字等所有资源都加载完成才会执行对应的方法(一个页面只能使用一次)
