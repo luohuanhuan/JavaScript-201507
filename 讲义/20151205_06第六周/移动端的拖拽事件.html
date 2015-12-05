@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>无标题文档</title>
+<style type="text/css">
+#outer{ width:70%; height:100px; overflow:hidden; margin:100px auto;}
+#inner{ width:500%;  height:100%; }
+#inner div{ width:20%; height:100%; background:red; text-align:center; font-size:24px; float:left;}
+</style>
+</head>
+
+<body>
+<div id="outer">
+	<div id="inner">
+    	<div>1</div><div style="background:green;">2</div><div style="background:black; color:white;">3</div><div style="background:blue; ">4</div><div style="background:yellow;">5</div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+
+function start(e){
+	this.startX=e.changedTouches[0].pageX;
+	this.abcclick=false;
+}
+function move(e){
+	var change=e.changedTouches[0].pageX-this.startX;
+	//当前的位置=原来的位置+鼠标移动的距离
+	//原来的位置
+	this.offsetWidth
+	//第一张的位置从那开始：0
+	//第二张的位置从那开始：-1*this.offsetWidth;
+	//第三张的位置从那开始:-index*this.offsetWidth;
+	this.parentNode.style.transform="translate("+(-this.index*this.offsetWidth+change)+"px,0)";
+	var index=this.index;	
+	console.log(change,index);
+	if(change>0){//这是在判断方向
+		//向右
+		this.parentNode.index=--index	
+	}else if(change<0){
+		//向左
+		this.parentNode.index=++index
+	}else{
+		//这样就算click事件
+		this.abcclick=true;	
+	}
+	
+}
+
+function end(e){
+	this.parentNode.style.transform="translate("+(-this.parentNode.index*this.offsetWidth)+"px,0)";
+	
+	if(this.abcclick){
+		//这里执行和click相关的方法	
+	}
+}
+
+var oDivs=document.getElementById("inner").getElementsByTagName("div");
+[].forEach.call(oDivs,function(ele,i){
+	ele.index=i;
+	ele.addEventListener("touchstart",start);
+	ele.addEventListener("touchmove",move);
+	ele.addEventListener("touchend",end);
+});
+</script>
