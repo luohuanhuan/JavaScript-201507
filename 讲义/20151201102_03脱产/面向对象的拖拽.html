@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+
+<style type="text/css">
+#div1{ width:100px; height:100px; position:absolute; top:0; left:0; background:green}
+</style>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>
+<script src="event.js"></script>
+
+<script>
+function Drag(ele){//ele是被拖拽的元素
+	//this是谁？原来在拖拽里的this都是指当前被拖拽的元素
+	//现在，面向对象里的this，都是当前类的实例
+	this.ele=ele;//上下文应该是当前这个拖拽活动的主体对象，也就是当前所有的行为都发生在上下文上（this，或说当前实例上）
+	this.x=ele.offsetLeft;
+	this.y=ele.offsetTop;
+	this.mx=e.pageX;
+	this.my=e.pageY;
+	this.down();
+	//on(ele,"mousedown",this.down);//这样绑定，this和我们规定的原则冲突
+	//事件绑定中的原则是：方法绑定给那个元素，方法在运行的时候，this就指向这个元素
+	//面向对象里，类上的方法里的this应该指当前类的实例
+	this.DOWN=processThis(this,this.down);//让processThis把this.down改造一下：返回一个新方法，让this.down在执行的时候，强制this指向当前这个this（就是当前类的实例）
+	this.MOVE=processThis(this,this.move);
+	this.UP=processThis(this,this.up);
+	//也可以用以下方式来实现
+	this.DOWN=this.down.bind(this);
+	this.MOVE=this.move.bind(this);
+	
+	on(ele,"mousedown",this.DOWN);
+	on(this.ele,"mousedown",this.DOWN);
+	this.ele,ele
+}
+
+Drag.prototype.down=function(e){
+	this//类上的方法里的this，一定要是当前类的实例
+	 this.ele
+}
+
+
+Drag.prototype.move=function(e){
+	
+}
+
+Drag.prototype.up=function(e){
+	
+}
+
+var obj=new Drag(div1);
+obj.down;
+obj.move;
+</script>
+
+
