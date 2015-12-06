@@ -247,7 +247,8 @@ function animate(ele,obj,duration,effect,fnCallback){
 			}
 			clearInterval(ele.timer);	
 			//fnCallback=effect;	//如果第四个参数传进来的是一个函数，则effect表示的是回调函数
-			fnCallback.call(ele);		
+			if(typeof fnCallback == "function")
+				fnCallback.call(ele);		
 		}
 	}
 	 ele.timer=window.setInterval(step,interval);

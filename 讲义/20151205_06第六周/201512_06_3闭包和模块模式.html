@@ -113,11 +113,12 @@ var moudles=(function(){
 	return {a:init,b:down}
 	//以上的方法定义，和方法的返回（暴露）
 	//还有下边应用，这是模块模式的原理
+	//有兴趣去看看requireJS
 	
 })();
 
 
-moudles.a(eles[0]);
+moudles.a(eles[0]);//this是什么和在那儿定义的没关系，变量是什么和在那儿执行没什么关系，看它在那儿定义的
 moudles.a(eles[1]);
 moudles.a(eles[2]);
 moudles.a(eles[3]);
