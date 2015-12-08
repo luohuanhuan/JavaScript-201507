@@ -116,3 +116,7 @@ function unbind(ele,type,fn){
 	
 }*/
 //众生无始以来，一直处于无明烦恼之中，累劫累生，习气深厚，这些烦恼习气从未离心，所以虽发菩提心而难守持，虽欲度众生而自己却被烦恼束缚，虽欲修行而障难重重。即使能够深悟佛法之理，也由于难敌烦恼业力，不能进步
+/*
+moudle.exports.fn=on;
+moudle.exports=on;
+moudle.exports是Node内置的对象*/
