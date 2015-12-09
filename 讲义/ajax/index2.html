@@ -36,7 +36,7 @@ table,tr,td{ border:2px blue solid; border-collapse:collapse;}
 
 </select>
 <br>
-<input type="submit" name="btn" value="提交">
+<input type="button" name="btn" value="提交">
 </form>
 <div id="showContent">
 这是数据显示区
@@ -50,7 +50,7 @@ table,tr,td{ border:2px blue solid; border-collapse:collapse;}
 </body>
 </html>
 <script>
-document.forms.item(0).onsubmit=function(){
+/*document.forms.item(0).onsubmit=function(){
 	//return false;//阻止表单被提交	
 }
 
@@ -59,8 +59,22 @@ xhr.open();
 xhr.send();
 xhr.onreadystatechange=function(){
 	
+}*/
+document.getElementsByName("btn").item(0).onclick=function(){
+	var xhr=new XMLHttpRequest();
+	xhr.open("GET","/ajax?name=关云长&gender=女&hobby=抽烟&hobby=喝酒&hobby=打麻将&degree=大学&course=数学&course=英语&btn=提交",true);
+	xhr.send();//
+	xhr.onreadystatechange=function(){//就是送货状态改变的时候
+		//xhr.readyState属性表示的是xhr（请求对象）的状态
+		//还需要判断HTTP的状态:xhr.status表示http的状态
+		
+		if(xhr.readyState==4&&xhr.status==200){
+			//alert(xhr.responseText	);
+			var ele=document.getElementById("showContent");
+			ele.innerHTML+=xhr.responseText+"<br>";
+		}
+	}
 }
-
 
 
 
