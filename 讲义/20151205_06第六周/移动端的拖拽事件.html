@@ -35,7 +35,7 @@ function move(e){
 	//第三张的位置从那开始:-index*this.offsetWidth;
 	this.parentNode.style.transform="translate("+(-this.index*this.offsetWidth+change)+"px,0)";
 	var index=this.index;	
-	console.log(change,index);
+	/*console.log(change,index);*/
 	if(change>0){//这是在判断方向
 		//向右
 		this.parentNode.index=--index	
