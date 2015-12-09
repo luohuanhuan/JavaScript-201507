@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+#content{ height:300px; background:purple;}
+</style>
+</head>
+
+<body>
+<div id="content">
+点这个div的时候再去把数据加载到这里
+</div>
+</body>
+</html>
+<script>
+//http://www.zhufengpeixun.cn/ajax/jsonphp.php?processFn=fnn
+function fnn(data){
+	//var data=JSON.parse(data);	
+	content.innerHTML=data;
+	
+}
+content.onclick=function(){
+	var oScript=document.createElement("script");
+	oScript.src="http://www.zhufengpeixun.cn/ajax/jsonphp.php?processFn=fnn";
+	document.body.appendChild(oScript);
+	
+}
+
+</script>

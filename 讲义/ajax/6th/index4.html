@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+table,tr,td{ border-collapse:collapse; border:red 1px solid;}
+</style>
+<script >
+alert("加载一次页面我就弹一次");
+</script>
+</head>
+
+<body>
+<h1>假装是个主页</h1>
+//什么叫submit，submit的方法：五种:post,get
+querystring,在node那边对应的属性是objUrl.query
+<form method="get"  action="/data/">
+姓名<input type="text" name="name" value="武照不帅" ><br/>
+年龄<input type="text" name="age" value="24"><br/>
+性别<input type="radio" name="gender" value="男"  checked>男<input type="radio" name="gender" value="女">女<br/>
+爱好<input type="checkbox" name="hobby" value="抽烟">抽烟
+<input type="checkbox" name="hobby" value="喝酒">喝酒
+<input type="checkbox" name="hobby" value="打麻将">打麻将
+<input type="checkbox" name="hobby" value="打架">打架
+<br/>
+学历
+<select  name="degree"  style="width:150px;">
+	<option value="小学">小学</option>
+	<option value="中学">中学</option>
+    <option value="高学">高学</option>
+    <option value="大学">大学</option>
+    <option value="硕士">硕士</option>
+</select>
+<br/>
+所学课程
+<select  name="course" style="width:150px;">
+	<option value="语文">语文</option>
+	<option value="数学">数学</option>
+    <option value="英文">英文</option>
+    <option value="物理">物理</option>
+    <option value="化学">化学</option>
+</select>
+<input type="button" value="提交" name="btn">
+</form>
+<div id="content">
+数据库里的内容就在这里显示
+</div>
+<div>
+</div>
+<div>
+</div>
+</body>
+</html>
+
+<script>
+document.getElementsByName("btn").item(0).onclick=function(){
+	var xhr=new XMLHttpRequest;//创建请求对象
+	//var str="name=俊丽&age=17&gender=女&hobby=吃饭&degree=博士"
+	var str=serialize(this.parentNode);
+	xhr.open("get","/ajax/?"+str,true);//使用指定的方法向指定的地址发起请求
+	xhr.send();//开始发请求
+	xhr.readyState;//这个是xhr请求对象的状态，五种状态：0--4
+	xhr.status//HTTP的状态 100，2xx,3xx,4xx,5xx
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4&&xhr.status==200){
+			//var p=document.createElement("p");
+			//p.innerHTML=xhr.responseText;
+			//content.appendChild(p);
+			
+			//先把xhr.responseText转化为JS对象，然后遍历这个对象
+			//创建行，然后遍历对象--并且创建td，把当此遍历出来的属性值做为td的innerHTML
+			//把td添加给tr
+			//把tr添加到id为content里面那个表格的tbody里
+			var obj=JSON.parse(xhr.responseText);
+			var oTr=document.createElement("tr");
+			for(var attr in obj){
+				var oTd=document.createElement("td");
+				oTd.innerHTML=obj[attr];
+				oTr.appendChild(oTd);
+			}
+			var oTable=document.getElementById("content").getElementsByTagName("table").item(0);
+			if(oTable){//如果表格存在，则直接添加
+			oTable.tBodies.item(0).appendChild(oTr);
+			}else{//不存在表格，则先创建表格和tbody
+				var oTable=document.createElement("table");
+				var oTbody=document.createElement("tbody");
+				document.getElementById("content").appendChild(oTable);
+				oTable.appendChild(oTbody);
+				oTbody.appendChild(oTr);
+			}
+		}	
+	}
+}
+
+//序列化：按着指定格式生成的字符串
+//JSON， '{"name":"rose","age":22}'
+//XML
+        function serialize(form){        
+            var parts = [],
+                field = null,
+                i,
+                len,
+                j,
+                optLen,
+                option,
+                optValue;
+            
+            for (i=0, len=form.elements.length; i < len; i++){
+                field = form.elements[i];
+            
+                switch(field.type){
+                    case "select-one":
+                    case "select-multiple":
+                    
+                        if (field.name.length){
+                            for (j=0, optLen = field.options.length; j < optLen; j++){
+                                option = field.options[j];
+                                if (option.selected){
+                                    optValue = "";
+                                    if (option.hasAttribute){
+                                        optValue = (option.hasAttribute("value") ? option.value : option.text);
+                                    } else {
+                                        optValue = (option.attributes["value"].specified ? option.value : option.text);
+                                    }
+                                    parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponent(optValue));
+                                }
+                            }
+                        }
+                        break;
+                        
+                    case undefined:     //fieldset
+                    case "file":        //file input
+                    case "submit":      //submit button
+                    case "reset":       //reset button
+                    case "button":      //custom button
+                        break;
+                        
+                    case "radio":       //radio button
+                    case "checkbox":    //checkbox
+                        if (!field.checked){
+                            break;
+                        }
+                        /* falls through */
+                                    
+                    default:
+                        //don't include form fields without names
+                        if (field.name.length){
+                            parts.push(encodeURIComponent(field.name) + "=" + encodeURIComponent(field.value));
+                        }
+                }
+            }        
+            return parts.join("&");
+        }
+
+</script>
+
+
