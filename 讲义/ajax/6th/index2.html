@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<h1>假装是个主页</h1>
+//什么叫submit，submit的方法：五种:post,get
+querystring,在node那边对应的属性是objUrl.query
+<form method="get"  action="">
+姓名<input type="text" name="name" value="武照不帅" ><br/>
+年龄<input type="text" name="age" value="24"><br/>
+性别<input type="radio" name="gender" value="男"  checked>男<input type="radio" name="gender" value="女">女<br/>
+爱好<input type="checkbox" name="hobby" value="抽烟">抽烟
+<input type="checkbox" name="hobby" value="喝酒">喝酒
+<input type="checkbox" name="hobby" value="打麻将">打麻将
+<input type="checkbox" name="hobby" value="打架">打架
+<br/>
+学历
+<select  name="degree"  style="width:150px;">
+	<option value="小学">小学</option>
+	<option value="中学">中学</option>
+    <option value="高学">高学</option>
+    <option value="大学">大学</option>
+    <option value="硕士">硕士</option>
+</select>
+<br/>
+所学课程
+<select  name="course" style="width:150px;">
+	<option value="语文">语文</option>
+	<option value="数学">数学</option>
+    <option value="英文">英文</option>
+    <option value="物理">物理</option>
+    <option value="化学">化学</option>
+</select>
+<input type="submit" value="提交" name="btn">
+</form>
+</body>
+</html>
