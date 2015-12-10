@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+
+同源策略：ajax的访问前是：scheme相同，域名（子域名和主域名都要相同）
+zhufeng.ke.qq.com,端口号相同
+XMLHttpRequest对象，只能在保证以上几个原则都相同的情况下，才可以工作
+
+以下代码是我们布置在本地的代码，打开这个网页是http://localhost的方式
+	var xhr=new XMLHttpRequest();
+	xhr.open("GET","http://www.qq.com/ajax");//
+    
+    以上代码也是在一个网页中在运行，要保证这个网页和第二个参数中的域名是相同的才行，否则会失败
+     No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:8081' is therefore not allowed access. The response had HTTP status code 502.
+     
+     xhr.open("GET","http://localhost:8081/ajax");//
+     
+     
+</body>
+alert(123)
+</html>
+<script src="http://www.qq.com"></script>
+<script src="abc.css"></script>
+<script src="http://www.zhufengpeixun.cn/ajax?city=北京"></script>
+<script>
+alert(123)
+//JS外链文件可以引用其它网站上的资源，它的扩展名也不必是js，并且还可能这个外链文件并不存在，只是由后台语言的逻辑生成的（有可能是动态生成的）。
+//我想说的是：用script标签的src属性，可以跨网站（跨域）引入一个文件，并且把这个文件里的文本信息当成JS代码来执行
+</script>

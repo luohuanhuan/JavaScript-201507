@@ -1,0 +1,5 @@
+alert(123);
+
+function fn(){alert(123)};
+function fn1(){alert(456)}
+fn1();
