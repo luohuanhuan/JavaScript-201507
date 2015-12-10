@@ -54,6 +54,7 @@ http.createServer(function(request,response){
 		
 	}else if(pathname=="/ajax"){
 		//是不是异步请求，和浏览器端有关系，有服务端没有任何关系
+		//(5000)
 		response.end(JSON.stringify(query));	
 	}
 	
