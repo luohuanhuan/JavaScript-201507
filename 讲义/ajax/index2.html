@@ -11,7 +11,7 @@ table,tr,td{ border:2px blue solid; border-collapse:collapse;}
 
 <body>
 <form method="get" action="">
-姓名<input type="text" name="name" value="耿某人"><br>
+<label for="name1">姓名<input type="text" id="name1" name="name" value="耿某人"></label><br>
 性别<input type="radio" checked value="男" name="gender">男<input type="radio" value="女" name="gender">女<br>
 爱好<input type="checkbox" name="hobby" checked value="抽烟">抽烟
 <input type="checkbox" name="hobby"   value="喝酒">喝酒
@@ -50,20 +50,51 @@ table,tr,td{ border:2px blue solid; border-collapse:collapse;}
 </body>
 </html>
 <script>
-/*document.forms.item(0).onsubmit=function(){
-	//return false;//阻止表单被提交	
+//方法的作用：把表单里的name和value的值，自动拼接成一个queryString
+function serialize(form){
+	var eles=form.elements;//form的固有属性，这是集合，它包含的是所有有效的表单元素：有name属性，有value属性
+	var str="";//"name=rose&age=22&heigth=180";
+	var a=[];
+	for(var i=0;i<eles.length;i++){
+		var ele=eles[i];
+		if(!ele.name)continue;//如果没有name属性，则忽略这个表单
+		switch(ele.type){
+			case "select-one":
+			case "select-multiple":
+			var options=ele.options;//这是下拉菜单固有属性
+			
+			for(var j=0;j<options.length;j++){
+				var opt=options[j];
+				if(opt.selected){
+					str=encodeURIComponent(ele.name)+"="+encodeURIComponent(opt.value);
+					a.push(str);
+				}
+				
+			}
+			break;
+			//case undefined:
+			//break;
+			case "radio":
+			case "checkbox":
+				if(!ele.checked)break
+			default:
+				str=encodeURIComponent(ele.name)+"="+encodeURIComponent(ele.value);
+				a.push(str);
+			
+		}
+	}
+	return a.join("&");
 }
 
-var xhr=new window.XMLHttpRequest;//request
-xhr.open();
-xhr.send();
-xhr.onreadystatechange=function(){
-	
-}*/
+
 document.getElementsByName("btn").item(0).onclick=function(){
 	var xhr=new XMLHttpRequest();
-	xhr.open("GET","/ajax?name=关云长&gender=女&hobby=抽烟&hobby=喝酒&hobby=打麻将&degree=大学&course=数学&course=英语&btn=提交",true);
-	xhr.send();//
+	
+	var strQuery=serialize(this.parentNode);
+	console.log(strQuery);
+	//xhr.open("GET","/ajax?"+strQuery);
+	xhr.open("GET","http://www.qq.com/ajax?"+strQuery);
+	xhr.send();//一但执行这个方法，请求就会被发送，并且服务器端会给一个response
 	xhr.onreadystatechange=function(){//就是送货状态改变的时候
 		//xhr.readyState属性表示的是xhr（请求对象）的状态
 		//还需要判断HTTP的状态:xhr.status表示http的状态
@@ -76,6 +107,22 @@ document.getElementsByName("btn").item(0).onclick=function(){
 	}
 }
 
+/*
+//sql :;delete from message where 1=1;
+//;delete from message where 1=1;
+//为了防止一些对后台有破坏作用的攻击语句，应该把预防性的把这些语句转码，把其中的特殊符号转成16进制的ASCII码
+encodeURIComponent(";delete from message where 1=1;")
+//"%3Bdelete%20from%20message%20where%201%3D1%3B"
+decodeURIComponent("%3Bdelete%20from%20message%20where%201%3D1%3B");
+encodeURIComponent
+decodeURIComponent
+encodeURI;
+decodeURI;//你自己在网上查一个，这一组方法和上一组方法有什么区别？
+var str="http://www.qq.com?name=rose&cotent=;delete from message where 1=1;";
+
+//name=耿某人&gender=男&hobby=抽烟&hobby=喝酒&hobby=打麻将&hobby=打豆豆&degree=小学&course=数学&course=英语&course=化学&btn=提交
+var password="a  b c d";
+*/
 
 
 
