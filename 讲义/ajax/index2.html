@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+table,tr,td{ border:2px blue solid; border-collapse:collapse;}
+
+</style>
+</head>
+
+<body>
+<form method="get" action="">
+姓名<input type="text" name="name" value="耿某人"><br>
+性别<input type="radio" checked value="男" name="gender">男<input type="radio" value="女" name="gender">女<br>
+爱好<input type="checkbox" name="hobby" checked value="抽烟">抽烟
+<input type="checkbox" name="hobby"   value="喝酒">喝酒
+<input type="checkbox" name="hobby"   value="打麻将">打麻将
+<input type="checkbox" name="hobby"  value="打豆豆">打豆豆
+<br>
+学历
+<select name="degree" >
+	<option value="小学">小学</option>
+    <option value="初中">中学</option>
+    <option value="高中">高中</option>
+    <option value="大学">大学</option>
+
+</select>
+<br>
+所学课程 
+<select name="course" multiple >
+	<option value="语文">语文</option>
+    <option value="数学">数学</option>
+    <option value="英语">英语</option>
+    <option value="化学">化学</option>
+
+</select>
+<br>
+<input type="button" name="btn" value="提交">
+</form>
+<div id="showContent">
+这是数据显示区
+</div>
+<div>
+第二个div
+</div>
+<div>
+第三个div
+</div>
+</body>
+</html>
+<script>
+/*document.forms.item(0).onsubmit=function(){
+	//return false;//阻止表单被提交	
+}
+
+var xhr=new window.XMLHttpRequest;//request
+xhr.open();
+xhr.send();
+xhr.onreadystatechange=function(){
+	
+}*/
+document.getElementsByName("btn").item(0).onclick=function(){
+	var xhr=new XMLHttpRequest();
+	xhr.open("GET","/ajax?name=关云长&gender=女&hobby=抽烟&hobby=喝酒&hobby=打麻将&degree=大学&course=数学&course=英语&btn=提交",true);
+	xhr.send();//
+	xhr.onreadystatechange=function(){//就是送货状态改变的时候
+		//xhr.readyState属性表示的是xhr（请求对象）的状态
+		//还需要判断HTTP的状态:xhr.status表示http的状态
+		
+		if(xhr.readyState==4&&xhr.status==200){
+			//alert(xhr.responseText	);
+			var ele=document.getElementById("showContent");
+			ele.innerHTML+=xhr.responseText+"<br>";
+		}
+	}
+}
+
+
+
+
+
+</script>

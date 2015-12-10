@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+table,tr,td{ border-collapse:collapse; border:red 1px solid;}
+</style>
+<script >
+alert("加载一次页面我就弹一次");
+</script>
+</head>
+
+<body>
+<h1>假装是个主页</h1>
+//什么叫submit，submit的方法：五种:post, get &
+querystring,在node那边对应的属性是objUrl.query
+<form method="get"  action="/data/">
+姓名<input type="text" name="name" value="武照不帅" ><br/>
+text,submit,reset,button,password,hidden,textArea
+name=value  name=武照不帅&age=24&
+年龄<input type="text" name="age" value="24"><br/>
+性别<input type="radio" name="gender" value="男"  checked>男<input type="radio" name="gender" value="女">女<br/> 
+<label for="hobby1">爱好<input type="checkbox" name="hobby" value="抽烟">抽烟</label>
+<input type="checkbox" name="hobby" value="喝酒">喝酒
+<input type="checkbox" name="hobby" value="打麻将">打麻将
+<input type="checkbox" name="hobby" value="打架">打架
+<br/>
+学历
+<select  name="degree"  style="width:150px;">
+	<option value="小学">小学</option>
+	<option value="中学">中学</option>
+    <option value="高学">高学</option>
+    <option value="大学">大学</option>
+    <option value="硕士">硕士</option>
+</select>
+<br/>
+所学课程
+<select  name="course" style="width:150px;">
+	<option value="语文">语文</option>
+	<option value="数学">数学</option>
+    <option value="英文">英文</option>
+    <option value="物理">物理</option>
+    <option value="化学">化学</option>
+</select>
+course=语文&course=数学&course=物理
+<input type="button" value="提交" name="btn">
+</form>
+<div id="content">
+数据库里的内容就在这里显示
+</div>
+<div>
+</div>
+<div>
+</div>
+</body>
+</html>
+
+<script>
+var btn=document.getElementsByName("btn").item(0);
+
+
+function serialize(form){
+	//form指表单，操作的是form里的所有的有效表单元素
+	var str="";
+	var eles=form.elements;//就是指form里所有的表单元素集合
+	var a=[];
+	for(var i=0;i<eles.length;i++){
+		var ele=eles[i];
+		if(ele.name.length){//必须保证此表单元素写了name属性
+			switch(ele.type){
+				 case "select-one":
+                 case "select-multiple":
+				 var opts=ele.options;
+				 for(var j=0;j<opts.length;j++){
+					 if(opts[j].selected){
+						a.push(ele.name+"="+opts[j].value) 
+					 }
+					 //str+=ele.name+"="+opts[j].value+"&"
+				 }
+				break;
+				case "file":
+				case "submit":
+				case "button":
+				case "reset":
+					break;
+				case "radio":
+				case "checkbox":
+					if(!ele.checked)break;
+				default:
+					a.push(ele.name+"="+ele.value);
+			}
+		}
+			
+	}
+	
+	return a.join("&");
+	
+}
+
+//name=武照不帅&age=24&gender=男&hobby=喝酒&hobby=打麻将&hobby=打架&degree=小学&course=语文&btn=提交
+var str="http://www.qq.com/?name=武照不帅&age=24&gender=男&hobby=喝酒&hobby=打麻将&hobby=打架&degree=小学&course=语文&btn=提交";
+console.log(encodeURI(str));//问号之前的不转，遇到=,&不转
+//http://www.qq.com/?name=%E6%AD%A6%E7%85%A7%E4%B8%8D%E5%B8%85&age=24&gender=…degree=%E5%B0%8F%E5%AD%A6&course=%E8%AF%AD%E6%96%87&btn=%E6%8F%90%E4%BA%A4
+//16进制的ASCII码 SQL注入
+//和encodeURI对应的方法是decodeURI
+//var i=0;var j=100;
+console.log(encodeURIComponent("http://www.qq.com/?name=rose&ex=select * from message where name =rose;delete from message where 1=1"));
+//decodeURIComponent
+
+//select%20*%20from%20message%20where%20name%20%3Drose%3Bdelete%20from%20message%20where%201%3D1
+//\w
+
+</script>
+
+

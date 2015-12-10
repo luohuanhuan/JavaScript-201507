@@ -61,14 +61,14 @@ function end(){
 			
 	}
 }
-function setPos(pos,cur){
+function setPos(pos,cur){//计算当前应该停在第几帧上，
 	var index = null;
 	if(pos>0){
 		index = cur-1;
-		if(index < 0){
+		if(index < 0){//过界判断，如果向右走，走到了-1张，则停在0张上
 			index = 0;
 		}
-	}else if(pos<0){
+	}else if(pos<0){//过界判断
 		index = cur+1;
 		if(index >oLis.length-1){
 			index = oLis.length-1;
@@ -76,8 +76,6 @@ function setPos(pos,cur){
 			
 	}
 	return index;
-	
-	
 }
 </script>
 
