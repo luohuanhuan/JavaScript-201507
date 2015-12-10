@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<script>
+//网站交互的原理（动态网站的原理）；
+//首先要有一个固定ip地址电脑（服务器），这个电脑上有一个软件，它用监听固定的端口，来做internet的信息访问服务
+//当有浏览器向这个ip的指定端口发起请求的时候，服务器端就可以得到并且处理这个请求，处理完成之后还要把处理的结果应答给浏览器端
+//每一个请求，必然会对应一个应答
+//request和response是网站访问服务固有机制
+//request和response就相当于开个饭馆就有两个服务员，一个收银台的服务员：负责收单； response负责上菜
+//网站编程有五大内置对象：request,response,session,server,application
+
+//理解什么是同步刷新：在传统的动态网站里，每一请求一次就会有一次应答，每一次应答都会导致整个网页的重新生成，这个网页重新生成的过程叫，就叫“网页同步刷新”，它的坏处就是浪费资源、性能，影响用户的体验
+
+//怎么实现的网页的异步加载：
+//浏览器中有一个XMLHttpRequest，用这个对象的实例来发起一个单独的请求，而不再用浏览器默认的请求机制（比如表单的submit行为）
+//用xhr请求对象，向后台发起请求，后台会把应答的内容通过这个对象发送回浏览器端
+//具体过程如下
+
+
+var request=new XMLHttpRequest();//第一步
+request.open("GET","/ajax",true);//第二步
+request.send();//第三步
+request.onreadystatechange=function(){//第四步
+	if(request.readyState==4&&request.status==200){
+		//readyState是请求对象的状态--好比交易流程的状态（很像快递的状态）
+		//status是HTTP的状态（请求的数据的状态，服务端响应的内容的状态）
+		request.responseText//第五步
+		//
+	}
+}
+
+//在和后台数据交互的时候，需要和后台约定那些事？
+//1、你用什么方式向后台发起请求，open的第一个参数
+//2、请求发送给那个地址去处理，open的第二个参数
+//3、发送的数据的形式要约定好：约定好query的name和value,就是要约定好查询字符串的键名，
+//?name=rose&age=22&weight=180
+
+//以上是请求的时候的约定
+
+//对应答的数据格式同样也要约定好
+[
+	{"name":"rose","age":18,"height":180},{},{}
+]
+//接口
+
+
+	
+
+
+
+
+
+
+</script>
+
+
+
+
