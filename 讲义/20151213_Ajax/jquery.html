@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <script>
+        // onload节onready有什么区别
+        var ready = function (callback) {
+            if (window.addEventListener) {
+                window.addEventListener('DOMContentLoaded', function () {
+                    callback();
+                }, false);
+            } else {
+                // 只要有readyState这个属性 100%会有onreadystatechange这个事件
+                /* 0-UNINITIALIZED：XML 对象被产生，但没有任何文件被加载。
+                 1-LOADING：加载程序进行中，但文件尚未开始解析。
+                 2-LOADED：部分的文件已经加载且进行解析，但对象模型尚未生效。
+                 3-INTERACTIVE：仅对已加载的部分文件有效，在此情况下，对象模型是有效但只读的。
+                 4-COMPLETED：文件已完全加载，代表加载成功。
+                 */
+                document.attachEvent('readystatechange', function () {
+                    if (document.readyState === 'interactive') {
+                        callback();
+                    }
+                })
+            }
+        };
+
+        // 时间戳 就是1970年到现在的毫秒数
+        /*ready(function () {
+            console.log('ready',Date.now());
+            console.time('a')
+        });
+        window.onload = function () {
+            console.log('load',new Date().getTime());
+            console.timeEnd('a');
+        }*/
+
+        ready(function(){
+            $.ajax({
+                // 是否异步,默认是true
+                async:true,
+                // 在执行ajax对象的send方法之前要执行的函数
+                // 用它可以实现loading效果
+                beforeSend:function(xhr){},
+                // 缓存
+                cache:false,
+                // 不管成功还是失败都会执行此函数
+                // 用它来实现收起loading效果
+                complete:function(){},
+                // 设置请求头信息里头的content-type,默认为application/x-www-form-urlencoded
+                contentType:'application/x-www-form-urlencoded',
+                // 设置success error complete三个函数里头的this指向
+                context:{},
+                // 修改jquery默认的格式解析器
+                converters:{'json':function(str){console.log(str)}},
+                // 往服务器发送的数据,可以是string也可以是object
+                // 如果是object会转换为URI的格式
+                data:{},
+                // 过滤器,服务器返回数据之后先走此函数 在抛给success或error函数
+                // warning:一定要return数据回去
+                dataFilter:function(data){
+                    return data;
+                },
+                // 表示把服务器返回的数据转换为指定格式
+                dataType:'text',
+                // ajax报错的时候,执行的函数
+                error:function(e){},
+                // 设置自定义头信息
+                headers:{'apiversion':'1.0'},
+                // 在1.9以下的jquery里都是用type
+                // http方法
+                method:'get',
+                // 把response里的content-type重写为指定的格式
+                mimeType:'text/plain',
+                // URL里的密码
+                password:'',
+                // URL的账户名
+                username:'',
+                // 当data为object的时候是否解析data 默认是true
+                // 是否解析data,
+                // warning:当data为formdata和二进制的时候 这里一定要设置为false
+                processData:false,
+                // 针对指定的http响应码执行响应的逻辑
+                statusCode:{
+                    200:function(){},
+                    404:function(){}
+                },
+                // 成功时执行的函数
+                success:function(data){},
+                // 超时毫秒数,为0时代表不执行超时逻辑,
+                // 如果超时,会执行error方法
+                timeout:0,
+                // 请求的路径
+                url:''
+            });
+
+            // 使用get方法提交
+            $.get('data.json',{},function(data){
+
+            },'json');
+            // 使用post方法提交
+            $.post('data.json',{},function(data){
+
+            },'json');
+            // 通过get方法获取json对象
+            $.getJSON('data.json',{},function(data){
+
+            });
+        });
+
+        $(function(){
+            // 提交的执行逻辑
+            var submit=function(data){
+                // 如果ajax在提交过程中,什么都不做
+                // 没有在执行过程中,就执行ajax提交
+                if(submit.status===false){
+                    $.ajax({
+                        // 提交的路径,根据server定义
+                        url:'/interface',
+                        data:data,
+                        beforeSend:function(){
+                            // return false
+                            // 代表终止ajax请求
+                            // 发送之前设置status为true
+                            submit.status=true;
+                        },
+                        dataType:'json',
+                        success:function(data){
+                            console.log(data)
+                        },
+                        complete:function(){
+                            // 当http的事务完成之后,再把status设置为false
+                            submit.status=false
+                        }
+                    })
+                }
+            };
+            // 没有在提交过程中为false
+            // 在提交过程中为true
+            // 自定义状态信息
+            submit.status=false;
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

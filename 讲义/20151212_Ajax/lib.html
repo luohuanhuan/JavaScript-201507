@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="lib/ajaxHelper.js"></script>
+    <script>
+        window.onload = function () {
+            x.$http({
+                url: 'data.json',
+                type: 'get',
+                async: false,
+                username: '张亚涛',
+                password: '123456',
+                timeout: 500,
+                dataType: 'json',
+                success: function (data) {
+                    console.table(data.list);
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

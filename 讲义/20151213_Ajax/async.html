@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        var aa = function () {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('post', 'data.json', false);
+            // 只有加上这个mime type之后才是表单提交
+            // 自定义请求头
+            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('myname-123', 'zhangyatao');
+            xhr.setRequestHeader('apiversion', '1.0');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.statusText === 'OK') {
+                    console.log(xhr.responseText);
+                    // 得到指定的响应头信息
+                    console.log(xhr.getResponseHeader('Date'));
+                    // 得到所有的响应头信息
+                    console.log(xhr.getAllResponseHeaders());
+                }
+            };
+
+            // 强制终止ajax请求
+            // xhr.abort();
+
+            // 重写server给的mime type
+            // ascii文本
+            // 除了content-type所有的响应头信息都是只读的
+            xhr.overrideMimeType('text/plain');
+// 当send方法里传formdata是request的content-type会自动变为multi-part/form-data
+            // 当send方法里传二进制(arraybuffer)的时候,
+            // request的content-type要设置为application/octet-stream
+            xhr.send('asdf=asdfasd');
+
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

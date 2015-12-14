@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        // 标准浏览器
+        // 兼容性:ie7+ chrome firefox opera safari
+        //        var xhr = new XMLHttpRequest();
+
+        // ie
+        // *.dll
+        //        var xhr2 = new ActiveXObject('Microsoft.XMLHTTP');
+        //        var xmlhttp2 = new ActiveXObject("Msxml2.XMLHTTP");
+        //        var xmlhttp3 = new ActiveXObject("Msxml3.XMLHTTP");
+
+        /* var getXHR1 = (function () {
+         var flag = window.XMLHttpRequest;
+         if (flag) {
+         return new XMLHttpRequest();
+         }
+         return new ActiveXObject('Microsoft.XMLHTTP');
+         })();*/
+
+        // step 1:获取ajax对象
+        var getXHR = (function () {
+            var flag = window.XMLHttpRequest;
+            if (flag) {
+                return function () {
+                    return new XMLHttpRequest();
+                }
+            }
+            return function () {
+                return new ActiveXObject('Microsoft.XMLHTTP');
+            }
+        })();
+
+        var x = getXHR();
+
+        // step 2:建立http请求
+        /**
+         * 第一个参数: http方法 [get post put delete head options]
+         * 第二个参数: url 请求服务器的路径
+         * 第三个参数:是否异步 ,默认是true
+         * 第四个参数: username, 默认是undefined
+         * 第五个参数:password, 默认是undefined
+         */
+        x.open('get', '/',false);
+
+
+        //step:4  接收响应
+        //有两种方法
+        // 第一种使用onload接收(只能在XMLHttpRequest对象上使用)
+        // 第二种使用onreadystatechange接收
+        // 需要注册一个方法
+
+        //status 表示http的响应状态码
+        //statusText 表示http的响应状态码描述符
+        //responseText 表示响应主体
+        // 这个方法就是注册一个逻辑
+        // 每当readyState改变的时候 都会执行这个方法
+        x.onreadystatechange = function () {
+            if (x.readyState === 4 && /^2\d{2}$/.test(x.status)) {
+                console.log(x.responseText);
+            }
+        };
+
+        //什么是readyState?
+        // 表示当前ajax对象的状态
+        // 注意和http response status的区别!
+        // readyState代表ajax对象的状态,response status代表http的状态
+        // enum 枚举 把可能出现的情况一一列举出来就叫枚举
+        /**
+         * 0 UNSENT 实例化ajax对象的时候为0 表示默认值
+         * 1 OPENED 执行open方法之后变为1
+         * 2 HEADER_RECEIVED 接收到服务器响应首部变为2
+         * 3 LOADING 开始接收响应主体变为3
+         * 4 DONE 响应主体接收完成变为4
+         */
+
+
+            // step 3:发送请求
+            // send方法会把参数放到请求主体里
+            // 所有get系不需要传参数,而post需要
+            // warning:当使用同步的时候 send方法后都会阻塞,一直等到服务器响应
+        x.send();
+
+
+        //为什么send方法要放到第四步后头?
+        // 因为如果ajax为同步请求,则send方法后面都会阻塞不执行.
+        // 导致第四步无法成功执行.所以为了防止这种情况,
+        // 统一把第四步都放到第三步之前
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
