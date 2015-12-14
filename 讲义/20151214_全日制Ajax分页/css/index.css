@@ -1,0 +1,102 @@
+body, div, h2, span, ul, li, input {
+    margin: 0;
+    padding: 0;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+    font-size: 14px;
+    -webkit-user-select: none;
+}
+
+ul, li {
+    list-style: none;
+}
+
+input {
+    outline: none;
+}
+
+.box {
+    margin: 10px auto;
+    padding: 20px;
+    width: 600px;
+    border: 1px solid #0fb200;
+    overflow: hidden;
+
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px 0 #AEADAE;
+}
+
+/*表头区域的样式*/
+.box h2 {
+    height: 35px;
+    line-height: 35px;
+    background: #CDE074;
+
+    background: -webkit-linear-gradient(left, #AFD400, #B1D7EF, #faeb9e, #CCCCCC);
+    background: -moz-linear-gradient(left, #AFD400, #B1D7EF, #faeb9e, #CCCCCC);
+    background: -o-linear-gradient(left, #AFD400, #B1D7EF, #faeb9e, #CCCCCC);
+    background: -ms-linear-gradient(left, #AFD400, #B1D7EF, #faeb9e, #CCCCCC);
+    background: linear-gradient(left, #AFD400, #B1D7EF, #faeb9e, #CCCCCC);
+}
+
+.box h2 span {
+    display: inline-block;
+    width: 200px;
+    height: 35px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/*内容区域的样式*/
+.box .list li {
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.box .list li.even {
+    background: #ccc;
+}
+
+.box .list li span {
+    display: block;
+    float: left;
+    width: 200px;
+    height: 30px;
+    text-align: center;
+}
+
+/*分页区域的样式*/
+.box .page {
+    float: right;
+    margin-top: 10px;
+}
+
+.box .page ul {
+    float: left;
+    overflow: hidden;
+}
+
+.box .page span, .box .page ul li, .box .page input {
+    float: left;
+    margin-left: 5px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+    border: 1px solid #CDE074;
+    cursor: pointer;
+}
+
+.box .page span, .box .page input {
+    display: block;
+    width: 50px;
+}
+
+.box .page ul li {
+    width: 20px;
+}
+
+.box .page ul li.select {
+    background: #B1D7EF;
+    color: #fff;
+}

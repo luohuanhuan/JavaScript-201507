@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body style="font-size: 50px;">
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    function queryURLParameter(url) {
+        var obj = {};
+        var reg = /([^?=&]+)=([^?=&]+)/g;
+        url.replace(reg, function () {
+            obj[arguments[1]] = arguments[2];
+        });
+        return obj;
+    }
+    var url = window.location.href;
+    var num = queryURLParameter(url)["num"];
+
+    //后台会单独的给你一个获取详细信息的URL地址（API接口），我们把获取的num通过?传递参数的方式传给后台,后台把对应的详细信息给你
+    utils.ajax("data.txt", function (data) {
+        for (var i = 0; i < data.length; i++) {
+            var cur = data[i];
+            if (cur["num"] === num) {
+                document.write("num:" + cur.num + " sex:" + cur.sex + " score:" + cur.score);
+                break;
+            }
+        }
+    });
+</script>
+</body>
+</html>
