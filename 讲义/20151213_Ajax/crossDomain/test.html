@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        //        var cors = new XMLHttpRequest();
+        // 含有这个属性withCredentials才支持跨域
+        // withCredentials
+        // 是否可以跨域携带用户凭据
+        // false(默认)不可以携带cookie
+        // true可以携带cookie
+        // 默认是不可以携带cookie的因为浏览器认为跨域是不安全的
+        //        var ie = new XDomainRequest();
+        // 兼容性 ie8+
+
+        var getCORS = (function () {
+            if (window.XMLHttpRequest && 'withCredentials' in (new XMLHttpRequest)) {
+                return function () {
+                    return new XMLHttpRequest();
+                }
+            } else if (window.XDomainRequest) {
+                return function () {
+                    return new XDomainRequest();
+                }
+            }
+            throw new Error('不支持此功能')
+        })();
+
+        var cors = getCORS();
+        cors.open('get', 'http://localhost:3000/cors', true);
+        // onload就等于ajax对象readyState为4的时候
+        cors.onload = function () {
+            console.log(cors.responseText);
+        };
+        cors.withCredentials = false;
+        cors.send();
+    </script>
+</head>
+<body>
+hello world
+</body>
+</html>

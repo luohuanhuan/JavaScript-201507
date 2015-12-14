@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jsonp.js"></script>
+    <script>
+        window.onload = function () {
+            var input = document.querySelector('input');
+            var btn = document.querySelector('button');
+            var ul = document.querySelector('ul');
+            btn.onclick = function () {
+                var val = input.value;
+                if (val) {
+                    JSONP('http://tcc.taobao.com/cc/json/mobile_tel_segment.htm',
+                            {'tel': val}, function (data) {
+                                ul.innerHTML = '';
+                                var fragement = document.createDocumentFragment();
+                                for (var n in data) {
+                                    var li = document.createElement('li');
+                                    li.innerHTML = n + ':' + data[n];
+                                    fragement.appendChild(li);
+                                }
+                                ul.appendChild(fragement);
+                            }, 'callback')
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="text">
+<button>查询手机号</button>
+<ul></ul>
+</body>
+</html>

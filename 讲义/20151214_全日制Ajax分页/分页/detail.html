@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body style="font-size: 40px;">
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript">
+    //获取URL地址栏中的参数值
+    function queryURLParameter() {
+        var url = window.location.href, reg = /([^?=&]+)=([^?=&]+)/g, obj = {};
+        var res = reg.exec(url);
+        while (res) {
+            obj[res[1]] = res[2];
+            res = reg.exec(url);
+        }
+        return obj;
+    }
+
+    var num = queryURLParameter().num;
+
+    utils.ajax("data.txt", function (data) {
+        var curObj = null;
+        for (var i = 0; i < data.length; i++) {
+            var cur = data[i];
+            if (cur.num === num) {
+                curObj = cur;
+                break;
+            }
+        }
+
+        document.body.innerHTML = "num:" + curObj.num + " sex:" + curObj.sex + " score:" + curObj.score;
+    });
+</script>
+</body>
+</html>

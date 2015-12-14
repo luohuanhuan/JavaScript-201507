@@ -1,0 +1,61 @@
+scheme://hostname:port
+
+http://www.baidu.com:80
+http://tieba.baidu.com:80
+
+同域 就是scheme hostname port都一样
+跨域 就是这三个里有一个不一样就是跨域
+
+我在自己的域名里请求其他域的服务器,这个
+就叫做跨域请求
+
+同源策略
+浏览器厂商为了安全强制添加的一种安全策略
+也就是不同域之间无法相互访问
+
+并不是所有的跨域请求都会受到同源策略的限制
+只有当浏览器认为这个跨域请求构成安全威胁的
+时候才会激活同源策略限制
+
+例子:iframe无法操作不同域的DOM
+link:会把资源按照指定格式导入到当前页面
+除了链接css,其他的都只能链接本域内的.
+script:任何情况都不受同源策略的限制(同源策略
+是无视script标签的),但是会把加载到的内容强制
+当成脚本来执
+img:任何情况下都不收同源策略的限制,但是会把加
+载到的任何内容强制当成图片来显示
+iframe:可以加载到其他域名的资源,但是不能操作
+
+
+jsonp返回的数据有固定的格式
+方法名+(+json数据+);
+json padding = 往json数据前面填充了一个方法名
+所以叫做json-padding 也就是jsonp
+注意事项:
+1 只能请求接口
+(跨域交互有两种形式:接口形式 页面通信形式)
+2 只能是http的get方法,get系有的特点jsonp全有.
+3 安全性问题.使用jsonp的接口必须是安全系数非常
+低的接口
+4 传过去的方法名必须是全局方法
+第二种跨域方法:CORS(跨域资源共享) - 接口形式
+使用跨域资源共享必须server端强配合
+必须加上响应头Access-Control-Allow-Origin
+这个响应头有两个值 (*和指定域名)
+如果想携带cookie的话server必须添加
+把Access-Control-Allow-Credentials设置为true
+
+这两个跨域方法的区别
+1 jsonp不算是ajax,而cors是ajax
+2 发送jsonp请求,server必须严格返回jsonp的格式
+而cors必须加上指定的响应头信息
+3 jsonp只能是get方法,而cors则是ajax支持的它都支持
+4 相比较之下cors比jsonp安全
+5 jsonp永远是异步的,而cors可同步可异步
+6 jsonp没有兼容性,而cors不支持ie6和7
+
+它们的相同点:
+1 都是跨域请求数据
+2 都是接口形式的跨域请求
+
