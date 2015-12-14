@@ -1,0 +1,109 @@
+body, div, h2, span, ul, li, input {
+    margin: 0;
+    padding: 0;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+    font-size: 14px;
+    -webkit-user-select: none;
+}
+
+ul, li {
+    list-style: none;
+}
+
+input {
+    outline: none;
+}
+
+#tab {
+    margin: 10px auto;
+    padding: 20px;
+    width: 500px;
+    border: 1px solid #31b0d5;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#tab h2 {
+    height: 35px;
+    line-height: 35px;
+    font-size: 16px;
+    background: #31b0d5;
+}
+
+#tab span {
+    display: block;
+    float: left;
+    width: 33.33%;
+    text-align: center;
+}
+
+#list {
+    opacity: 0;
+    height: 350px;
+}
+
+#list li {
+    height: 35px;
+    line-height: 35px;
+    cursor: pointer;
+}
+
+#list li.bg {
+    background: #FFF38F;
+}
+
+#list li.hover {
+    background: #E0F2BE;
+}
+
+#page li {
+    float: left;
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #31b0d5;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#page li.select {
+    background: #FFF38F;
+}
+
+.pageDiv {
+    float: right;
+    margin-top: 10px;
+}
+
+.pageDiv div, .pageDiv ul, .pageDiv input {
+    display: block;
+    float: left;
+}
+
+.pageDiv div{
+    margin-left: 5px;
+    width: 50px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #31b0d5;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.pageDiv input{
+    margin-left: 5px;
+    width: 48px;
+    height: 20px;
+    border: 1px solid #31b0d5;
+    font-size: 12px;
+    text-align: center;
+}
+
+
+
+
+
+

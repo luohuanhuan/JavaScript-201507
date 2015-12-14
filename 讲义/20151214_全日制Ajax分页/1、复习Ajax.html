@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    //使用jQuery
+    //    $.ajax({
+    //        url: "test.txt",
+    //        type: "get",
+    //        dataType: "json",//text
+    //        async: true,
+    //        success: function (data) {
+    //            //data就是我们请求的结果
+    //            console.log(data);
+    //        },
+    //        error: function () {
+    //
+    //        }
+    //    });
+
+    //    $.ajax({
+    //        url: "test.txt",
+    //        type: "post",
+    //        data: {
+    //            name: "12"
+    //        },
+    //        dataType: "json",
+    //        success: function (data) {
+    //            //data就是我们请求的结果
+    //            console.log(data);
+    //        }
+    //    });
+
+    //使用原生的JS
+    //    var createXHR = (function () {
+    //        if ("XMLHttpRequest" in window) {
+    //            return function () {
+    //                return new XMLHttpRequest();
+    //            }
+    //        }
+    //        if (new ActiveXObject("Microsoft.XMLHTTP")) {
+    //            return function () {
+    //                return new ActiveXObject("Microsoft.XMLHTTP");
+    //            }
+    //        }
+    //        if (new ActiveXObject("Msxml2.XMLHTTP")) {
+    //            return function () {
+    //                return new ActiveXObject("Msxml2.XMLHTTP");
+    //            }
+    //        }
+    //        if (new ActiveXObject("Msxml3.XMLHTTP")) {
+    //            return function () {
+    //                return new ActiveXObject("Msxml3.XMLHTTP");
+    //            }
+    //        }
+    //    })();
+    //    var xhr = createXHR();
+    //    xhr.open("get", "test.txt");
+    //    xhr.onreadystatechange = function () {
+    //        if (this.readyState === 4 && /^2\d{2}$/.test(this.status)) {
+    //            var value = this.responseText;
+    //            console.log(value);
+    //        }
+    //    };
+    //    xhr.send();//"post请求中如果需要传递给后台数据,我们需要把JSON格式的字符串放到里"
+
+    //非同源策略
+    //    function aaaaa(data) {
+    //        //console.log(data);
+    //    }
+    //前端:利用<script>不存在跨域的概念(我可以在自己的网页中引入任何域名下的JS文件),我们通过<script>的src属性,向后台发送一个请求,并且把一个函数的名字(aaaaa)传递给后台(一般来说都是?callback=aaaaa)
+    //后台:后台会把传递进来的参数进行解析,获取到你的方法名aaaaa,并且执行这个方法,把所有需要给你的数据传递给aaaaa
+    //我们aaaaa中定义的形参data中其实就已经存储了我们需要的数据,接下来在做数据解析、数据绑定即可
+</script>
+<!--<script type="text/javascript"-->
+<!--src="http://matchweb.sports.qq.com/kbs/list?callback=aaaaa&columnId=100000&startTime=2015-12-18&endTime=2015-12-18"></script>-->
+<script type="text/javascript">
+    //    $.ajax({
+    //        url: "http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2015-12-18&endTime=2015-12-18&_=" + Math.random(),
+    //        type: "get",
+    //        dataType: "jsonp",
+    //        jsonpCallback: "a",
+    //        success: function (data) {
+    //            console.log(data);
+    //        }
+    //    });
+    //自动jQuery加了一个callback,而且是随机的名字  http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2015-12-18&endTime=2015-12-18&_=1450068860182&callback=jQuery1113008462649933062494_1450068860181
+    //自己从新起了名字：http://matchweb.sports.qq.com/kbs/list?columnId=100000&startTime=2015-12-18&endTime=2015-12-18&_=1450069016442&callback=a
+
+    $.ajax({
+        url: "https://gsp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=ad&sc=hao123&_=" + Math.random(),
+        type: "get",
+        dataType: "jsonp",
+        jsonp: "cb",//->修改callback这个属性名为cb
+        jsonpCallback: "aa",//->修改cb传递值的名字为aa
+        success: function (data) {
+            console.log(data);
+        }
+    });
+    //https://gsp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=ad&sc=hao123&_=1450069446089&cb=aa (callback=jQuery.....)
+</script>
+</body>
+</html>
