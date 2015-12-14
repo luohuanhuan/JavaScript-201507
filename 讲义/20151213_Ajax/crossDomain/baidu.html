@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            margin-left: 10px;
+        }
+
+        div {
+            margin-top: 10px;
+            width: 250px;
+            border: 1px solid royalblue;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li:hover {
+            background-color: aqua;
+        }
+    </style>
+    <!--<script>-->
+    <!--window.aa=function(data){-->
+    <!--console.log(data)-->
+    <!--}-->
+    <!--</script>-->
+    <!--<script src="https://gsp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?cb=aa&wd=a&sc=hao123&_=1449994635796"></script>-->
+    <script src="jsonp.js"></script>
+    <script>
+        window.onload = function () {
+            var input = document.querySelector('input');
+            var btn = document.querySelector('button');
+            var ul = document.querySelector('div>ul');
+            ul.onclick = function (e) {
+                e = e || window.event;
+                var target = e.target || e.srcElement;
+                window.open('http://www.baidu.com/s?wd='+encodeURIComponent(target.innerHTML));
+            };
+            btn.onclick = function () {
+                var val = input.value;
+                if (val) {
+                    JSONP('https://gsp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                            {'wd': val}, function (data) {
+                                ul.innerHTML = '';
+                                var fragement = document.createDocumentFragment();
+                                data['s'].forEach(function (item) {
+                                    var li = document.createElement('li');
+                                    li.innerHTML = item;
+                                    fragement.appendChild(li);
+                                });
+                                ul.appendChild(fragement);
+                            }, 'cb');
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<input type="text">
+<button>百度一下</button>
+<div>
+    <ul>
+    </ul>
+</div>
+</body>
+</html>
