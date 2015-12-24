@@ -8,7 +8,7 @@ function bind(curEle, evenType, evenFn) {
     var tempFn = function () {
         evenFn.call(curEle);
     };
-    //把化妆前的放到脑门上,后期需要拿化妆前的比较
+    //把化妆前的放到脑门上,后期解除绑定事件的时候需要拿化妆前的比较
     tempFn.photo = evenFn;
 
     //2)把它存储到一个容器中(容器中存储的是所有需要绑定的方法化妆后的函数)

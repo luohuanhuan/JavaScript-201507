@@ -150,8 +150,8 @@
      * Num.2 : Methods for obtaining DOM style
      */
 
-    //css：Gets or sets the style of the current element (third value values are obtained, and the value is set).
-    _utils.css = function css(curEle, attr, value) {
+    //setCss：Gets or sets the style of the current element (third value values are obtained, and the value is set).
+    _utils.setCss = function setCss(curEle, attr, value) {
         //get style
         var reg = /^[+-]?(\d|([1-9]\d+))(\.\d+)?(px|pt|em|rem)$/;
         if (typeof value === "undefined") {
@@ -175,7 +175,21 @@
             curEle["style"][attr] = value;
         }
     };
-
+    _utils.getCss = function getCss(curEle, attr) {
+        var reg = /^[+-]?(\d|([1-9]\d+))(\.\d+)?(px|pt|em|rem)$/, val = null;
+        if ("getComputedStyle" in window) {
+            val = window.getComputedStyle(curEle, null)[attr];
+        } else {
+            if (attr === "opacity") {
+                var temp = curEle.currentStyle["filter"], tempReg = /^alpha\(opacity=(\d+(?:\.\d+)?)\)$/;
+                val = tempReg.test(temp) ? tempReg.exec(temp)[1] : "1";
+                val = parseFloat(val) / 100;
+            } else {
+                val = curEle.currentStyle[attr];
+            }
+        }
+        return reg.test(val) ? parseFloat(val) : val;
+    },
     //setGroupCss：Set the style for the current element
     _utils.setGroupCss = function setGroupCss(curEle, options) {
         for (var key in options) {
