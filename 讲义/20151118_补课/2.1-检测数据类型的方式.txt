@@ -32,7 +32,7 @@ JS中检测数据类型只有四种方式
     console.log(oDiv instanceof EventTarget);//->true
 
 3、toString检测数据类型(常用而且相对来说精准的检测方式,上述方式出现的缺陷在这里都弥补了)
-   1)原理：在Object.prototype上有一个toString方法,这个方法执行的时候,会返回方法中this关键字对应数据值的数据类型,例如：
+   1)原理：在Object.prototype上有一个toString方法,会这个方法执行的时候,返回方法中this关键字对应数据值的数据类型,例如：
     //Object.prototype.toString() ->返回的是 Object.prototype 的数据类型 ->"[object Object]"
     //f.toString() ->返回的是f的数据类型 ->"[object Object]"
 
