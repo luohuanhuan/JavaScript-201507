@@ -1,0 +1,32 @@
+静态页面:内容是固定死的,不能在GitHub上发布动后台数据接口
+1、建仓库：在GitHub上创建一个新的仓库
+
+2、发布页面：
+    Settings->Launch Automatic page generator->Continue to layouts->选择对应的模板->Publish Page
+
+3、说明：我们刚才创建的页面没有在master主分支上,而是在gh-pages这个分支上
+
+4、切换主分支：把我们的默认的分支切换成gh-pages
+    Settings->Branches->Default branch(把默认的分支切换为gh-pages)
+
+5、克隆
+    $git clone 你的仓库的地址
+
+6、把自己的项目上传到当前的这个仓库gh-pages这个分支下
+    准备好项目文件,放在克隆下来的这个文件夹目录下
+    $git add -A
+    $git commit -m"init repository"
+    $git push origin gh-pages  ->重点记住不是master分支了
+
+7、查找自己的项目地址
+    Settings->GitHub Pages->Your site is published at "http://zhouxiaotian.github.io/myResume"
+
+8、生成一个二维码(草料二维码生成器:http://cli.im/)
+
+特殊说明:
+    http://zhouxiaotian.github.io/myResume/ 这个是整个项目文件地址,默认访问的是index.html,如果我们想访问本地址下的其他页面的话,只需要加上文件名即可,例如:
+    http://zhouxiaotian.github.io/myResume/jd.html
+
+
+
+
