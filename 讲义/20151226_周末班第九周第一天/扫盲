@@ -1,0 +1,24 @@
+[pc]
+jQuery.js、Bootstrap、EasyUI.js、Ext.js、prototype.js、React.js...
+underscore.js
+
+[移动端]
+Zepto.js、jQuery mobile.js、妹子UI(http://amazeui.org/)
+iscroll.js
+
+[图形统计]
+hcharts: http://www.hcharts.cn/
+echarts：http://echarts.baidu.com/
+https://d3js.org/
+http://svgjs.com/
+
+[node.js]
+require.js(AMD)  sea.js(CMD)
+backbone.js(MVC)  angular.js(MVVM)
+自动化平台：gulp、grunt、fis
+
+[JS代码检测]
+
+[css预处理]
+sass、less (编写完成的代码需要进行编译)
+compass

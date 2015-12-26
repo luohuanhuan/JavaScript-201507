@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <script type="text/javascript" src="js/fastClick.js"></script>
+    <script type="text/javascript">
+        //FastClick的使用
+        window.addEventListener("load", function () {
+            FastClick.attach(document.body);
+        }, false);
+    </script>
+    <style type="text/css">
+        body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -150px 0 0 -150px;
+            width: 300px;
+            height: 300px;
+
+            background: -webkit-linear-gradient(top left, #990099, #ff3333, #ffe470);
+            background: linear-gradient(top left, #990099, #ff3333, #ffe470);
+
+            border-radius: 50%;
+
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        .move {
+            -webkit-animation: myMove 2s linear 0s 1 both;
+            animation: myMove 2s linear 0s 1 both;
+        }
+
+        @-webkit-keyframes myMove {
+            50%, 100% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+                top: 50%;
+            }
+            25% {
+                -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
+                top: 30%;
+            }
+            75% {
+                -webkit-transform: rotate(-180deg);
+                transform: rotate(-180deg);
+                top: 70%;
+            }
+        }
+
+        @keyframes myMove {
+            50%, 100% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+                top: 50%;
+            }
+            25% {
+                -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
+                top: 30%;
+            }
+            75% {
+                -webkit-transform: rotate(-180deg);
+                transform: rotate(-180deg);
+                top: 70%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="box"></div>
+
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript">
+    //Zepto.js被誉为移动端的小型jQuery.js
+    //它只处理的webkit内核的兼容,所以只能应用于我们的移动端项目
+
+    //jQuery事件
+    //$(".box").click();
+    //$(".box").on("click")
+    //$(".box").bind("click") ->unbind移除绑定 trigger触发
+    //$(".box").live() ->在1.7以上的版本都没有  ->替换delegate
+    //$(".box").delegate("click",".m",function(){});
+
+    //1、Zepto中只包含了jQuery中常用的方法(选择器比jQuery少很多、方法也少了很多)->我们在使用Zepto.js之前建议大家先把API手册过一遍
+
+    //2、Zepto的动画模块(animate),支持CSS3动画
+    //    $(".box").tap(function () {
+    //        $(this).animate({rotate: "360deg"}, 1000, "linear", function () {
+    //            $(this).css("transform", "rotate(0deg)");
+    //        });
+    //    });
+
+    //3、Zepto中新增加了touch事件模块
+
+    //    $(".box").swipeUp(function (e) {
+    //        var _this = this;
+    //        $(this).addClass("move");
+    //
+    //        window.setTimeout(function () {
+    //            $(_this).removeClass("move");
+    //        }, 2000);
+    //    });
+
+    //使用zepto.js在微信中运行,我们使用singleTap而不是用tap,因为微信内置了一份zepto.js,如果使用tap点击一次会触发两次操作
+</script>
+
+
+<script type="text/javascript">
+    //移动端使用click事件的弊端:
+    //1、点击操作会有300ms延迟->因为当我们点击的时候,浏览器会在300ms之内看是否用户还有后续的操作
+    //2、click事件触发敏感
+    //3、当点击的时候很多的浏览器会给你加一个不同颜色的背景条(背景色)->为了提示用户已选择
+
+    //移动端多有的事件操作都是基于这两个事件模型模拟出来的
+    //touch事件模型:一个手指的操作我们都用touch
+    //gesture事件模型:多个手指的操作我们都用gesture
+
+    //30px/20px以内属于点击而不属于移动
+    //750ms以上算做长按
+
+    //1、fastClick:解决click的300ms延迟问题
+
+    //2、touch云手势事件库 http://touch.code.baidu.com/
+
+    //3、hammer.js
+
+    //4、Zepto.js中提供的touch事件模块  http://www.css88.com/doc/zeptojs_api/
+    //tap 点击
+    //singleTap、doubleTap、longTap
+    //swipe, swipeLeft, swipeRight, swipeUp, swipeDown
+</script>
+
+<script type="text/javascript" src="js/touch.js"></script>
+<script type="text/javascript">
+    $t.swipeUp(document.querySelector(".box"), {
+        start: function (e) {
+
+        },
+        move: function (e) {
+//            var changePos = this["endYswipeUp"] - this["strYswipeUp"];
+//            console.log(changePos);
+//            this.style.top = changePos + "px";
+        },
+        end: function (e) {
+            this.className = "box move";
+            var _this = this;
+            window.setTimeout(function () {
+                _this.className = "box";
+            }, 2000);
+        }
+    });
+</script>
+</body>
+</html>
