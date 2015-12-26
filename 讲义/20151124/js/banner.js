@@ -316,6 +316,7 @@ var animate = function (curEle, oTarget, duration, effect, callBack) {
     });
 
     //初始化绑定数据
+    //var dataAry = ["img/banner1.jpg", "img/banner2.jpg", "img/banner3.jpg", "img/banner4.jpg"];
     var initData = function () {
         var str = "";
         str += "<div trueImg='" + dataAry[dataAry.length - 1] + "'></div>";

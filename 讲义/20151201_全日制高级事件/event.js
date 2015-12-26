@@ -10,6 +10,7 @@ function on(ele,type,fn){
 			if(a[i]==fn)return;			
 		}
 		a.push(fn);
+		return;
 		
 	}
 		if(ele.addEventListener){
@@ -68,9 +69,6 @@ function on(ele,type,fn){
 			}
 			
 		}
-		
-		
-		
 	}
 	function off(ele,type,fn){
 		if(/^self/.test(type)){

@@ -1,0 +1,109 @@
+body, div, ul, li, h2, span, input {
+    margin: 0;
+    padding: 0;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+    font-size: 14px;
+    -webkit-user-select: none;
+}
+
+ul, li {
+    list-style: none;
+}
+
+/*禁止浏览器自带的默认边框*/
+input {
+    outline: none;
+}
+
+.box {
+    overflow: hidden;
+    margin: 10px auto;
+    width: 600px;
+    padding: 20px;
+    border: 1px solid yellowgreen;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px 0 #AEADAE;
+}
+
+/*表头区域的样式*/
+.box h2 {
+    height: 35px;
+    line-height: 35px;
+    background: yellowgreen;
+    background: -webkit-linear-gradient(left, #AFD400, #B1D7EF, greenyellow, #08BECE);
+    background: -moz-linear-gradient(left, #AFD400, #B1D7EF, greenyellow, #08BECE);
+    background: -o-linear-gradient(left, #AFD400, #B1D7EF, greenyellow, #08BECE);
+    background: -ms-linear-gradient(left, #AFD400, #B1D7EF, greenyellow, #08BECE);
+    background: linear-gradient(left, #AFD400, #B1D7EF, greenyellow, #08BECE);
+}
+
+.box h2 span {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.box .list li {
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.box .list li.even {
+    background: lightpink;
+}
+
+.box .list li span {
+    display: block;
+    float: left;
+    width: 200px;
+    height: 30px;
+    text-align: center;
+}
+
+.box .page {
+    float: right;/*应对,box设置overflow属性，清除自己浮动对.box的影响*/
+    margin-top: 10px;
+}
+
+.box .page ul {
+    float: left;
+    overflow: hidden; /*清除里面子元素对自己的影响*/
+}
+
+.box .page ul li {
+    float: left;
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid green;
+    cursor: pointer;
+}
+.box .page ul li.select{
+    background: #B1D7EF;
+    color: white;
+}
+.box .page span {
+    display: block;
+    float: left;
+    width: 50px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+    margin-left: 5px;
+    border: 1px solid green;
+    cursor: pointer;
+}
+
+.page input {
+    margin-left: 5px;
+    width: 50px;
+    height: 20px;
+    border: 1px solid green;
+    text-align: center;
+    font-size: 12px;
+}
