@@ -1,0 +1,252 @@
+@charset "utf-8";
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 0s linear 0s;
+    transition: all 0s linear 0s;
+}
+
+/*滑动的三角按钮*/
+.tip {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -10px;
+    width: 0;
+    height: 0;
+
+    border: 10px solid #fff;
+    border-color: transparent transparent #fff;
+
+    -webkit-animation: tip 1.5s linear 0s infinite;
+    animation: tip 1.5s linear 0s infinite;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes tip {
+    100% {
+        opacity: 0;
+        bottom: 30px;
+    }
+}
+
+@keyframes tip {
+    100% {
+        opacity: 0;
+        bottom: 30px;
+    }
+}
+
+/*music*/
+.music {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: url("../video/music.svg") no-repeat;
+    background-size: 100%;
+
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.music audio {
+    display: none;
+}
+
+.music.move {
+    -webkit-animation: audioMove 1s linear 0s infinite;
+    animation: audioMove 1s linear 0s infinite;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes audioMove {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes audioMove {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+/*开始编写每一屏幕的样式*/
+.one-box {
+    position: absolute;
+    left: 50%;
+    top: 16%;
+    margin: -130px 0 0 -130px;
+    width: 260px;
+    height: 260px;
+    border: 1px dashed rgb(70, 175, 232);
+    border-radius: 50%;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.pageDemo.move .one-box {
+    -webkit-animation: one-boxM 1s linear 0s infinite;
+    animation: one-boxM 1s linear 0s infinite;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes one-boxM {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes one-boxM {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.one-title {
+    position: absolute;
+    left: 50%;
+    top: 12%;
+    margin: -25px 0 0 -130px;
+    padding: 0 15px;
+    width: 230px;
+    height: 50px;
+    font-size: 24px;
+    color: rgb(70, 175, 232);
+    text-align: center;
+}
+
+.one-title p:nth-child(1) {
+    height: 30px;
+    line-height: 30px;
+}
+
+.one-title p:nth-child(2) {
+    height: 20px;
+    line-height: 20px;
+    font-size: 16px;
+}
+
+.pageDemo.move .one-title {
+    -webkit-animation: wobble 1s linear 0s 1 both;
+    animation: wobble 1s linear 0s 1 both;
+}
+
+@-webkit-keyframes wobble {
+    from {
+        -webkit-transform: none;
+        transform: none;
+    }
+
+    15% {
+        -webkit-transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+        transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    }
+
+    30% {
+        -webkit-transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+        transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+    }
+
+    45% {
+        -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+        transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    }
+
+    60% {
+        -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+        transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    }
+
+    75% {
+        -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+        transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    }
+
+    to {
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes wobble {
+    from {
+        -webkit-transform: none;
+        transform: none;
+    }
+
+    15% {
+        -webkit-transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+        transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    }
+
+    30% {
+        -webkit-transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+        transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+    }
+
+    45% {
+        -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+        transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    }
+
+    60% {
+        -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+        transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    }
+
+    75% {
+        -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+        transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    }
+
+    to {
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
