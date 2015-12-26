@@ -177,10 +177,10 @@ var animate = (function () {
             }
         }
     };
-
+    
     return function (curEle, options, duration, effect, callback) {
         window.clearTimeout(curEle.timer);
-
+        
         //init effect
         var fnEffect = zhufengEffect.Expo.easeOut;
         if (typeof effect === "number") {
