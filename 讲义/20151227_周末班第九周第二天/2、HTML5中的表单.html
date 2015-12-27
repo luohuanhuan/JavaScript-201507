@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <style type="text/css">
+        body, div, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, iframe, input, textarea, select, label, article, aside, footer, header, menu, nav, section, time, audio, video {
+            margin: 0;
+            padding: 0;
+        }
+
+        article, aside, footer, header, nav, section, audio, canvas, video, img {
+            display: block;
+        }
+
+        body {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-size: 12px;
+            font-family: Helvetica, STHeiti, Droid Sans Fallback;
+        }
+
+        html, body {
+            width: 100%;
+        }
+
+        img {
+            border: 0;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        input, select, textarea {
+            outline: 0;
+            -webkit-user-modify: read-write-plaintext-only;
+        }
+
+        input {
+            /*-webkit-appearance: none;*/
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .box {
+            position: relative;
+            padding: 10px;
+        }
+
+        .box input {
+            display: block;
+            margin-bottom: 10px;
+            padding-left: 40px;
+            width: 85%;
+            height: 35px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .box em {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: #37C7D4;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .box em:nth-child(1) {
+            top: 11px;
+            left: 11px;
+        }
+
+        .box em:nth-child(2) {
+            top: 58px;
+            left: 11px;
+        }
+
+        /*css验证*/
+        /*#userEmail:valid {*/
+        /*border: 1px solid #3eba30;*/
+        /*}*/
+
+        /*#userEmail:invalid {*/
+        /*border: 1px solid firebrick;*/
+        /*box-shadow: 0 0 10px 0 #ff6600;*/
+        /*}*/
+
+        .error {
+            border: 1px solid firebrick;
+            box-shadow: 0 0 10px 0 #ff6600;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <em></em>
+    <em></em>
+    <input type="email" id="userEmail" placeholder="请输入邮箱~"/>
+    <input type="password" id="userPass" placeholder="请输入密码~"/>
+
+    <div class="submit"></div>
+</div>
+<input type="range" max="65" min="18" value="25" id="range" step="1"/>
+
+<script type="text/javascript">
+    //onblur:失去焦点事件
+    //onfocus:获取焦点事件
+    //onkeydown:键盘按下事件
+    //onkeyup:键盘抬起事件
+
+    /*JS验证*/
+    var userEmail = document.querySelector("#userEmail");
+    userEmail.addEventListener("input", function () {
+        var flag = this.checkValidity();
+        if (flag) {
+            this.className = null;
+        } else {
+            this.className = "error";
+        }
+    }, false);
+
+    document.querySelector("#range").addEventListener("input", function () {
+        var val = this.value.trim();
+        userEmail.value = val;
+    }, false);
+
+    //JS实现placeholder的效果
+    //不使用内置的检测方式,自己编写正则验证
+</script>
+
+<!--
+之前有的input表单的类型
+input:text、password、radio、checkbox、button、submit、reset、file...
+
+HTML5中新增加的input表单的类型
+search、url、email、number、tel、range、color、date、time...
+1)当用户在手机上操作的时候,根据不同的类型调取出方便用户操作的对应的虚拟键盘
+2)HTML5提供了新的表单验证方式,我们不需要使用正则也可以实现信息的验证；例如:之前验证邮箱需要自己写正则,还需要在各种事件中进行处理...现在我们既可以在CSS中验证也可以在JS中验证
+3)placeholder这个HTML5中新的属性可以给我们的文本框加默认的提示信息
+-->
+
+<!--<input type="radio" name="sex" id="sexBoy" checked/><label for="sexBoy">男</label>-->
+<!--<input type="radio" name="sex" id="sexGirl"/><label for="sexGirl">女</label>-->
+</body>
+</html>
