@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>腾讯看比赛</title>
+    <script type="text/javascript">
+        //检测是否是在移动端中打开的,如果不是则直接的跳转到错误提示页面
+        var flag = (function () {
+            var reg1 = /AppleWebKit.*Mobile/i;
+            var reg2 = /(MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE)/;
+            var curV = navigator.userAgent;
+            return reg1.test(curV) || reg2.test(curV);
+        })();
+        //!flag ? window.location.href = "error.html" : null;
+    </script>
+    <link type="text/css" rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+<div class="player">
+    <video src="" id="playerVideo" preload="none" controls/>
+</div>
+
+<div class="support">
+    <div class="sup-team"></div>
+    <div class="sup-progress">
+        <span></span>
+    </div>
+    <div class="sup-count">
+        <div><em class="sup-count-left"></em>103108</div>
+        <div>NBA常规赛</div>
+        <div><em class="sup-count-right"></em>103108</div>
+    </div>
+</div>
+
+
+<script charset="utf-8" type="text/javascript" src="js/zepto.min.js"></script>
+<script charset="utf-8" type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

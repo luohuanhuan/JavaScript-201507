@@ -1,0 +1,119 @@
+body, div, input, span, label {
+    margin: 0;
+    padding: 0;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+    font-size: 14px;
+    -webkit-user-select: none;
+}
+
+input {
+    outline: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    overflow: hidden;
+}
+
+.box {
+    margin: 50px auto;
+    padding: 50px;
+    width: 900px;
+    background: #fff;
+
+    border-radius: 10px;
+    box-shadow: 0 0 20px 0 #ccc;
+}
+
+.box div {
+    position: relative;
+    height: 60px;
+    line-height: 60px;
+}
+
+.box div span {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+.box div input {
+    display: inline-block;
+    margin-left: 20px;
+    padding: 0 5px;
+    width: 300px;
+    height: 30px;
+    border: 1px solid #31b0d5;
+    border-radius: 3px;
+    background: #E0F2BE;
+}
+
+.box div input.ok {
+    border: 1px solid #0fb200;
+}
+
+.box div input.no {
+    border: 1px solid #ff0000;
+    background: #FFE0E9;
+}
+
+#userMan, #userWoman {
+    display: inline-block;
+    width: 30px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+.box div label {
+    display: inline-block;
+    width: 50px;
+    height: 60px;
+}
+
+#userCode {
+    width: 100px;
+}
+
+#spanCode {
+    display: inline-block;
+    width: 100px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border: 1px solid #FFF38F;
+    background: #ffe470;
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+
+#submit {
+    margin-left: 70px;
+    width: 200px;
+}
+
+.box div .tip {
+    position: absolute;
+    top: 20px;
+    left: 410px;
+    width: 20px;
+    height: 20px;
+}
+
+.box div .tip.ok {
+    background: url("../img/ok.png") no-repeat;
+}
+
+.box div .tip.no {
+    background: url("../img/no.png") no-repeat;
+}
+
+.box div .default {
+    position: absolute;
+    top: 1px;
+    left: 134px;
+    width: 300px;
+    height: 30px;
+    color: #999;
+}
