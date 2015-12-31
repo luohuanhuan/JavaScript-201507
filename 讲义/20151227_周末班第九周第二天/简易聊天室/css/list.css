@@ -1,0 +1,115 @@
+/* 防止手机触摸事件出现区块阴影 */
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+
+body, div, ul, li, img, span, input {
+    margin: 0;
+    padding: 0;
+    font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+ul, li {
+    list-style: none;
+}
+
+img {
+    border: none;
+}
+
+input {
+    outline: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.list {
+    margin: 0 10px;
+}
+
+.list li {
+    position: relative;
+    height: 60px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.list li div {
+    float: right;
+    margin: 5px 60px 0 0;
+    height: 50px;
+    line-height: 25px;
+}
+
+.list li.com div {
+    float: left;
+    margin: 5px 0 0 60px;
+}
+
+.list li img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.list li.com img {
+    left: 10px;
+}
+
+.list li:last-child {
+    border-bottom: none;
+}
+
+.box {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 34px;
+    border-top: 2px solid #0fb200;
+    background: #fff;
+}
+
+.box input {
+    display: block;
+    float: left;
+    margin: 1px 0 0 1px;
+    width: 80%;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.box span {
+    display: block;
+    float: right;
+    margin: 1px 1px 0 0;
+    width: 15%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #FFE0E9;
+    background: -webkit-linear-gradient(top left, #FFE0E9, #0fb200, #FFF38F);
+    background: linear-gradient(top left, #FFE0E9, #0fb200, #FFF38F);
+}
+
+
+
+
+

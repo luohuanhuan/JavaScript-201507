@@ -1,0 +1,256 @@
+@charset "utf-8";
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html, body {
+    font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    border: none;
+}
+
+img:not([src*="/"]) {
+    display: none
+}
+
+ul, li {
+    list-style: none;
+}
+
+/*-------------------*/
+html, body, .outer {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.outer {
+    position: relative;
+}
+
+.inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 0s linear 0s;
+    transition: all 0s linear 0s;
+}
+
+.inner > div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/*---------------------*/
+.tip {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -10px;
+    width: 0;
+    height: 0;
+    border: 10px solid #f82d2d;
+    border-color: transparent transparent #f82d2d transparent;
+
+    -webkit-animation: tipMove 1.5s ease-in-out 0s infinite both;
+    animation: tipMove 1.5s ease-in-out 0s infinite both;
+}
+
+@-webkit-keyframes tipMove {
+    0%, 100% {
+        opacity: 1;
+        bottom: 10px;
+    }
+    50% {
+        opacity: 0;
+        bottom: 20px;
+    }
+}
+
+@keyframes tipMove {
+    0%, 100% {
+        opacity: 1;
+        bottom: 10px;
+    }
+    50% {
+        opacity: 0;
+        bottom: 20px;
+    }
+}
+
+/*------------------------*/
+.one-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -130px 0 0 -130px;
+    width: 260px;
+    height: 260px;
+    border: 1px dashed red;
+    border-radius: 50%;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.inner > div.move .one-box {
+    -webkit-animation: one-boxMove 1s linear 0s infinite both;
+    animation: one-boxMove 1s linear 0s infinite both;
+}
+
+@-webkit-keyframes one-boxMove {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes one-boxMove {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.one-info {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    margin: -25px 0 0 -115px;
+    width: 230px;
+    height: 50px;
+    color: rgb(70, 175, 232);
+    text-align: center;
+}
+
+.one-info span {
+    display: block;
+}
+
+.one-info span:nth-child(1) {
+    line-height: 30px;
+    font-size: 24px;
+}
+
+.one-info span:nth-child(2) {
+    line-height: 20px;
+}
+
+.inner > div.move .one-info {
+    -webkit-animation: shake 1s linear 0s 1 both;
+    animation: shake 1s linear 0s 1 both;
+}
+
+@-webkit-keyframes shake {
+    from, to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+
+    20%, 40%, 60%, 80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+}
+
+@keyframes shake {
+    from, to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+
+    20%, 40%, 60%, 80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+}
+
+/*----------------*/
+.music{
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: url("../video/music.svg") no-repeat;
+    background-size: 100% 100%;
+}
+
+.music.move{
+    -webkit-animation: audioMove 1s linear 0s infinite both;
+    animation: audioMove 1s linear 0s infinite both;
+}
+
+@-webkit-keyframes audioMove {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes audioMove {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>注册会员</title>
+    <link charset="utf-8" rel="stylesheet" type="text/css" href="css/register.css"/>
+</head>
+<body>
+<!--placeholder是HTML5中新增加的给文本框增加默认提示问题的属性：文本框输入内容后，提示问题消失，如果没有输入内容，提示文字一直存在，但是这个属性不兼容-->
+
+<div class="box">
+    <div>
+        <span>用户名 :</span>
+        <input type="text" id="userName" reg="nick"/>
+
+        <div class="default">3-20位由数组、字母、下划线、-组成</div>
+        <div class="tip"></div>
+    </div>
+    <div>
+        <span>邮箱 :</span>
+        <input type="text" id="userEmail" reg="email"/>
+
+        <div class="default">建议您使用QQ邮箱注册</div>
+        <div class="tip"></div>
+    </div>
+    <div>
+        <span>性别 :</span>
+        <input type="radio" id="userMan" name="sex" checked/><label for="userMan">男</label>
+        <input type="radio" id="userWoman" name="sex"/><label for="userWoman">女</label>
+    </div>
+    <div>
+        <span>密码 :</span>
+        <input type="password" id="userPass"/>
+    </div>
+    <div>
+        <span>确认密码 :</span>
+        <input type="password" id="userPassTwo"/>
+    </div>
+    <div>
+        <span>验证码 :</span>
+        <input type="text" id="userCode"/>
+        <span id="spanCode">Ad2F</span>
+    </div>
+    <div>
+        <input type="submit" id="submit"/>
+    </div>
+</div>
+
+<script charset="utf-8" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    /*房帅中式邮箱验证：/\w+((-w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+/ */
+
+    var regList = {
+        nick: /^[0-9a-zA-Z_-]{3,20}$/,
+        email: /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+(\.[a-zA-Z]{2,4}){1,2}$/
+    };
+
+    $(".default").bind("click", function () {
+        $(this).siblings("input").focus();
+    });
+
+    var $checkInp = $("#userName,#userEmail");
+
+    $checkInp.bind("keyup", function () {
+        var $val = $(this).val().trim();
+        if ($val !== "") {
+            $(this).nextAll(".default").fadeOut(100);
+        } else {
+            $(this).nextAll(".default").fadeIn(100).removeClass("ok no").nextAll(".tip").removeClass("ok no");
+        }
+    });
+
+    $checkInp.bind("blur", function () {
+        var $val = $(this).val().trim();
+        var $reg = $(this).attr("reg");
+        if ($val !== "") {
+            if (regList[$reg].test($val)) {
+                $(this).removeClass("no").addClass("ok").nextAll(".tip").removeClass("no").addClass("ok");
+            } else {
+                $(this).removeClass("ok").addClass("no").nextAll(".tip").removeClass("ok").addClass("no");
+            }
+        } else {
+            $(this).removeClass("ok no").nextAll(".tip").removeClass("ok no");
+        }
+    });
+</script>
+</body>
+</html>

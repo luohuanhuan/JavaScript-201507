@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>
+    <title>珠峰聊天室</title>
+    <link type="text/css" rel="stylesheet" href="css/list.css"/>
+</head>
+<body>
+<div class="list" id="list">
+    <ul>
+        <li class="com">
+            <img src="img/logo.jpg"/>
+
+            <div>您好，这里是珠峰培训客服中心，请问有什么可以帮助您吗？</div>
+        </li>
+    </ul>
+</div>
+<div class="box">
+    <input type="text" id="input1"/>
+    <span id="submit">提交</span>
+</div>
+
+<script type="text/javascript" src="js/iscroll.js"></script>
+<script type="text/javascript">
+    //1、使用的第一步确定滚动区域的具体高度
+    var cH = document.documentElement.clientHeight || document.body.clientHeight;
+    var oList = document.querySelector("#list");
+    oList.style.height = (cH - 36) + "px";
+
+    //2、禁掉默认的touchmove事件
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+
+    //3、实例化我们的初始结构
+    var myScroll = new IScroll("#list", {
+        mouseWheel: true, //->是否支持鼠标滚轮
+        scrollbars: false, //->是否显示我们的滚动条
+        useTransform: true,
+        useTransition: true, //->使用css3来实现我们的动画
+        bounce: false //->到达边界是否有缓冲
+    });
+
+    //4、默认滚动到最后一条数据信息
+    var myRefresh = function () {
+        myScroll.refresh();
+        myScroll.scrollToElement(document.querySelector('#list li:last-child'), 500);
+    };
+    myRefresh();
+
+    //5、开始增加聊天信息
+    var _con = document.querySelector("#list>ul");
+    var createText = function (val, isCom) {
+        var oLi = document.createElement("li");
+        var cN = "", logo = "img/my.png";
+        isCom ? (cN = "com", logo = "img/logo.jpg") : null;
+        oLi.className = cN;
+        oLi.innerHTML = "<img src='" + logo + "'/><div>" + val + "</div>";
+        _con.appendChild(oLi);
+        myRefresh();
+    };
+
+    document.querySelector("#submit").onclick = function () {
+        var inp = document.querySelector("#input1");
+        var val = inp.value;
+        createText(val, false);
+        inp.value = "";
+        window.setTimeout(function () {
+            createText("非常抱歉，当前客服咨询繁忙，请稍后~~", true);
+        }, 1000);
+    };
+</script>
+</body>
+</html>
